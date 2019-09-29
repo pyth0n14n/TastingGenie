@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TastingGenie</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
