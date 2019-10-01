@@ -6,11 +6,26 @@
              tools:context=".TestFragment"
              android:background="@color/colorRed">
 
-    <TextView
-            android:layout_width="match_parent"
+    <LinearLayout
             android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:text="@string/hello_world"
-            />
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/hello_world"
+        />
+
+        <Button
+                android:id="@+id/button_test_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/button"
+                android:layout_gravity="center"
+        />
+    </LinearLayout>
 
 </FrameLayout>
