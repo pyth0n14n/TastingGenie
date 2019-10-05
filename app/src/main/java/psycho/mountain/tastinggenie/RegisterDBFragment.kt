@@ -1,7 +1,8 @@
 package psycho.mountain.tastinggenie
 
+import android.app.AlertDialog
 import android.content.Context
-import android.net.Uri
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -9,12 +10,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_register_db_fragment.*
-import org.jetbrains.anko.db.TEXT
+import kotlinx.android.synthetic.main.row.view.*
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 
 
 class RegisterDBFragment : Fragment() {
+
+    lateinit var mPersonalManager : PersonalManager
+    lateinit var mPersonalList : List<ListData>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,42 +36,45 @@ class RegisterDBFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         context?.let {
-            val helper = PersonalDatabaseOpenHelper.newInstance(it)
-            var dataList = helper.readableDatabase.select(PersonalDatabaseOpenHelper.tableName)
-                .parseList<ListData>(ListDataParser())
-
-            if (dataList.isEmpty()) {
-                dataList = arrayListOf<ListData>(ListData("hoge", "huga"))
-            }
-
-            personal_list.adapter = PersonalListAdapter(context, R.layout.row).apply {
-                addAll(dataList)
-            }
-
+            val dialog = AlertDialog.Builder(it)
+            mPersonalManager = PersonalManager(it)
+            loadList()
 
             button_register_db!!.setOnClickListener {
-                Log.d("first_name", edittext_first_name.text.toString())
-                Log.d("last_name", edittext_last_name.text.toString())
-
-                helper.use {
-                    insert(
-                        PersonalDatabaseOpenHelper.tableName, *arrayOf(
-                            "first_name" to edittext_first_name.text.toString(), "last_name" to edittext_last_name.text.toString()
-                        )
-                    )
-                }
+                mPersonalManager.insertPersonalList(edittext_first_name.text.toString(),
+                    edittext_last_name.text.toString())
+                loadList()
             }
             button_view_db!!.setOnClickListener {
-                var dataList = helper.readableDatabase.select(PersonalDatabaseOpenHelper.tableName).parseList<ListData>(ListDataParser())
-
-                if (dataList.isEmpty()) {
-                    dataList = arrayListOf<ListData>(ListData("hoge", "huga"))
-                }
-
-                personal_list.adapter = PersonalListAdapter(context, R.layout.row).apply {
-                    addAll(dataList)
-                }
+                loadList()
             }
+
+            personal_list.setOnItemLongClickListener { _, view, position, id ->
+                /*
+                Log.d("position", position.toString())
+                Log.d("id", id.toString())
+                Log.d("getItem", item.toString())
+                Log.d("list_first", view.rowFirstName.text.toString())
+                 */
+
+                dialog.apply {
+                    setTitle("!!!確認!!!")
+                    setMessage("本当に消しますか？")
+                    setPositiveButton("OK", DialogInterface.OnClickListener { _, _ ->
+                        mPersonalManager.deletePersonalList(mPersonalList[position].id)
+                        loadList()
+                    })
+                    show()
+                }
+                true
+            }
+        }
+    }
+
+    fun loadList() {
+        mPersonalList = mPersonalManager.getPersonalList()
+        personal_list.adapter = PersonalListAdapter(context, R.layout.row).apply {
+            addAll(mPersonalList)
         }
     }
 

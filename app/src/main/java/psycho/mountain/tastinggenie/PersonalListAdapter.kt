@@ -3,7 +3,6 @@ package psycho.mountain.tastinggenie
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewParent
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.row.view.*
 import org.jetbrains.anko.layoutInflater
@@ -20,13 +19,14 @@ class PersonalListAdapter : ArrayAdapter<ListData> {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
-        var newView = convertView ?: context.layoutInflater.inflate(R.layout.row, null)
+        var mView = convertView ?: context.layoutInflater.inflate(R.layout.row, null)
 
         getItem(position)?.run {
-            newView.rowFirstName.text = first_name
-            newView.rowLastName.text = last_name
+
+            mView.rowFirstName.text = first_name
+            mView.rowLastName.text = last_name
         }
-        return newView
+        return mView
     }
 
 
