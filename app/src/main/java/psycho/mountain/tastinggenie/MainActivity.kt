@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.fragment_register_db_fragment.*
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 
-class MainActivity : AppCompatActivity(), TestFragment.TestFragmentListener, RegisterDBFragment.RegisterDBFragmentListener {
+class MainActivity : AppCompatActivity(), TestFragment.TestFragmentListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,32 +35,6 @@ class MainActivity : AppCompatActivity(), TestFragment.TestFragmentListener, Reg
         fragmentTransaction.commit()
 
         val helper = PersonalDatabaseOpenHelper.newInstance(this)
-        val dataList = helper.readableDatabase.select(PersonalDatabaseOpenHelper.tableName).parseList<ListData>(ListDataParser())
-
-        personal_list.adapter = PersonalListAdapter(baseContext, R.layout.row).apply {
-            addAll(dataList)
-        }
-
     }
-
-    override fun onClickRegisterButton() {
-        val helper = PersonalDatabaseOpenHelper.newInstance(this)
-        helper.use {
-            insert(PersonalDatabaseOpenHelper.tableName, *arrayOf(
-                "first_name" to edittext_first_name, "last_name" to edittext_last_name
-            ))
-        }
-    }
-
-    override fun onClickViewButton() {
-        val helper = PersonalDatabaseOpenHelper.newInstance(this)
-        val dataList = helper.readableDatabase.select(PersonalDatabaseOpenHelper.tableName).parseList<ListData>(ListDataParser())
-
-        personal_list.adapter = PersonalListAdapter(baseContext, R.layout.row).apply {
-            addAll(dataList)
-        }
-    }
-
-
 
 }
