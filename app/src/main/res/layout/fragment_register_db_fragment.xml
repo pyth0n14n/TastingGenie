@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             tools:context=".RegisterDBFragment"
+             android:orientation="vertical">
+
+    <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/text_db_test"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/text_margin"
+            android:textSize="20dp" />
+
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="start">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_result_first_name"
+                android:layout_marginEnd="@dimen/text_margin" />
+        <EditText
+                android:id="@+id/edittext_first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="start">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_result_last_name"
+                android:layout_marginEnd="@dimen/text_margin"
+                />
+        <EditText
+                android:id="@+id/edittext_last_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/text_margin"
+            android:gravity="center">
+        <Button
+                android:id="@+id/button_register_db"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="20pt"
+                android:text="@string/button_register_db" />
+
+        <Button
+                android:id="@+id/button_view_db"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="20pt"
+                android:text="@string/button_view_db" />
+
+
+    </LinearLayout>>
+
+    <ListView
+            android:id="@+id/personal_list"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            />
+</LinearLayout>

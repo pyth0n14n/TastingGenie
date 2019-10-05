@@ -1,51 +1,58 @@
 package psycho.mountain.tastinggenie
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import kotlinx.android.synthetic.main.fragment_test_fragment.*
+import kotlinx.android.synthetic.main.fragment_register_db_fragment.*
 
-class TestFragment : Fragment() {
 
-    interface TestFragmentListener {
-        fun onClickTestButton()
+class RegisterDBFragment : Fragment() {
+
+    interface RegisterDBFragmentListener {
+        fun onClickRegisterButton()
+        fun onClickViewButton()
     }
 
-    private var mListener: TestFragmentListener? = null
+    private var mListener: RegisterDBFragmentListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_test_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_register_db_fragment, container, false)
     }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
-        if (context is TestFragmentListener){
+        if (context is RegisterDBFragmentListener){
             mListener = context
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        button_test_fragment!!.setOnClickListener {
+        button_register_db!!.setOnClickListener {
             mListener?.let {
-                it.onClickTestButton()
+                it.onClickRegisterButton()
+            }
+        }
+        button_view_db!!.setOnClickListener {
+            mListener?.let {
+                it.onClickViewButton()
             }
         }
     }
 
     // factory method
     companion object {
-        fun newInstance() : TestFragment {
-            return TestFragment()
+        fun newInstance() : RegisterDBFragment {
+            return RegisterDBFragment()
         }
     }
 }
