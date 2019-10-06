@@ -3,7 +3,9 @@ package psycho.mountain.tastinggenie
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,12 +15,18 @@ import kotlinx.android.synthetic.main.fragment_register_db_fragment.*
 import kotlinx.android.synthetic.main.row.view.*
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
+import org.jetbrains.anko.imageBitmap
 
 
 class RegisterDBFragment : Fragment() {
 
     lateinit var mPersonalManager : PersonalManager
     lateinit var mPersonalList : List<ListData>
+    private var mListener : ImageSelectListener? = null
+
+    interface ImageSelectListener {
+        fun onImageSelectAction()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +38,10 @@ class RegisterDBFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
+
+        if (context is ImageSelectListener) {
+            mListener = context
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,12 +53,21 @@ class RegisterDBFragment : Fragment() {
             loadList()
 
             button_register_db!!.setOnClickListener {
-                mPersonalManager.insertPersonalList(edittext_first_name.text.toString(),
+                mPersonalManager.insertPersonalList(register_db_image.drawable,
+                    edittext_first_name.text.toString(),
                     edittext_last_name.text.toString())
                 loadList()
             }
             button_view_db!!.setOnClickListener {
                 loadList()
+            }
+
+            register_db_image!!.setOnLongClickListener {
+                Log.d("onLongClick", "okokok")
+                mListener?.let {
+                    it.onImageSelectAction()
+                }
+                true
             }
 
             personal_list.setOnItemLongClickListener { _, view, position, id ->

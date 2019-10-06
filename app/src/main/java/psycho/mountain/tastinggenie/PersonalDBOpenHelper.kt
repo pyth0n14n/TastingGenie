@@ -8,11 +8,12 @@ class PersonalDBOpenHelper (context: Context):ManagedSQLiteOpenHelper(context, D
 
     companion object {
         const val DB_PERSONAL = "personal.db"
-        const val DB_VERSION = 1
+        const val DB_VERSION = 2
 
         const val TABLE_PERSONAL = "personal"
 
         const val CULM_ID = "id"
+        const val CULM_IMAGE = "image"
         const val CULM_FIRST_NAME = "first_name"
         const val CULM_LAST_NAME = "last_name"
 
@@ -29,13 +30,27 @@ class PersonalDBOpenHelper (context: Context):ManagedSQLiteOpenHelper(context, D
             createTable(TABLE_PERSONAL, ifNotExists = true,
                 columns = *arrayOf(
                     CULM_ID to INTEGER + PRIMARY_KEY + UNIQUE,
+                    CULM_IMAGE to BLOB,
                     CULM_FIRST_NAME to TEXT,
                     CULM_LAST_NAME to TEXT))
         }
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        // TODO: 更新が必要な時？
+        // v2に画像追加のため，DBを一新する
+        //if (oldVersion == 1 && newVersion == 2) {
+            db?.run {
+                dropTable(TABLE_PERSONAL, true)
+
+                createTable(TABLE_PERSONAL, ifNotExists = true,
+                    columns = *arrayOf(
+                        CULM_ID to INTEGER + PRIMARY_KEY + UNIQUE,
+                        CULM_IMAGE to BLOB,
+                        CULM_FIRST_NAME to TEXT,
+                        CULM_LAST_NAME to TEXT))
+            }
+
+        //}
     }
 }
 

@@ -14,6 +14,42 @@
             android:layout_marginBottom="@dimen/text_margin"
             android:textSize="20dp" />
 
+    <ImageView
+            android:id="@+id/register_db_image"
+            android:layout_height="100dp"
+            android:layout_width="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/empty_image"
+            />
+
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/text_margin"
+            android:gravity="start">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/text_margin"
+                android:layout_gravity="center"
+                android:text="@string/select_image" />
+
+        <ImageButton
+                android:id="@+id/image_button_gallery"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@android:drawable/ic_menu_gallery"
+                android:layout_marginEnd="@dimen/text_margin"
+                />
+        <ImageButton
+                android:id="@+id/image_button_camera"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@android:drawable/ic_menu_camera"
+                />
+    </LinearLayout>
     <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
