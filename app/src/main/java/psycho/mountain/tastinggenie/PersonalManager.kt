@@ -27,6 +27,7 @@ class PersonalManager (context: Context) {
         val bitmap = (image as BitmapDrawable).bitmap
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bos)
         val byteImage = bos.toByteArray()
+        bos.close()
 
         mDB.use {
             insert(

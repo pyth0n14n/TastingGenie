@@ -16,6 +16,7 @@ import java.io.InputStream
 class MainActivity : AppCompatActivity(), TestFragment.TestFragmentListener, RegisterDBFragment.ImageSelectListener {
 
     val REQUEST_GET_IMAGE = 100
+    val MAX_IMAGE_SIZE = 500
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,11 +63,11 @@ class MainActivity : AppCompatActivity(), TestFragment.TestFragmentListener, Reg
         if (requestCode == REQUEST_GET_IMAGE && resultCode == Activity.RESULT_OK && data != null){
             try {
                 if (data.extras != null && data.extras.get("data") != null) {
-                    val capturedImage: Bitmap = data.extras.get("data") as Bitmap
+                    val capturedImage: Bitmap = compressBitmap(data.extras.get("data") as Bitmap)
                     register_db_image.imageBitmap = capturedImage
                 } else {
                     val stream: InputStream = contentResolver.openInputStream(data.data)
-                    val bitmap: Bitmap = BitmapFactory.decodeStream(stream)
+                    val bitmap: Bitmap = compressBitmap(BitmapFactory.decodeStream(stream))
                     stream.close()
                     register_db_image.imageBitmap = bitmap
                 }
@@ -76,6 +77,13 @@ class MainActivity : AppCompatActivity(), TestFragment.TestFragmentListener, Reg
                 e.printStackTrace()
             }
         }
+    }
+
+    fun compressBitmap(bitmap : Bitmap) : Bitmap {
+        val WID = 360
+        val HEI = 640
+        val imageOptions = BitmapFactory.Options()
+        return  Bitmap.createScaledBitmap(bitmap, WID, HEI, true)
     }
 
 }
