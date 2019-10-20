@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="psycho.mountain.tastinggenie">
 
-    // 主に，カメラと画像選択のため
+    <!-- comment 主に，カメラと画像選択のため -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 

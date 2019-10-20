@@ -1,23 +1,24 @@
-package psycho.mountain.tastinggenie
+package psycho.mountain.tastinggenie.database
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.db.insert
-import org.jetbrains.anko.db.delete
 import java.io.ByteArrayOutputStream
 
 class PersonalManager (context: Context) {
 
-    private val mDB = PersonalDBOpenHelper.newInstance(context)
+    private val mDB =
+        PersonalDBOpenHelper.newInstance(context)
 
     fun getPersonalList(): List<ListData> {
         lateinit var personal_list: List<ListData>
         mDB.use {
-            personal_list = select(PersonalDBOpenHelper.TABLE_PERSONAL).parseList(PersonalDataParser())
+            personal_list = select(PersonalDBOpenHelper.TABLE_PERSONAL).parseList(
+                PersonalDataParser()
+            )
         }
         return personal_list
     }

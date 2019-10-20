@@ -1,4 +1,4 @@
-package psycho.mountain.tastinggenie
+package psycho.mountain.tastinggenie.database
 
 import java.sql.Blob
 

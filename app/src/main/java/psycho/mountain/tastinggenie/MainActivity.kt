@@ -17,6 +17,7 @@ import android.content.ContentValues
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.util.Log
+import kotlinx.android.synthetic.main.sake_list_item.*
 import org.jetbrains.anko.imageURI
 import java.lang.Math.pow
 import java.lang.Math.round
@@ -58,31 +59,7 @@ class MainActivity : AppCompatActivity(), TestFragment.TestFragmentListener, Reg
     }
 
 
-//    override fun onImageSelectAction() {
-//        val pickPhotoIntent : Intent = Intent(Intent.ACTION_GET_CONTENT)
-//        pickPhotoIntent.setType("image/*")
-//
-//        val photoName = System.currentTimeMillis().toString() + ".jpg"
-//        val contentValues = ContentValues()
-//        contentValues.put(MediaStore.Images.Media.TITLE, photoName)
-//        contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-//        val uri = contentResolver
-//            .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-//
-//        val takePhotoIntent : Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//
-//
-//        val chooserIntent : Intent = Intent.createChooser(pickPhotoIntent, "Picture...")
-//        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, takePhotoIntent)
-//
-//        startActivityForResult(chooserIntent, REQUEST_GET_IMAGE)
-//    }
-
     override fun onImageSelectAction() {
-        showGallery()
-    }
-
-    private fun showGallery() {
         //カメラの起動Intentの用意
         val photoName = System.currentTimeMillis().toString() + ".jpg"
         val contentValues = ContentValues()
@@ -107,6 +84,7 @@ class MainActivity : AppCompatActivity(), TestFragment.TestFragmentListener, Reg
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        // カメラ・ドキュメント画像の取得とviewへの設定
         if (requestCode == REQUEST_GET_IMAGE) {
             if (resultCode != Activity.RESULT_OK) {
                 // キャンセル時
@@ -114,6 +92,7 @@ class MainActivity : AppCompatActivity(), TestFragment.TestFragmentListener, Reg
             }
 
             val resultUri : Uri? = if (data?.data != null) data.data else mUri
+            Log.d("asdf: resultURI", resultUri.toString())
             resultUri?.let{
                 MediaScannerConnection.scanFile(this, arrayOf(it.path) as Array<String>, arrayOf("image/jpg"), null)
                 try {
