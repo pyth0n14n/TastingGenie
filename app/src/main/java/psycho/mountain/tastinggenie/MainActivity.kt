@@ -71,7 +71,17 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onItemClick(personal: ListData) {
-        Toast.makeText(this, personal.first_name, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, personal.first_name, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onFabButtonClick() {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        fragmentTransaction.addToBackStack(null)
+
+        fragmentTransaction.replace(R.id.container, SakeInformationFragment.newInstance())
+        fragmentTransaction.commit()
     }
 
     override fun onImageSelectAction() {

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <!-- "生酛", "山廃酛", //　酛 -->
+    <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/moto"
+            android:textSize="@dimen/text_normal" />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:text="生酛"/>
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:text="山廃酛"/>
+    </LinearLayout>
+
+<!--    "生詰め酒", "生貯蔵酒", "生酒", // 火入れ-->
+    <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="火入れ"
+            android:layout_marginTop="@dimen/layout_margin2"
+            android:textSize="@dimen/text_normal" />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:text="生詰め酒"/>
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:text="生貯蔵酒"/>
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:text="生酒"/>
+    </LinearLayout>
+
+<!--    "原酒",  // 加水-->
+    <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="加水"
+            android:layout_marginTop="@dimen/layout_margin2"
+            android:textSize="@dimen/text_normal"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:text="原酒"/>
+    </LinearLayout>
+
+<!--    "冷やおろし", "雪室貯蔵", "樽酒", "長期熟成酒", // 貯蔵-->
+    <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="貯蔵"
+            android:layout_marginTop="@dimen/layout_margin2"
+            android:textSize="@dimen/text_normal" />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:text="冷やおろし"/>
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:text="雪室貯蔵"/>
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:text="樽酒"/>
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:text="長期熟成酒"/>
+    </LinearLayout>
+
+<!--    "新酒", "古酒", // 新古-->
+    <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="新古"
+            android:layout_marginTop="@dimen/layout_margin2"
+            android:textSize="@dimen/text_normal" />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:text="新酒"/>
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:text="古酒"/>
+    </LinearLayout>
+
+<!--    "にごり酒", "おり酒",  // 濾し    -->
+    <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="濾し"
+            android:layout_marginTop="@dimen/layout_margin2"
+            android:textSize="@dimen/text_normal" />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:text="にごり酒"/>
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:text="おり酒"/>
+    </LinearLayout>
+
+<!--    "荒走り", "中汲み", "責め", "雫酒", // 絞り-->
+    <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="絞り"
+            android:layout_marginTop="@dimen/layout_margin2"
+            android:textSize="@dimen/text_normal" />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:text="荒走り"/>
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:text="中汲み"/>
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:text="責め"/>
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:text="雫酒"/>
+    </LinearLayout>
+
+<!--    "凍結酒", "発泡酒", // 口当たり-->
+    <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="口当たり"
+            android:layout_marginTop="@dimen/layout_margin2"
+            android:textSize="@dimen/text_normal" />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:text="凍結酒"/>
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:text="発泡酒"/>
+    </LinearLayout>
+
+<!--    "生一本", "貴醸酒" // 製造-->
+    <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="製造"
+            android:layout_marginTop="@dimen/layout_margin2"
+            android:textSize="@dimen/text_normal" />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:text="生一本"/>
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:text="貴醸酒"/>
+    </LinearLayout>
+
+</LinearLayout>
+

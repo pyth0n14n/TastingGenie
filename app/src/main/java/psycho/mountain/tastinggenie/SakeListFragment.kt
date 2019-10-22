@@ -3,17 +3,18 @@ package psycho.mountain.tastinggenie
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_sake_list.*
+import kotlinx.android.synthetic.main.fragment_sake_list.view.*
 import psycho.mountain.tastinggenie.database.ListData
 import psycho.mountain.tastinggenie.database.PersonalManager
 import psycho.mountain.tastinggenie.listview.RecyclerAdapter
 import psycho.mountain.tastinggenie.listview.RecyclerViewHolder
-import java.util.Collections.addAll
 
 class SakeListFragment: Fragment() {
 
@@ -23,6 +24,7 @@ class SakeListFragment: Fragment() {
 
     interface SelectListListener {
         fun onItemClick(personal: ListData)
+        fun onFabButtonClick()
     }
 
     companion object {
@@ -65,10 +67,14 @@ class SakeListFragment: Fragment() {
                 })
 
             recyclerView.setHasFixedSize(true)
-            recyclerView.layoutManager = LinearLayoutManager(activity)
+            recyclerView.layoutManager = GridLayoutManager(activity, 2)
             recyclerView.adapter = adapter
         }
 
-
+        view.button_sake_list_add.setOnClickListener {
+            listener?.let{
+                it.onFabButtonClick()
+            }
+        }
     }
 }
