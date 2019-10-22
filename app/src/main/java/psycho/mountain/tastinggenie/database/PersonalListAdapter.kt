@@ -1,4 +1,4 @@
-package psycho.mountain.tastinggenie
+package psycho.mountain.tastinggenie.database
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.row.view.*
 import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.layoutInflater
-import psycho.mountain.tastinggenie.database.ListData
+import psycho.mountain.tastinggenie.R
 
 class PersonalListAdapter : ArrayAdapter<ListData> {
 

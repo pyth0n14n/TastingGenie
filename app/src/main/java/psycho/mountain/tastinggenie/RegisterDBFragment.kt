@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_register_db_fragment.*
 import psycho.mountain.tastinggenie.database.ListData
+import psycho.mountain.tastinggenie.database.PersonalListAdapter
 import psycho.mountain.tastinggenie.database.PersonalManager
 
 
@@ -90,7 +91,10 @@ class RegisterDBFragment : Fragment() {
 
     fun loadList() {
         mPersonalList = mPersonalManager.getPersonalList()
-        personal_list.adapter = PersonalListAdapter(context, R.layout.row).apply {
+        personal_list.adapter = PersonalListAdapter(
+            context,
+            R.layout.row
+        ).apply {
             addAll(mPersonalList)
         }
     }

@@ -6,13 +6,13 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import kotlinx.android.synthetic.main.fragment_test_fragment.*
 
 class TestFragment : Fragment() {
 
     interface TestFragmentListener {
-        fun onClickTestButton()
+        fun onClickTestButton1()
+        fun onClickTestButton2()
     }
 
     private var mListener: TestFragmentListener? = null
@@ -37,7 +37,12 @@ class TestFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         button_test_fragment!!.setOnClickListener {
             mListener?.let {
-                it.onClickTestButton()
+                it.onClickTestButton1()
+            }
+        }
+        button_to_sake_list!!.setOnClickListener {
+            mListener?.let {
+                it.onClickTestButton2()
             }
         }
     }

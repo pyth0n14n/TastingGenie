@@ -17,19 +17,21 @@ import android.content.ContentValues
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import kotlinx.android.synthetic.main.sake_list_item.*
 import org.jetbrains.anko.imageURI
+import psycho.mountain.tastinggenie.database.ListData
 import java.lang.Math.pow
 import java.lang.Math.round
 import java.nio.file.Files.size
 import kotlin.math.roundToInt
 
-
-class MainActivity : AppCompatActivity(), TestFragment.TestFragmentListener, RegisterDBFragment.ImageSelectListener {
+class MainActivity : AppCompatActivity(),
+    TestFragment.TestFragmentListener,
+    RegisterDBFragment.ImageSelectListener,
+    SakeListFragment.SelectListListener {
 
     val REQUEST_GET_IMAGE = 100
-    val REQUEST_CHOOSER = 1000
-    val MAX_IMAGE_SIZE = 500
     private var mUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +49,7 @@ class MainActivity : AppCompatActivity(), TestFragment.TestFragmentListener, Reg
         }
     }
 
-    override fun onClickTestButton() {
+    override fun onClickTestButton1() {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
 
@@ -58,6 +60,19 @@ class MainActivity : AppCompatActivity(), TestFragment.TestFragmentListener, Reg
         fragmentTransaction.commit()
     }
 
+    override fun onClickTestButton2() {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        fragmentTransaction.addToBackStack(null)
+
+        fragmentTransaction.replace(R.id.container, SakeListFragment.newInstance())
+        fragmentTransaction.commit()
+    }
+
+    override fun onItemClick(personal: ListData) {
+        Toast.makeText(this, personal.first_name, Toast.LENGTH_LONG).show()
+    }
 
     override fun onImageSelectAction() {
         //カメラの起動Intentの用意
@@ -106,32 +121,35 @@ class MainActivity : AppCompatActivity(), TestFragment.TestFragmentListener, Reg
     }
 
     fun compressBitmap(uri : Uri) : Bitmap {
-        val stream = contentResolver.openInputStream(uri)
-        var opts = BitmapFactory.Options()
-        opts.inJustDecodeBounds = true
-        BitmapFactory.decodeStream(stream, null, opts)
+        val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+        return Bitmap.createScaledBitmap(bitmap, 160, 320, true)
 
-        Log.d("asdf", "height: ${opts.outHeight}")
-        Log.d("asdf", "height: ${opts.outWidth}")
-        Log.d("asdf", "Size: ${stream.readBytes().size}")
-
-        // 3: RGB
-        val orgSizeMb = opts.outHeight * opts.outWidth * 3/ 10e6
-        var scale = 0
-        for (i in 1..(orgSizeMb).roundToInt()) {
-            // 1MBに抑えたい TODO: 後で可変にしても良い
-            scale = i * i
-            if (orgSizeMb / scale <= 1) {
-                break
-            }
-        }
-
-        opts = BitmapFactory.Options()
-        opts.inSampleSize = scale
-        opts.inJustDecodeBounds = false
-        stream.close()
-
-        return  BitmapFactory.decodeStream(stream, null, opts)
+//        val stream = contentResolver.openInputStream(uri)
+//        var opts = BitmapFactory.Options()
+//        opts.inJustDecodeBounds = true
+//        BitmapFactory.decodeStream(stream, null, opts)
+//
+//        Log.d("asdf", "height: ${opts.outHeight}")
+//        Log.d("asdf", "height: ${opts.outWidth}")
+//        Log.d("asdf", "Size: ${stream.readBytes().size}")
+//
+//        // 3: RGB
+//        val orgSizeMb = opts.outHeight * opts.outWidth * 3/ 10e6
+//        var scale = 0
+//        for (i in 1..(orgSizeMb).roundToInt()) {
+//            // 1MBに抑えたい TODO: 後で可変にしても良い
+//            scale = i * i
+//            if (orgSizeMb / scale <= 1) {
+//                break
+//            }
+//        }
+//
+//        opts = BitmapFactory.Options()
+//        opts.inSampleSize = scale
+//        opts.inJustDecodeBounds = false
+//        stream.close()
+//
+//        return  BitmapFactory.decodeStream(stream, null, opts)
     }
 
 }
