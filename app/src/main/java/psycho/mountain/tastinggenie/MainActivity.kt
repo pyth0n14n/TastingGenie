@@ -29,7 +29,8 @@ import kotlin.math.roundToInt
 class MainActivity : AppCompatActivity(),
     TestFragment.TestFragmentListener,
     RegisterDBFragment.ImageSelectListener,
-    SakeListFragment.SelectListListener {
+    SakeListFragment.SelectListListener,
+    SakeInformationFragment.SakeInformationFragmentListener {
 
     val REQUEST_GET_IMAGE = 100
     private var mUri: Uri? = null
@@ -47,6 +48,19 @@ class MainActivity : AppCompatActivity(),
             fragmentTransaction.replace(R.id.container, TestFragment.newInstance())
             fragmentTransaction.commit()
         }
+    }
+
+    override fun onClickAddButton() {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        // 一つPopしておく
+        fragmentManager.popBackStack()
+        // さらにPushすると，一つ前の値をPushしたことになる
+        fragmentTransaction.addToBackStack(null)
+
+        fragmentTransaction.replace(R.id.container, SakeDetailedFragment.newInstance())
+        fragmentTransaction.commit()
     }
 
     override fun onClickTestButton1() {

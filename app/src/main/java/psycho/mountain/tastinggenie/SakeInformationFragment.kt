@@ -12,9 +12,23 @@ import kotlinx.android.synthetic.main.fragment_sake_information.*
 
 class SakeInformationFragment : Fragment() {
 
+    interface SakeInformationFragmentListener {
+        fun onClickAddButton()
+    }
+
+    private var listener: SakeInformationFragmentListener? = null
+
     companion object {
         fun newInstance() : SakeInformationFragment{
             return SakeInformationFragment()
+        }
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        if (context is SakeInformationFragmentListener) {
+            listener = context
         }
     }
 
@@ -38,6 +52,12 @@ class SakeInformationFragment : Fragment() {
             }
             sake_information_prefecture.setOnClickListener {
                 dialogSakePrefecture(context!!)
+            }
+
+            button_add_sake_list.setOnClickListener {
+                listener?.let{
+                    it.onClickAddButton()
+                }
             }
         }
     }
@@ -72,7 +92,7 @@ class SakeInformationFragment : Fragment() {
             "荒走り", "中汲み", "責め", "雫酒", // 絞り
             "凍結酒", "発泡酒", // 口当たり
             "生一本", "貴醸酒" // 製造
-            )
+        )
         var checked : BooleanArray = BooleanArray(typeList.size) { false }
 
         // 選択されていた値を取り出し

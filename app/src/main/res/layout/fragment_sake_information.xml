@@ -81,212 +81,223 @@
         tools:context=".SakeInformationFragment"
         android:orientation="vertical">
 
-    <ImageView
-            android:id="@+id/sake_information_image"
-            android:layout_width="120dp"
-            android:layout_height="180dp"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/layout_margin"
-            android:contentDescription="お酒の画像"
-            android:src="@drawable/empty_image" />
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <LinearLayout
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/layout_margin"
-                android:orientation="horizontal">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/text_margin"
-                    android:textSize="@dimen/text_normal"
-                    android:text="@string/sake_name" />
+                android:orientation="vertical">
 
-            <EditText
-                    android:id="@+id/sake_information_name"
+            <ImageView
+                    android:id="@+id/sake_information_image"
+                    android:layout_width="120dp"
+                    android:layout_height="180dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:contentDescription="お酒の画像"
+                    android:src="@drawable/empty_image" />
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:text="お名前は？"
-                    android:textSize="@dimen/text_normal" />
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_name" />
+
+                <EditText
+                        android:id="@+id/sake_information_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="お名前は？"
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_grade" />
+
+                <TextView
+                        android:id="@+id/sake_information_grade"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/need_selecting" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_type" />
+
+                <TextView
+                        android:id="@+id/sake_information_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/need_selecting" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_maker" />
+
+                <EditText
+                        android:id="@+id/sake_information_maker"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="xx酒造"
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_prefecture" />
+
+                <TextView
+                        android:id="@+id/sake_information_prefecture"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/need_selecting" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_degree" />
+
+                <EditText
+                        android:id="@+id/sake_information_sake_deg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberSigned|number|numberDecimal"
+                        android:text=""
+                        android:textSize="@dimen/text_normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_polishing_rate" />
+
+                <EditText
+                        android:id="@+id/sake_information_pol_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:text=""
+                        android:textSize="@dimen/text_normal" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="%" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_rice" />
+
+                <EditText
+                        android:id="@+id/sake_information_rice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/rice" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_yeast" />
+
+                <EditText
+                        android:id="@+id/sake_information_yeast"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal"
+                        android:text="協会9号" />
+
+            </LinearLayout>
+
+            <Button
+                    android:id="@+id/button_add_sake_list"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_add" />
         </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/layout_margin"
-            android:orientation="horizontal">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/text_margin"
-                android:textSize="@dimen/text_normal"
-                android:text="@string/sake_grade" />
-
-        <TextView
-                android:id="@+id/sake_information_grade"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_normal"
-                android:text="@string/need_selecting" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/layout_margin"
-            android:orientation="horizontal">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/text_margin"
-                android:textSize="@dimen/text_normal"
-                android:text="@string/sake_type" />
-
-        <TextView
-                android:id="@+id/sake_information_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_normal"
-                android:text="@string/need_selecting" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/layout_margin"
-            android:orientation="horizontal">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/text_margin"
-                android:textSize="@dimen/text_normal"
-                android:text="@string/sake_maker" />
-
-        <EditText
-                android:id="@+id/sake_information_maker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:text="xx酒造"
-                android:textSize="@dimen/text_normal" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/layout_margin"
-            android:orientation="horizontal">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/text_margin"
-                android:textSize="@dimen/text_normal"
-                android:text="@string/sake_prefecture" />
-
-        <TextView
-                android:id="@+id/sake_information_prefecture"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_normal"
-                android:text="@string/need_selecting" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/layout_margin"
-            android:orientation="horizontal">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/text_margin"
-                android:textSize="@dimen/text_normal"
-                android:text="@string/sake_degree" />
-
-        <EditText
-                android:id="@+id/sake_information_sake_deg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_normal"
-                android:text="協会9号" />
-
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/layout_margin"
-            android:orientation="horizontal">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/text_margin"
-                android:textSize="@dimen/text_normal"
-                android:text="@string/sake_polishing_rate" />
-
-        <EditText
-                android:id="@+id/sake_information_pol_rate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text=""
-                android:textSize="@dimen/text_normal" />
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/text_margin"
-                android:textSize="@dimen/text_normal"
-                android:text="%" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/layout_margin"
-            android:orientation="horizontal">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/text_margin"
-                android:textSize="@dimen/text_normal"
-                android:text="@string/sake_rice" />
-
-        <EditText
-                android:id="@+id/sake_information_rice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_normal"
-                android:text="@string/rice" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/layout_margin"
-            android:orientation="horizontal">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/text_margin"
-                android:textSize="@dimen/text_normal"
-                android:text="@string/sake_yeast" />
-
-        <EditText
-                android:id="@+id/sake_information_yeast"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_normal"
-                android:text="協会9号" />
-
-    </LinearLayout>
-
-    <Button
-            android:id="@+id/button_sake_information"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_add" />
-
+    </ScrollView>
 </LinearLayout>
