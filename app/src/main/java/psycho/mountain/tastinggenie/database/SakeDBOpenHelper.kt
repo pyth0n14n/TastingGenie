@@ -21,6 +21,7 @@ class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
         const val COL_IMAGE = "image"
         const val COL_MAKER = "maker"
         const val COL_PREF = "prefecture"
+        const val COL_SAKE_DEG = "sake_degree"
         const val COL_POL_RATE = "polishing_rate"
         const val COL_ALCOHOL = "alcohol"
         const val COL_RICE = "rice"
@@ -28,6 +29,8 @@ class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
 
         const val COL_REVIEW_ID = "review_id"
         const val COL_DATE = "date"
+        const val COL_BAR = "bar"
+        const val COL_PRICE = "price"
         const val COL_TEMP = "temperature"
         const val COL_COLOR = "color"
         const val COL_SCENT1 = "scent1"
@@ -63,6 +66,7 @@ class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
                     COL_IMAGE to TEXT,
                     COL_MAKER to TEXT,
                     COL_PREF to TEXT,
+                    COL_SAKE_DEG to REAL,
                     COL_POL_RATE to INTEGER,
                     COL_ALCOHOL to INTEGER,
                     COL_RICE to TEXT,
@@ -75,6 +79,8 @@ class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
                     COL_REVIEW_ID to INTEGER + PRIMARY_KEY + UNIQUE, // INTEGER + PRIMARY_KEY + UNIQUE,
                     COL_ID to INTEGER,
                     COL_DATE to TEXT,
+                    COL_BAR to TEXT,
+                    COL_PRICE to TEXT,
                     COL_TEMP to TEXT,
                     COL_COLOR to TEXT,
                     COL_SCENT1 to TEXT,

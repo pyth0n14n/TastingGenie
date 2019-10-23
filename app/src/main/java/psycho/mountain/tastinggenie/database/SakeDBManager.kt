@@ -18,7 +18,8 @@ class SakeDBManager (context: Context){
     }
 
     fun insertSakeList(name: String, grade: String, type: String, image: String, maker: String,
-                       pref: String, pol_rate: Int, alcohol: Int, rice: String, yeast: String) {
+                       pref: String, sake_deg: Float, pol_rate: Int, alcohol: Int, rice: String,
+                       yeast: String) {
         sakeListDb.use {
             insert(
                 SakeDBOpenHelper.TABLE_SAKE_LIST,
@@ -28,6 +29,7 @@ class SakeDBManager (context: Context){
                 SakeDBOpenHelper.COL_IMAGE to image,
                 SakeDBOpenHelper.COL_MAKER to maker,
                 SakeDBOpenHelper.COL_PREF to pref,
+                SakeDBOpenHelper.COL_SAKE_DEG to sake_deg,
                 SakeDBOpenHelper.COL_POL_RATE to pol_rate,
                 SakeDBOpenHelper.COL_ALCOHOL to alcohol,
                 SakeDBOpenHelper.COL_RICE to rice,
