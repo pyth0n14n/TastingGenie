@@ -8,18 +8,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import kotlinx.android.synthetic.main.fragment_sake_information.*
+import org.jetbrains.anko.imageBitmap
+import org.jetbrains.anko.imageResource
 
 class SakeInformationFragment : Fragment() {
 
     interface SakeInformationFragmentListener {
         fun onClickAddButton()
+        fun onClickAddPhotoButton(imageView: ImageView)
     }
 
     private var listener: SakeInformationFragmentListener? = null
 
     companion object {
         fun newInstance() : SakeInformationFragment{
+            Log.d("SakeInformationFragment", "newInstance")
             return SakeInformationFragment()
         }
     }
@@ -27,15 +32,26 @@ class SakeInformationFragment : Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
+        Log.d("SakeInformationFragment", "onAttach")
         if (context is SakeInformationFragmentListener) {
+            Log.d("SakeInformationFragment", "onAttach: context")
             listener = context
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        Log.d("SakeInformationFragment", "onDestroyView")
+        sake_information_image.imageBitmap = null
+        listener = null
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("SakeInformationFragment", "onCreateView")
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sake_information, container, false)
     }
@@ -43,7 +59,11 @@ class SakeInformationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //sake_information_image.imageResource = R.drawable.hitsuji
+
+        Log.d("SakeInformationFragment", "onViewCreated")
         context?.let {
+            Log.d("SakeInformationFragment", "onViewCreated: let")
             sake_information_grade.setOnClickListener {
                 dialogSakeGrade(context!!)
             }
@@ -57,6 +77,12 @@ class SakeInformationFragment : Fragment() {
             button_add_sake_list.setOnClickListener {
                 listener?.let{
                     it.onClickAddButton()
+                }
+            }
+
+            button_add_sake_photo.setOnClickListener{
+                listener?.let{
+                    it.onClickAddPhotoButton(sake_information_image)
                 }
             }
         }

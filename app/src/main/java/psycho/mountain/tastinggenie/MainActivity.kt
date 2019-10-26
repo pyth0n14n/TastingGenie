@@ -14,11 +14,18 @@ import java.io.IOException
 import java.io.InputStream
 import android.os.Build
 import android.content.ContentValues
+import android.content.Context
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.util.AttributeSet
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
+import kotlinx.android.synthetic.main.fragment_sake_information.*
 import kotlinx.android.synthetic.main.sake_list_item.*
+import org.jetbrains.anko.image
+import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.imageURI
 import psycho.mountain.tastinggenie.database.ListData
 import java.lang.Math.pow
@@ -34,6 +41,7 @@ class MainActivity : AppCompatActivity(),
 
     val REQUEST_GET_IMAGE = 100
     private var mUri: Uri? = null
+    private var imageView: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +56,30 @@ class MainActivity : AppCompatActivity(),
             fragmentTransaction.replace(R.id.container, TestFragment.newInstance())
             fragmentTransaction.commit()
         }
+    }
+
+    override fun onClickAddPhotoButton(imageView: ImageView) {
+        this.imageView = imageView
+
+        //カメラの起動Intentの用意
+        val photoName = System.currentTimeMillis().toString() + ".jpg"
+        val contentValues = ContentValues()
+        contentValues.put(MediaStore.Images.Media.TITLE, photoName)
+        contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+        mUri = contentResolver
+            .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+        val intentCamera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, mUri)
+
+        // ギャラリー用のIntent作成
+        val intentGallery: Intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intentGallery.addCategory(Intent.CATEGORY_OPENABLE)
+        intentGallery.type = "image/jpeg"
+
+        val intent = Intent.createChooser(intentCamera, "画像の選択")
+        intent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(intentGallery))
+        startActivityForResult(intent, REQUEST_GET_IMAGE)
     }
 
     override fun onClickAddButton() {
@@ -99,25 +131,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onImageSelectAction() {
-        //カメラの起動Intentの用意
-        val photoName = System.currentTimeMillis().toString() + ".jpg"
-        val contentValues = ContentValues()
-        contentValues.put(MediaStore.Images.Media.TITLE, photoName)
-        contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-        mUri = contentResolver
-            .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
 
-        val intentCamera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, mUri)
-
-        // ギャラリー用のIntent作成
-        val intentGallery: Intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intentGallery.addCategory(Intent.CATEGORY_OPENABLE)
-        intentGallery.type = "image/jpeg"
-
-        val intent = Intent.createChooser(intentCamera, "画像の選択")
-        intent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(intentGallery))
-        startActivityForResult(intent, REQUEST_GET_IMAGE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -125,18 +139,25 @@ class MainActivity : AppCompatActivity(),
 
         // カメラ・ドキュメント画像の取得とviewへの設定
         if (requestCode == REQUEST_GET_IMAGE) {
+            Log.d("onActivityResult", "REQUEST_GET_IMAGE")
             if (resultCode != Activity.RESULT_OK) {
                 // キャンセル時
+                Log.d("onActivityResult", "not RESULT_OK")
                 return
             }
 
             val resultUri : Uri? = if (data?.data != null) data.data else mUri
             Log.d("asdf: resultURI", resultUri.toString())
             resultUri?.let{
+                Log.d("onActivityResult", "scanFile")
                 MediaScannerConnection.scanFile(this, arrayOf(it.path) as Array<String>, arrayOf("image/jpg"), null)
                 try {
-//                    val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, it)
-                    register_db_image.imageBitmap = compressBitmap(it) // TODO
+                    val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, it)
+                    imageView?.let {
+                        it.imageURI = resultUri// imageBitmap = compressBitmap(it) // TODO
+                    }
+                    Log.d("onActivityResult", "try")
+
                 } catch (e : IOException){
                     e.printStackTrace()
                 }
