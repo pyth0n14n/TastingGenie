@@ -22,7 +22,7 @@ import android.support.v4.app.SupportActivity
 import android.support.v4.app.SupportActivity.ExtraData
 import android.support.v4.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
+import psycho.mountain.tastinggenie.Utility.copyImageFromBitmap
 
 
 class MainActivity : AppCompatActivity(),
@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity(),
                 try {
                     val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, it)
                     if (isFromDocument) {
-                        copyImageFromBitmap(bitmap, baseContext)
+                        copyImageFromBitmap(bitmap, imageUri!!, baseContext)
                     }
                     imageView?.let {
                         it.imageURI = resultUri// imageBitmap = compressBitmap(it) // TODO
@@ -154,76 +154,5 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    fun fileFromUri(uri: Uri, context: Context) : File? {
-        val projection = arrayOf(MediaStore.MediaColumns.DATA)
-        val cursor = context.contentResolver.query(uri, projection, null, null, null)
-
-        var file: File? = null
-
-        cursor?.let {
-            var path: String? = null
-            if (it.moveToFirst()) {
-                path = it.getString(0)
-            }
-            it.close()
-            if (path != null) {
-                file = File(path)
-            }
-        }
-        return file
-    }
-
-    fun copyImageFromBitmap(bmp: Bitmap, context: Context) {
-        val photoName = System.currentTimeMillis().toString() + ".jpg"
-
-        val bos: BufferedOutputStream? = null
-
-        try {
-            val bos = FileOutputStream(fileFromUri(imageUri!!, context))
-            val baos = ByteArrayOutputStream()
-
-            bmp!!.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-            bos.write(baos.toByteArray())
-            bos.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        } finally {
-            bos?.let{
-                it.close()
-            }
-        }
-    }
-
-    fun compressBitmap(uri : Uri) : Bitmap {
-        val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-        return Bitmap.createScaledBitmap(bitmap, 160, 320, true)
-
-//        val stream = contentResolver.openInputStream(uri)
-//        var opts = BitmapFactory.Options()
-//        opts.inJustDecodeBounds = true
-//        BitmapFactory.decodeStream(stream, null, opts)
-//
-//        Log.d("asdf", "height: ${opts.outHeight}")
-//        Log.d("asdf", "height: ${opts.outWidth}")
-//        Log.d("asdf", "Size: ${stream.readBytes().size}")
-//
-//        // 3: RGB
-//        val orgSizeMb = opts.outHeight * opts.outWidth * 3/ 10e6
-//        var scale = 0
-//        for (i in 1..(orgSizeMb).roundToInt()) {
-//            // 1MBに抑えたい TODO: 後で可変にしても良い
-//            scale = i * i
-//            if (orgSizeMb / scale <= 1) {
-//                break
-//            }
-//        }
-//
-//        opts = BitmapFactory.Options()
-//        opts.inSampleSize = scale
-//        opts.inJustDecodeBounds = false
-//        stream.close()
-//
-//        return  BitmapFactory.decodeStream(stream, null, opts)
-    }
 
 }

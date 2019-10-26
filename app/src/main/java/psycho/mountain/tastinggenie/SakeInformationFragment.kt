@@ -1,7 +1,10 @@
 package psycho.mountain.tastinggenie
 
 import android.app.AlertDialog
+import android.app.ProgressDialog.show
 import android.content.Context
+import android.content.DialogInterface
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -10,12 +13,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ScrollView
+import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_sake_information.*
 import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.sdk27.coroutines.onFocusChange
+import psycho.mountain.tastinggenie.Utility.deleteFileByUri
+import psycho.mountain.tastinggenie.Utility.fileFromUri
 import psycho.mountain.tastinggenie.database.SakeList
+import java.lang.NullPointerException
 import java.lang.NumberFormatException
 
 class SakeInformationFragment : Fragment() {
@@ -92,24 +99,78 @@ class SakeInformationFragment : Fragment() {
                     it.onClickAddPhotoButton(sake_information_image)
                 }
             }
+
+            // 長押しで写真削除
+            val dialog = AlertDialog.Builder(it)
+            sake_information_image.setOnLongClickListener {
+                dialog.apply {
+                    setTitle("画像の削除")
+                    setMessage("本当に消しますか？")
+                    setPositiveButton("はい", DialogInterface.OnClickListener { _, _ ->
+                        sake_information_image.setImageResource(R.drawable.empty_image)
+                        val uri = Uri.parse(sake_information_image.contentDescription.toString())
+                        deleteFileByUri(uri, context)
+                    })
+                    setNegativeButton("いいえ", DialogInterface.OnClickListener{_, _ -> })
+                    show()
+                }
+                true
+
+            }
         }
     }
 
+    // TODO: テキストが空だとnullで落ちる
     private fun makeSakeList(): SakeList {
         val sakeList: SakeList = SakeList(-1,// IDはダミー．DBに自動入力して貰う
-            sake_information_name.text.toString(),
-            sake_information_grade.text.toString(),
-            sake_information_type.text.toString(),
-            sake_information_image.contentDescription.toString(),
-            sake_information_maker.text.toString(),
-            sake_information_prefecture.text.toString(),
-            sake_information_sake_deg.text.toString().toFloat(),
-            sake_information_pol_rate.text.toString().toInt(),
-            sake_information_alcohol.text.toString().toInt(),
-            sake_information_rice.text.toString(),
-            sake_information_yeast.text.toString()
+            viewToString(sake_information_name),
+            viewToString(sake_information_grade),
+            viewToString(sake_information_type),
+            if (sake_information_image.contentDescription == null) ""
+            else sake_information_image.contentDescription.toString(),
+            viewToString(sake_information_maker),
+            viewToString(sake_information_prefecture),
+            viewToFloat(sake_information_sake_deg),
+            viewToInt(sake_information_pol_rate),
+            viewToInt(sake_information_alcohol),
+            viewToString(sake_information_rice),
+            viewToString(sake_information_yeast)
         )
         return sakeList
+    }
+
+    private fun viewToString(textView: TextView): String{
+        lateinit var data: String
+        try {
+            data = textView.text.toString()
+        } catch(e: NullPointerException) {
+            data = ""
+        }
+        return data
+    }
+
+    private fun viewToFloat(textView: TextView): Float{
+        var data: Float = 0.0F
+        try {
+            data = textView.text.toString().toFloat()
+        } catch(e: NullPointerException) {
+            data = -1.0F
+        } catch(e: NumberFormatException) {
+            data = -2.0F
+        }
+        return data
+    }
+
+    private fun viewToInt(textView: TextView): Int{
+        var data: Int = 0
+        try {
+            data = textView.text.toString().toInt()
+        } catch(e: NullPointerException) {
+            data = -1
+        } catch(e: NumberFormatException) {
+            data = -2
+        }
+        return data
     }
 
     private fun degToSweetLevel(deg: Float): String {

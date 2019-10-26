@@ -32,6 +32,7 @@ class SakeListFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // TODO: 再読み込み時に，データベースの中身が反映されていない
         arguments?.let{
             sakeList = it.getParcelableArrayList<SakeList>("sake_list") as List<SakeList>
         }
