@@ -3,36 +3,17 @@ package psycho.mountain.tastinggenie
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import kotlinx.android.synthetic.main.fragment_register_db_fragment.*
-import org.jetbrains.anko.imageBitmap
-import java.io.FileNotFoundException
 import java.io.IOException
-import java.io.InputStream
-import android.os.Build
 import android.content.ContentValues
-import android.content.Context
 import android.media.MediaScannerConnection
 import android.net.Uri
-import android.util.AttributeSet
-import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import kotlinx.android.synthetic.main.fragment_sake_information.*
-import kotlinx.android.synthetic.main.sake_list_item.*
-import org.jetbrains.anko.image
-import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.imageURI
-import psycho.mountain.tastinggenie.database.ListData
 import psycho.mountain.tastinggenie.database.SakeList
-import java.lang.Math.pow
-import java.lang.Math.round
-import java.nio.file.Files.size
-import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity(),
     SakeListFragment.SakeListListener,
