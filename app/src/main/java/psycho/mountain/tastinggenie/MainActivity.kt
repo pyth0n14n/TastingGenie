@@ -6,34 +6,52 @@ import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import java.io.IOException
 import android.content.ContentValues
+import android.content.Context
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.Environment
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import org.jetbrains.anko.imageURI
+import psycho.mountain.tastinggenie.database.SakeDBManager
 import psycho.mountain.tastinggenie.database.SakeList
+import java.io.*
+import android.support.v4.app.SupportActivity
+import android.support.v4.app.SupportActivity.ExtraData
+import android.support.v4.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class MainActivity : AppCompatActivity(),
     SakeListFragment.SakeListListener,
     SakeInformationFragment.SakeInformationFragmentListener {
 
+    lateinit var sakeDBManager: SakeDBManager
     val REQUEST_GET_IMAGE = 100
-    private var mUri: Uri? = null
+    private var imageUri: Uri? = null
     private var imageView: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        sakeDBManager = SakeDBManager(applicationContext)
+
         if (savedInstanceState == null){
+            val bundle: Bundle = Bundle()
+            bundle.putParcelableArrayList("sake_list", sakeDBManager.getSakeList() as ArrayList<SakeList>)
+
             val fragmentManager = supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
 
             //fragmentTransaction.addToBackStack(null)
 
-            fragmentTransaction.replace(R.id.container, SakeListFragment.newInstance())
+            val fragment = SakeListFragment.newInstance()
+            fragment.arguments = bundle
+            fragmentTransaction.replace(R.id.container, fragment)
             fragmentTransaction.commit()
         }
     }
@@ -43,14 +61,18 @@ class MainActivity : AppCompatActivity(),
 
         //カメラの起動Intentの用意
         val photoName = System.currentTimeMillis().toString() + ".jpg"
-        val contentValues = ContentValues()
-        contentValues.put(MediaStore.Images.Media.TITLE, photoName)
-        contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-        mUri = contentResolver
+        val contentValues = ContentValues().apply {
+            put(MediaStore.Images.Media.TITLE, photoName)
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            // TODO: フォルダ名を任意にしたい
+            // val path = Environment.DIRECTORY_PICTURES + File.pathSeparator + "利酒魔人"
+        }
+        imageUri = contentResolver
             .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+        Log.d("asdf: imageUri", imageUri!!.path + photoName)
 
         val intentCamera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, mUri)
+        intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
 
         // ギャラリー用のIntent作成
         val intentGallery: Intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
@@ -98,18 +120,72 @@ class MainActivity : AppCompatActivity(),
                 // キャンセル時
                 return
             }
+            Log.d("asdf", imageUri!!.path + imageUri!!.lastPathSegment)
 
-            val resultUri : Uri? = if (data?.data != null) data.data else mUri
+            var isFromDocument = false
+            var resultUri: Uri? = null
+            if (data?.data != null) {
+                resultUri = data.data
+                isFromDocument = true
+                Log.d("onActivityResult", "document")
+            }else{
+                resultUri = imageUri
+                Log.d("onActivityResult", "camera")
+            }
+
             resultUri?.let{
                 MediaScannerConnection.scanFile(this, arrayOf(it.path) as Array<String>, arrayOf("image/jpg"), null)
                 try {
                     val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, it)
+                    if (isFromDocument) {
+                        copyImageFromBitmap(bitmap, baseContext)
+                    }
                     imageView?.let {
                         it.imageURI = resultUri// imageBitmap = compressBitmap(it) // TODO
                     }
                 } catch (e : IOException){
                     e.printStackTrace()
                 }
+            }
+        }
+    }
+
+    fun fileFromUri(uri: Uri, context: Context) : File? {
+        val projection = arrayOf(MediaStore.MediaColumns.DATA)
+        val cursor = context.contentResolver.query(uri, projection, null, null, null)
+
+        var file: File? = null
+
+        cursor?.let {
+            var path: String? = null
+            if (it.moveToFirst()) {
+                path = it.getString(0)
+            }
+            it.close()
+            if (path != null) {
+                file = File(path)
+            }
+        }
+        return file
+    }
+
+    fun copyImageFromBitmap(bmp: Bitmap, context: Context) {
+        val photoName = System.currentTimeMillis().toString() + ".jpg"
+
+        val bos: BufferedOutputStream? = null
+
+        try {
+            val bos = FileOutputStream(fileFromUri(imageUri!!, context))
+            val baos = ByteArrayOutputStream()
+
+            bmp!!.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            bos.write(baos.toByteArray())
+            bos.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } finally {
+            bos?.let{
+                it.close()
             }
         }
     }

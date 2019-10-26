@@ -16,7 +16,6 @@ import psycho.mountain.tastinggenie.listview.RecyclerViewHolder
 
 class SakeListFragment: Fragment() {
 
-    lateinit var sakeDBManager: SakeDBManager
     lateinit var sakeList: List<SakeList>
     private var listener: SakeListListener? = null
 
@@ -29,6 +28,14 @@ class SakeListFragment: Fragment() {
         fun newInstance() : SakeListFragment {
             return SakeListFragment()
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let{
+            sakeList = it.getParcelableArrayList<SakeList>("sake_list") as List<SakeList>
+        }
+
     }
 
     override fun onCreateView(
@@ -53,8 +60,6 @@ class SakeListFragment: Fragment() {
         val recyclerView = recycler_list
 
         context?.let {
-            sakeDBManager = SakeDBManager(it)
-            sakeList = sakeDBManager.getSakeList()
             val adapter = RecyclerAdapter(sakeList, object : RecyclerViewHolder.ItemClickListener {
                     override fun onItemClick(position: Int) {
                         listener?.let{
