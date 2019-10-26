@@ -1,15 +1,17 @@
 package psycho.mountain.tastinggenie.listview
 
 import android.content.Context
+import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import org.jetbrains.anko.imageURI
 import psycho.mountain.tastinggenie.R
-import psycho.mountain.tastinggenie.database.ListData
+import psycho.mountain.tastinggenie.database.SakeList
 
 class RecyclerAdapter(
-    private val itemList:List<ListData>,
+    private val itemList:List<SakeList>,
     private val itemClickListener: RecyclerViewHolder.ItemClickListener) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
 
@@ -28,11 +30,11 @@ class RecyclerAdapter(
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         val myHolder:RecyclerViewHolder = holder
 
-        val personal = itemList[position]
+        val sake = itemList[position]
 
-        myHolder.sakeImageView.setImageResource(R.mipmap.ic_launcher)  // TODO: 本物の画像
-        myHolder.nameTextView.text = personal.first_name
-        myHolder.gradeTextView.text = personal.last_name
+        myHolder.sakeImageView.imageURI = Uri.parse(sake.image)
+        myHolder.nameTextView.text = sake.name
+        myHolder.gradeTextView.text = sake.grade
 
         myHolder.sakeListItem.setOnClickListener{
             itemClickListener.onItemClick(position)

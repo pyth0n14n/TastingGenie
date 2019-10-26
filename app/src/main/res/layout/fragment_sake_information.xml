@@ -91,6 +91,7 @@
             android:src="@drawable/empty_image" />
 
     <ScrollView
+            android:id="@+id/sake_information_scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -113,6 +114,17 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/layout_margin"
                     android:orientation="horizontal">
+
+                <!-- 入力必須項目 -->
+                <TextView
+                        android:id="@+id/sake_information_must1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal"
+                        android:text="*"
+                        android:textColor="@color/colorRed"
+                        android:visibility="gone"/>
+
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -125,7 +137,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:text="お名前は？"
+                        android:text="@string/sake_information_name_init"
                         android:textSize="@dimen/text_normal" />
             </LinearLayout>
 
@@ -134,6 +146,17 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/layout_margin"
                     android:orientation="horizontal">
+
+                <!-- 入力必須項目 -->
+                <TextView
+                        android:id="@+id/sake_information_must2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal"
+                        android:text="*"
+                        android:textColor="@color/colorRed"
+                        android:visibility="gone"/>
+
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -154,6 +177,17 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/layout_margin"
                     android:orientation="horizontal">
+
+                <!-- 入力必須項目 -->
+                <TextView
+                        android:id="@+id/sake_information_must3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal"
+                        android:text="*"
+                        android:textColor="@color/colorRed"
+                        android:visibility="gone"/>
+
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -228,6 +262,14 @@
                         android:layout_height="wrap_content"
                         android:inputType="numberSigned|number|numberDecimal"
                         android:text=""
+                        android:layout_weight="1"
+                        android:textSize="@dimen/text_normal" />
+
+                <TextView
+                        android:id="@+id/sake_information_sake_deg_level"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
                         android:textSize="@dimen/text_normal" />
 
             </LinearLayout>
@@ -250,6 +292,36 @@
                         android:layout_height="wrap_content"
                         android:inputType="number"
                         android:text=""
+                        android:layout_weight="1"
+                        android:textSize="@dimen/text_normal" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="%" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_alcohol" />
+
+                <EditText
+                        android:id="@+id/sake_information_alcohol"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:text=""
+                        android:layout_weight="1"
                         android:textSize="@dimen/text_normal" />
 
                 <TextView

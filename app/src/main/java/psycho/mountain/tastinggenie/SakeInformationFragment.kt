@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ScrollView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_sake_information.*
 import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.imageResource
@@ -24,7 +26,6 @@ class SakeInformationFragment : Fragment() {
 
     companion object {
         fun newInstance() : SakeInformationFragment{
-            Log.d("SakeInformationFragment", "newInstance")
             return SakeInformationFragment()
         }
     }
@@ -32,26 +33,15 @@ class SakeInformationFragment : Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
-        Log.d("SakeInformationFragment", "onAttach")
         if (context is SakeInformationFragmentListener) {
-            Log.d("SakeInformationFragment", "onAttach: context")
             listener = context
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        Log.d("SakeInformationFragment", "onDestroyView")
-        sake_information_image.imageBitmap = null
-        listener = null
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("SakeInformationFragment", "onCreateView")
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sake_information, container, false)
     }
@@ -59,11 +49,7 @@ class SakeInformationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //sake_information_image.imageResource = R.drawable.hitsuji
-
-        Log.d("SakeInformationFragment", "onViewCreated")
         context?.let {
-            Log.d("SakeInformationFragment", "onViewCreated: let")
             sake_information_grade.setOnClickListener {
                 dialogSakeGrade(context!!)
             }
@@ -74,9 +60,14 @@ class SakeInformationFragment : Fragment() {
                 dialogSakePrefecture(context!!)
             }
 
+            // sake_information_sake_deg TODO: 辛口～甘口を動的に表示する
+
             button_add_sake_list.setOnClickListener {
-                listener?.let{
-                    it.onClickAddButton()
+                if (validateSakeList()) {
+                    // 入力チェックOKならば DB 操作して状態遷移
+                    listener?.let{
+                        it.onClickAddButton()
+                    }
                 }
             }
 
@@ -88,6 +79,52 @@ class SakeInformationFragment : Fragment() {
         }
     }
 
+    private fun validateSakeList() : Boolean{
+        var msg: String = ""
+
+        val initText = resources.getString(R.string.sake_information_name_init)
+        val needSelect = resources.getString(R.string.need_selecting)
+
+        // 必須項目: 酒名
+        if (sake_information_name.text.toString() == initText) {
+            sake_information_must1.visibility = View.VISIBLE
+            msg += "酒名 "
+        }
+        else {
+            sake_information_must1.visibility = View.GONE
+        }
+
+        // 必須項目: 酒類
+        if (sake_information_grade.text.toString() == needSelect) {
+            sake_information_must2.visibility = View.VISIBLE
+            msg += "酒類 "
+        }
+        else {
+            sake_information_must2.visibility = View.GONE
+        }
+
+        // 必須項目: 分類
+        if (sake_information_type.text.toString() == needSelect) {
+            sake_information_must3.visibility = View.VISIBLE
+            msg += "分類 "
+        }
+        else {
+            sake_information_must3.visibility = View.GONE
+        }
+
+        if (msg != "") {
+            msg += "は必須項目です"
+            sake_information_scroll.fullScroll(ScrollView.FOCUS_UP)
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+
+        }
+
+        return msg == ""
+    }
+
+    // ---------------------------------------------------
+    // -------------       Dialogs     -------------------
+    // ---------------------------------------------------
     private fun dialogSakeGrade(context : Context) {
         val gradeList : Array<String> = arrayOf("純米大吟醸", "大吟醸", "純米吟醸",
             "吟醸", "特別純米", "特別本醸造", "純米", "本醸造", "その他")

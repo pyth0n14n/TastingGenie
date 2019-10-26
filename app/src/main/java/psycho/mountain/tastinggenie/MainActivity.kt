@@ -28,15 +28,14 @@ import org.jetbrains.anko.image
 import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.imageURI
 import psycho.mountain.tastinggenie.database.ListData
+import psycho.mountain.tastinggenie.database.SakeList
 import java.lang.Math.pow
 import java.lang.Math.round
 import java.nio.file.Files.size
 import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity(),
-    TestFragment.TestFragmentListener,
-    RegisterDBFragment.ImageSelectListener,
-    SakeListFragment.SelectListListener,
+    SakeListFragment.SakeListListener,
     SakeInformationFragment.SakeInformationFragmentListener {
 
     val REQUEST_GET_IMAGE = 100
@@ -53,7 +52,7 @@ class MainActivity : AppCompatActivity(),
 
             //fragmentTransaction.addToBackStack(null)
 
-            fragmentTransaction.replace(R.id.container, TestFragment.newInstance())
+            fragmentTransaction.replace(R.id.container, SakeListFragment.newInstance())
             fragmentTransaction.commit()
         }
     }
@@ -95,29 +94,8 @@ class MainActivity : AppCompatActivity(),
         fragmentTransaction.commit()
     }
 
-    override fun onClickTestButton1() {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-
-        // 戻り先がnull菜のではなく，バックスタックに遷移を記録する（戻せるようにする）という意味
-        fragmentTransaction.addToBackStack(null)
-
-        fragmentTransaction.replace(R.id.container, RegisterDBFragment.newInstance())
-        fragmentTransaction.commit()
-    }
-
-    override fun onClickTestButton2() {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-
-        fragmentTransaction.addToBackStack(null)
-
-        fragmentTransaction.replace(R.id.container, SakeListFragment.newInstance())
-        fragmentTransaction.commit()
-    }
-
-    override fun onItemClick(personal: ListData) {
-        Toast.makeText(this, personal.first_name, Toast.LENGTH_SHORT).show()
+    override fun onItemClick(sake: SakeList) {
+        Toast.makeText(this, sake.name, Toast.LENGTH_SHORT).show()
     }
 
     override fun onFabButtonClick() {
@@ -130,34 +108,24 @@ class MainActivity : AppCompatActivity(),
         fragmentTransaction.commit()
     }
 
-    override fun onImageSelectAction() {
-
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         // カメラ・ドキュメント画像の取得とviewへの設定
         if (requestCode == REQUEST_GET_IMAGE) {
-            Log.d("onActivityResult", "REQUEST_GET_IMAGE")
             if (resultCode != Activity.RESULT_OK) {
                 // キャンセル時
-                Log.d("onActivityResult", "not RESULT_OK")
                 return
             }
 
             val resultUri : Uri? = if (data?.data != null) data.data else mUri
-            Log.d("asdf: resultURI", resultUri.toString())
             resultUri?.let{
-                Log.d("onActivityResult", "scanFile")
                 MediaScannerConnection.scanFile(this, arrayOf(it.path) as Array<String>, arrayOf("image/jpg"), null)
                 try {
                     val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, it)
                     imageView?.let {
                         it.imageURI = resultUri// imageBitmap = compressBitmap(it) // TODO
                     }
-                    Log.d("onActivityResult", "try")
-
                 } catch (e : IOException){
                     e.printStackTrace()
                 }

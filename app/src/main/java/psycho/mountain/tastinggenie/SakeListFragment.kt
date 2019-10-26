@@ -13,17 +13,19 @@ import kotlinx.android.synthetic.main.fragment_sake_list.*
 import kotlinx.android.synthetic.main.fragment_sake_list.view.*
 import psycho.mountain.tastinggenie.database.ListData
 import psycho.mountain.tastinggenie.database.PersonalManager
+import psycho.mountain.tastinggenie.database.SakeDBManager
+import psycho.mountain.tastinggenie.database.SakeList
 import psycho.mountain.tastinggenie.listview.RecyclerAdapter
 import psycho.mountain.tastinggenie.listview.RecyclerViewHolder
 
 class SakeListFragment: Fragment() {
 
-    lateinit var personalManager: PersonalManager
-    lateinit var personalList: List<ListData>
-    private var listener: SelectListListener? = null
+    lateinit var sakeDBManager: SakeDBManager
+    lateinit var sakeList: List<SakeList>
+    private var listener: SakeListListener? = null
 
-    interface SelectListListener {
-        fun onItemClick(personal: ListData)
+    interface SakeListListener {
+        fun onItemClick(sake: SakeList)
         fun onFabButtonClick()
     }
 
@@ -44,7 +46,7 @@ class SakeListFragment: Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
-        if (context is SakeListFragment.SelectListListener) {
+        if (context is SakeListFragment.SakeListListener) {
             listener = context
         }
     }
@@ -55,13 +57,12 @@ class SakeListFragment: Fragment() {
         val recyclerView = recycler_list
 
         context?.let {
-            personalManager = PersonalManager(it)
-            personalList = personalManager.getPersonalList()
-            Log.d("hoge", personalList[0].first_name)
-            val adapter = RecyclerAdapter(personalList, object : RecyclerViewHolder.ItemClickListener {
+            sakeDBManager = SakeDBManager(it)
+            sakeList = sakeDBManager.getSakeList()
+            val adapter = RecyclerAdapter(sakeList, object : RecyclerViewHolder.ItemClickListener {
                     override fun onItemClick(position: Int) {
                         listener?.let{
-                            it.onItemClick(personalList[position])
+                            it.onItemClick(sakeList[position])
                         }
                     }
                 })

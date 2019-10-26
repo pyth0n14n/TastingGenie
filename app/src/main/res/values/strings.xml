@@ -27,5 +27,7 @@
     <string name="button_add">追加</string>
     <string name="moto">酛</string>
     <string name="sake_degree">日本酒度</string>
+    <string name="sake_alcohol">アルコール度数</string>
+    <string name="sake_information_name_init"><![CDATA[<酒名>]]></string>
 
 </resources>
