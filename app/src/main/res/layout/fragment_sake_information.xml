@@ -220,7 +220,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:text="xx酒造"
+                        android:text=""
                         android:textSize="@dimen/text_normal" />
             </LinearLayout>
 

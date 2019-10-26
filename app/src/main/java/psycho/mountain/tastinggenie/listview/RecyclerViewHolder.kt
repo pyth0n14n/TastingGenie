@@ -18,5 +18,6 @@ class RecyclerViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     val sakeImageView: ImageView = view.findViewById(R.id.sake_list_image)
     val nameTextView: TextView = view.findViewById(R.id.sake_list_name)
     val gradeTextView: TextView = view.findViewById(R.id.sake_list_grade)
+    val typeTextView: TextView = view.findViewById(R.id.sake_list_type)
 
 }

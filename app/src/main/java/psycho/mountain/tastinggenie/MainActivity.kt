@@ -84,7 +84,10 @@ class MainActivity : AppCompatActivity(),
         startActivityForResult(intent, REQUEST_GET_IMAGE)
     }
 
-    override fun onClickAddButton() {
+    override fun onClickAddButton(sakeList: SakeList) {
+        // DBへの追加
+        sakeDBManager.insertSakeListFromList(sakeList)
+
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
 
@@ -142,6 +145,7 @@ class MainActivity : AppCompatActivity(),
                     }
                     imageView?.let {
                         it.imageURI = resultUri// imageBitmap = compressBitmap(it) // TODO
+                        it.contentDescription = resultUri.toString()  // DBにはStringとして保存する
                     }
                 } catch (e : IOException){
                     e.printStackTrace()

@@ -38,6 +38,25 @@ class SakeDBManager (context: Context){
         }
     }
 
+    fun insertSakeListFromList(sakeList: SakeList) {
+        sakeListDb.use {
+            insert(
+                SakeDBOpenHelper.TABLE_SAKE_LIST,
+                SakeDBOpenHelper.COL_NAME to sakeList.name,
+                SakeDBOpenHelper.COL_GRADE to sakeList.grade,
+                SakeDBOpenHelper.COL_TYPE to sakeList.type,
+                SakeDBOpenHelper.COL_IMAGE to sakeList.image,
+                SakeDBOpenHelper.COL_MAKER to sakeList.maker,
+                SakeDBOpenHelper.COL_PREF to sakeList.prefecture,
+                SakeDBOpenHelper.COL_SAKE_DEG to sakeList.sake_deg,
+                SakeDBOpenHelper.COL_POL_RATE to sakeList.pol_rate,
+                SakeDBOpenHelper.COL_ALCOHOL to sakeList.alcohol,
+                SakeDBOpenHelper.COL_RICE to sakeList.rice,
+                SakeDBOpenHelper.COL_YEAST to sakeList.yeast
+            )
+        }
+    }
+
     fun deleteSakeList(id: Int) {
         sakeListDb.use {
             delete(

@@ -30,11 +30,12 @@ class RecyclerAdapter(
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         val myHolder:RecyclerViewHolder = holder
 
-        val sake = itemList[position]
+        val sake: SakeList = itemList[position]
 
         myHolder.sakeImageView.imageURI = Uri.parse(sake.image)
         myHolder.nameTextView.text = sake.name
         myHolder.gradeTextView.text = sake.grade
+        myHolder.typeTextView.text = sake.type.replace(",", " ")
 
         myHolder.sakeListItem.setOnClickListener{
             itemClickListener.onItemClick(position)

@@ -14,11 +14,14 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_sake_information.*
 import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.imageResource
+import org.jetbrains.anko.sdk27.coroutines.onFocusChange
+import psycho.mountain.tastinggenie.database.SakeList
+import java.lang.NumberFormatException
 
 class SakeInformationFragment : Fragment() {
 
     interface SakeInformationFragmentListener {
-        fun onClickAddButton()
+        fun onClickAddButton(sakeList: SakeList)
         fun onClickAddPhotoButton(imageView: ImageView)
     }
 
@@ -60,23 +63,85 @@ class SakeInformationFragment : Fragment() {
                 dialogSakePrefecture(context!!)
             }
 
-            // sake_information_sake_deg TODO: 辛口～甘口を動的に表示する
+            // 甘辛を自動で入力
+            sake_information_sake_deg.onFocusChange { _, _ ->
+                try {
+                    val deg = sake_information_sake_deg.text.toString().toFloat()
+                    sake_information_sake_deg_level.text = degToSweetLevel(deg)
+                }
+                catch(e: NumberFormatException) {
+                    e.printStackTrace()
+                    sake_information_sake_deg_level.text = ""
+                }
+            }
 
+            // DBに追加する処理
             button_add_sake_list.setOnClickListener {
+                // 入力チェックOKならば DB 操作して状態遷移
                 if (validateSakeList()) {
-                    // 入力チェックOKならば DB 操作して状態遷移
+                    val sakeList = makeSakeList()
                     listener?.let{
-                        it.onClickAddButton()
+                        it.onClickAddButton(sakeList)
                     }
                 }
             }
 
+            // 写真追加処理
             button_add_sake_photo.setOnClickListener{
                 listener?.let{
                     it.onClickAddPhotoButton(sake_information_image)
                 }
             }
         }
+    }
+
+    private fun makeSakeList(): SakeList {
+        val sakeList: SakeList = SakeList(-1,// IDはダミー．DBに自動入力して貰う
+            sake_information_name.text.toString(),
+            sake_information_grade.text.toString(),
+            sake_information_type.text.toString(),
+            sake_information_image.contentDescription.toString(),
+            sake_information_maker.text.toString(),
+            sake_information_prefecture.text.toString(),
+            sake_information_sake_deg.text.toString().toFloat(),
+            sake_information_pol_rate.text.toString().toInt(),
+            sake_information_alcohol.text.toString().toInt(),
+            sake_information_rice.text.toString(),
+            sake_information_yeast.text.toString()
+        )
+        return sakeList
+    }
+
+    private fun degToSweetLevel(deg: Float): String {
+        lateinit var taste: String
+        when  {
+            deg >= 6.0 -> {
+                taste = getString(R.string.taste_strongly_spicy)
+            }
+            deg >= 3.5 -> {
+                taste = getString(R.string.taste_spicy)
+            }
+            deg >= 1.5 -> {
+                taste = getString(R.string.taste_softly_spicy)
+            }
+            deg >= -1.4 -> {
+                taste = getString(R.string.taste_normal)
+            }
+            deg >= -3.4 -> {
+                taste = getString(R.string.taste_softly_sweet)
+            }
+            deg >= -5.9 -> {
+                taste = getString(R.string.taste_sweet)
+            }
+            deg <= -6.0 -> {
+                taste = getString(R.string.taste_strongly_sweet)
+            }
+            else -> {
+                taste = "不正値"
+            }
+        }
+
+        return taste
     }
 
     private fun validateSakeList() : Boolean{
