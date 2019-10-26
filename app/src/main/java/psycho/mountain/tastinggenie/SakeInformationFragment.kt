@@ -27,16 +27,24 @@ import java.lang.NumberFormatException
 
 class SakeInformationFragment : Fragment() {
 
+    private var sakeList: SakeList? = null  // データ更新時は既存の値をBundleで渡される
+    private var listener: SakeInformationFragmentListener? = null
+
     interface SakeInformationFragmentListener {
         fun onClickAddButton(sakeList: SakeList)
         fun onClickAddPhotoButton(imageView: ImageView)
     }
 
-    private var listener: SakeInformationFragmentListener? = null
-
     companion object {
         fun newInstance() : SakeInformationFragment{
             return SakeInformationFragment()
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let{
+            sakeList = it.getParcelable("sake") as SakeList
         }
     }
 
@@ -58,6 +66,10 @@ class SakeInformationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        sakeList?.let {
+            setupView(it)
+        }
 
         context?.let {
             sake_information_grade.setOnClickListener {
@@ -87,17 +99,13 @@ class SakeInformationFragment : Fragment() {
                 // 入力チェックOKならば DB 操作して状態遷移
                 if (validateSakeList()) {
                     val sakeList = makeSakeList()
-                    listener?.let{
-                        it.onClickAddButton(sakeList)
-                    }
+                    listener?.onClickAddButton(sakeList)
                 }
             }
 
             // 写真追加処理
             button_add_sake_photo.setOnClickListener{
-                listener?.let{
-                    it.onClickAddPhotoButton(sake_information_image)
-                }
+                listener?.onClickAddPhotoButton(sake_information_image)
             }
 
             // 長押しで写真削除
@@ -120,9 +128,29 @@ class SakeInformationFragment : Fragment() {
         }
     }
 
-    // TODO: テキストが空だとnullで落ちる
+    private fun setupView(sake: SakeList) {
+        if (sake.image != "") {
+            sake_information_image.setImageURI(Uri.parse(sake.image))
+            sake_information_image.contentDescription = sake.image
+        }
+        if (sake.name != "") {sake_information_name.setText(sake.name)}
+        if (sake.grade != "") {sake_information_grade.text = sake.grade}
+        if (sake.type != "") {sake_information_type.text = sake.type}
+        if (sake.maker != "") {sake_information_maker.setText((sake.maker))}
+        if (sake.prefecture != "") {sake_information_prefecture.text = sake.prefecture}
+        if (sake.sake_deg >= 0.0F) {
+            sake_information_sake_deg.setText(sake.sake_deg.toString())
+            sake_information_sake_deg_level.text = degToSweetLevel(sake.sake_deg)
+        }
+        if (sake.pol_rate >= 0) {sake_information_pol_rate.setText(sake.pol_rate.toString())}
+        if (sake.alcohol >= 0) {sake_information_alcohol.setText(sake.alcohol.toString())}
+        if (sake.rice != "") {sake_information_rice.setText(sake.rice)}
+        if (sake.yeast != "") {sake_information_yeast.setText(sake.yeast)}
+        button_add_sake_list.text = "更新"
+    }
+
     private fun makeSakeList(): SakeList {
-        val sakeList: SakeList = SakeList(-1,// IDはダミー．DBに自動入力して貰う
+        return SakeList(-1,// IDはダミー．DBに自動入力して貰う
             viewToString(sake_information_name),
             viewToString(sake_information_grade),
             viewToString(sake_information_type),
@@ -136,7 +164,6 @@ class SakeInformationFragment : Fragment() {
             viewToString(sake_information_rice),
             viewToString(sake_information_yeast)
         )
-        return sakeList
     }
 
     private fun viewToString(textView: TextView): String{

@@ -101,7 +101,18 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onItemClick(sake: SakeList) {
-        Toast.makeText(this, sake.name, Toast.LENGTH_SHORT).show()
+        val bundle: Bundle = Bundle()
+        bundle.putParcelable("sake", sake)
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        fragmentTransaction.addToBackStack(null)
+
+        val fragment = SakeInformationFragment.newInstance()
+        fragment.arguments = bundle
+        fragmentTransaction.replace(R.id.container, fragment)
+        fragmentTransaction.commit()
     }
 
     override fun onFabButtonClick() {
@@ -123,29 +134,30 @@ class MainActivity : AppCompatActivity(),
                 // キャンセル時
                 return
             }
-            Log.d("asdf", imageUri!!.path + imageUri!!.lastPathSegment)
 
+            // カメラかドキュメントかの判断
             var isFromDocument = false
             var resultUri: Uri? = null
             if (data?.data != null) {
                 resultUri = data.data
                 isFromDocument = true
-                Log.d("onActivityResult", "document")
             }else{
                 resultUri = imageUri
-                Log.d("onActivityResult", "camera")
             }
 
+            // 画像のセットと必要に応じて画像コピーの処理
             resultUri?.let{
                 MediaScannerConnection.scanFile(this, arrayOf(it.path) as Array<String>, arrayOf("image/jpg"), null)
                 try {
                     val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, it)
+                    // ドキュメントの場合，アプリのストレージにコピーを作成
                     if (isFromDocument) {
                         copyImageFromBitmap(bitmap, imageUri!!, baseContext)
                     }
-                    imageView?.let {
-                        it.imageURI = resultUri// imageBitmap = compressBitmap(it) // TODO
-                        it.contentDescription = resultUri.toString()  // DBにはStringとして保存する
+                    // 画像の貼り付けとURIの保持
+                    imageView?.apply {
+                        imageURI = resultUri// imageBitmap = compressBitmap(it) // TODO
+                        contentDescription = resultUri.toString()  // DBにはStringとして保存する
                     }
                 } catch (e : IOException){
                     e.printStackTrace()

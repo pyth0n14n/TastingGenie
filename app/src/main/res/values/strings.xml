@@ -11,8 +11,6 @@
     <string name="label_result_first_name">名</string>
     <string name="label_result_last_name">姓</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="select_image">画像を追加</string>
     <string name="sake_name">酒名</string>
     <string name="sake_grade">酒類</string>

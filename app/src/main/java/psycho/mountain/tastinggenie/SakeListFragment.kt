@@ -36,7 +36,10 @@ class SakeListFragment: Fragment() {
         arguments?.let{
             sakeList = it.getParcelableArrayList<SakeList>("sake_list") as List<SakeList>
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
     }
 
     override fun onCreateView(
@@ -50,7 +53,7 @@ class SakeListFragment: Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
-        if (context is SakeListFragment.SakeListListener) {
+        if (context is SakeListListener) {
             listener = context
         }
     }
@@ -63,9 +66,7 @@ class SakeListFragment: Fragment() {
         context?.let {
             val adapter = RecyclerAdapter(sakeList, object : RecyclerViewHolder.ItemClickListener {
                     override fun onItemClick(position: Int) {
-                        listener?.let{
-                            it.onItemClick(sakeList[position])
-                        }
+                        listener?.onItemClick(sakeList[position])
                     }
                 })
 
@@ -75,9 +76,7 @@ class SakeListFragment: Fragment() {
         }
 
         view.button_sake_list_add.setOnClickListener {
-            listener?.let{
-                it.onFabButtonClick()
-            }
+            listener?.onFabButtonClick()
         }
     }
 }
