@@ -133,7 +133,15 @@ class MainActivity : AppCompatActivity(),
     override fun onItemLongClick(sake: SakeList) {
         // 消すかどうかの確認はすでにとってある
         sakeDBManager.deleteSakeList(sake.id)
+    }
 
+    override fun onListViewCreated(size: Int): MutableList<SakeList>? {
+        val sakeList = sakeDBManager.getSakeList() as MutableList<SakeList>
+        if (sakeList.size != size) {
+            return sakeList
+        } else {
+            return null
+        }
     }
 
     override fun onFabButtonClick() {
@@ -146,6 +154,9 @@ class MainActivity : AppCompatActivity(),
         fragmentTransaction.commit()
     }
 
+    // -----------------------------------------------------------------------
+    // ---         Intent遷移の処理（カメラやドキュメントの使用）
+    // -----------------------------------------------------------------------
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

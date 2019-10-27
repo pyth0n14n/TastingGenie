@@ -20,13 +20,14 @@ import psycho.mountain.tastinggenie.listview.RecyclerViewHolder
 
 class SakeListFragment: Fragment() {
 
-    lateinit var sakeList: List<SakeList>
+    lateinit var sakeList: MutableList<SakeList>
     private var listener: SakeListListener? = null
 
     interface SakeListListener {
         fun onItemClick(sake: SakeList)
         fun onItemLongClick(sake: SakeList)
         fun onFabButtonClick()
+        fun onListViewCreated(size: Int): MutableList<SakeList>?
     }
 
     companion object {
@@ -37,9 +38,9 @@ class SakeListFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // TODO: 再読み込み時に，データベースの中身が反映されていない
         arguments?.let{
-            sakeList = it.getParcelableArrayList<SakeList>("sake_list") as List<SakeList>
+            Log.d("SakeListFragment", "onCreate with Argument")
+            sakeList = it.getParcelableArrayList<SakeList>("sake_list") as MutableList<SakeList>
         }
     }
 
@@ -67,8 +68,15 @@ class SakeListFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = recycler_list
+        Log.d("SakeListFragment", "onViewCreated")
+        Log.d("SakeListFragment", "sake.size = " + sakeList.size.toString())
 
         context?.let {
+            // TODO: わざわざBundleでやるようにしたのに，この実装は本当は良くないのでは？
+            listener?.onListViewCreated(sakeList.size)?.let {
+                sakeList = it
+            }
+
             val adapter = RecyclerAdapter(sakeList, object : RecyclerViewHolder.ItemClickListener {
                 override fun onItemClick(position: Int) {
                     listener?.onItemClick(sakeList[position])
@@ -79,19 +87,15 @@ class SakeListFragment: Fragment() {
                         setTitle("データベースの削除")
                         setMessage("本当に消しますか？")
                         setPositiveButton("はい", DialogInterface.OnClickListener { _, _ ->
+                            // DBから削除
                             listener?.onItemLongClick(sakeList[position])
 
-                            Log.d("sakeList", sakeList.size.toString())
-                            val sakeListMutable = sakeList.toMutableList()
-                            sakeListMutable.removeAt(position)
-                            sakeList = sakeListMutable.toList()
-                            Log.d("sakeList", sakeList.size.toString())
-
+                            // 表示上の変更
+                            sakeList.removeAt(position)
                             recyclerView.removeViewAt(position)
                             recyclerView.adapter?.notifyItemRemoved(position)
                             recyclerView.adapter?.notifyItemRangeChanged(position, sakeList.size)
                             recyclerView.adapter?.notifyDataSetChanged()
-
                         })
                     }.show()
                 }
