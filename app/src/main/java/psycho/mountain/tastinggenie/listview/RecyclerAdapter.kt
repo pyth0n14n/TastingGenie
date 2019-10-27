@@ -1,6 +1,5 @@
 package psycho.mountain.tastinggenie.listview
 
-import android.content.Context
 import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,7 +11,7 @@ import psycho.mountain.tastinggenie.database.SakeList
 
 class RecyclerAdapter(
     private val itemList:List<SakeList>,
-    private val itemClickListener: RecyclerViewHolder.ItemClickListener) : RecyclerView.Adapter<RecyclerViewHolder>() {
+    private val itemClickListener: RecyclerViewHolder.ItemClickListener): RecyclerView.Adapter<RecyclerViewHolder>(){
 
 
     override fun getItemCount(): Int{
@@ -27,19 +26,22 @@ class RecyclerAdapter(
         return RecyclerViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        val myHolder:RecyclerViewHolder = holder
+    override fun onBindViewHolder(viewHolder: RecyclerViewHolder, position: Int) {
+        val holder:RecyclerViewHolder = viewHolder
 
         val sake: SakeList = itemList[position]
 
-        myHolder.sakeImageView.imageURI = Uri.parse(sake.image)
-        myHolder.nameTextView.text = sake.name
-        myHolder.gradeTextView.text = sake.grade
-        myHolder.typeTextView.text = sake.type.replace(",", " ")
+        holder.sakeImageView.imageURI = Uri.parse(sake.image)
+        holder.nameTextView.text = sake.name
+        holder.gradeTextView.text = sake.grade
+        holder.typeTextView.text = sake.type.replace(",", " ")
 
-        myHolder.sakeListItem.setOnClickListener{
+        holder.sakeListItem.setOnClickListener {
             itemClickListener.onItemClick(position)
         }
-
+        holder.sakeListItem.setOnLongClickListener {
+            itemClickListener.onItemLongClick(position)
+            true
+        }
     }
 }

@@ -1,9 +1,13 @@
 package psycho.mountain.tastinggenie
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.AlertDialogLayout
 import android.support.v7.widget.GridLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +25,7 @@ class SakeListFragment: Fragment() {
 
     interface SakeListListener {
         fun onItemClick(sake: SakeList)
+        fun onItemLongClick(sake: SakeList)
         fun onFabButtonClick()
     }
 
@@ -65,10 +70,32 @@ class SakeListFragment: Fragment() {
 
         context?.let {
             val adapter = RecyclerAdapter(sakeList, object : RecyclerViewHolder.ItemClickListener {
-                    override fun onItemClick(position: Int) {
-                        listener?.onItemClick(sakeList[position])
-                    }
-                })
+                override fun onItemClick(position: Int) {
+                    listener?.onItemClick(sakeList[position])
+                }
+
+                override fun onItemLongClick(position: Int) {
+                    AlertDialog.Builder(it).apply {
+                        setTitle("データベースの削除")
+                        setMessage("本当に消しますか？")
+                        setPositiveButton("はい", DialogInterface.OnClickListener { _, _ ->
+                            listener?.onItemLongClick(sakeList[position])
+
+                            Log.d("sakeList", sakeList.size.toString())
+                            val sakeListMutable = sakeList.toMutableList()
+                            sakeListMutable.removeAt(position)
+                            sakeList = sakeListMutable.toList()
+                            Log.d("sakeList", sakeList.size.toString())
+
+                            recyclerView.removeViewAt(position)
+                            recyclerView.adapter?.notifyItemRemoved(position)
+                            recyclerView.adapter?.notifyItemRangeChanged(position, sakeList.size)
+                            recyclerView.adapter?.notifyDataSetChanged()
+
+                        })
+                    }.show()
+                }
+            })
 
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager = GridLayoutManager(activity, 2)
@@ -79,4 +106,6 @@ class SakeListFragment: Fragment() {
             listener?.onFabButtonClick()
         }
     }
+
+
 }

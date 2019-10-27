@@ -56,6 +56,10 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
+    // -----------------------------------------------------------------------
+    // ---         ボタンの処理（画面遷移とDB操作）
+    // -----------------------------------------------------------------------
+    // ============== Information Fragment =================
     override fun onClickAddPhotoButton(imageView: ImageView) {
         this.imageView = imageView
 
@@ -85,8 +89,18 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onClickAddButton(sakeList: SakeList) {
-        // DBへの追加
-        sakeDBManager.insertSakeListFromList(sakeList)
+        // DBへの追加かDBの更新かを判断
+        if (sakeList.id == -1) {
+            // DBへの追加
+            Log.d("MainActivity", "DB Add")
+            sakeDBManager.insertSakeListFromList(sakeList)
+        } else {
+            Log.d("MainActivity", "DB renew")
+            if (sakeDBManager.isExistSakeList(sakeList.id)) {
+                Log.d("MainActivity", "DB renew exec")
+                sakeDBManager.replaceSakeListFromList(sakeList)
+            }
+        }
 
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
@@ -100,6 +114,7 @@ class MainActivity : AppCompatActivity(),
         fragmentTransaction.commit()
     }
 
+    // ============== Sake List Fragment =================
     override fun onItemClick(sake: SakeList) {
         val bundle: Bundle = Bundle()
         bundle.putParcelable("sake", sake)
@@ -113,6 +128,12 @@ class MainActivity : AppCompatActivity(),
         fragment.arguments = bundle
         fragmentTransaction.replace(R.id.container, fragment)
         fragmentTransaction.commit()
+    }
+
+    override fun onItemLongClick(sake: SakeList) {
+        // 消すかどうかの確認はすでにとってある
+        sakeDBManager.deleteSakeList(sake.id)
+
     }
 
     override fun onFabButtonClick() {

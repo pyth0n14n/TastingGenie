@@ -12,6 +12,7 @@ class RecyclerViewHolder (view: View) : RecyclerView.ViewHolder(view) {
 
     interface ItemClickListener {
         fun onItemClick(position: Int)
+        fun onItemLongClick(position: Int)
     }
 
     val sakeListItem: CardView = view.findViewById(R.id.sake_list_item)

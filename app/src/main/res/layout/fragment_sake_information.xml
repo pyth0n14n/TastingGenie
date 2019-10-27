@@ -373,6 +373,14 @@
 
             </LinearLayout>
 
+            <!-- sakeList.id を格納するダミーTextView -->
+            <TextView
+                    android:id="@+id/sake_information_hidden_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-1"
+                    android:visibility="gone" />
+
             <Button
                     android:id="@+id/button_add_sake_list"
                     android:layout_gravity="center"

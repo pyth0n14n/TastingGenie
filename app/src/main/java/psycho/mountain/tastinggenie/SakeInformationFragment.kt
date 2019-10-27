@@ -88,9 +88,13 @@ class SakeInformationFragment : Fragment() {
                     val deg = sake_information_sake_deg.text.toString().toFloat()
                     sake_information_sake_deg_level.text = degToSweetLevel(deg)
                 }
-                catch(e: NumberFormatException) {
-                    e.printStackTrace()
-                    sake_information_sake_deg_level.text = ""
+                catch(e: Exception){
+                    when(e) {
+                        is NullPointerException, is NumberFormatException -> {
+                            e.printStackTrace()
+                            sake_information_sake_deg_level.text = ""
+                        }
+                    }
                 }
             }
 
@@ -146,11 +150,12 @@ class SakeInformationFragment : Fragment() {
         if (sake.alcohol >= 0) {sake_information_alcohol.setText(sake.alcohol.toString())}
         if (sake.rice != "") {sake_information_rice.setText(sake.rice)}
         if (sake.yeast != "") {sake_information_yeast.setText(sake.yeast)}
+        if (sake.id != -1) {sake_information_hidden_id.text = sake.id.toString()}
         button_add_sake_list.text = "更新"
     }
 
     private fun makeSakeList(): SakeList {
-        return SakeList(-1,// IDはダミー．DBに自動入力して貰う
+        return SakeList(viewToInt(sake_information_hidden_id),// IDはダミー．DBに自動入力して貰う
             viewToString(sake_information_name),
             viewToString(sake_information_grade),
             viewToString(sake_information_type),

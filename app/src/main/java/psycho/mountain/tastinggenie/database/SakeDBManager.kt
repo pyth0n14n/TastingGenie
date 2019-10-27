@@ -1,6 +1,7 @@
 package psycho.mountain.tastinggenie.database
 
 import android.content.Context
+import org.jetbrains.anko.db.IntParser
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.db.insert
@@ -39,6 +40,63 @@ class SakeDBManager (context: Context){
     }
 
     fun insertSakeListFromList(sakeList: SakeList) {
+        sakeListDb.use {
+            insert(
+                SakeDBOpenHelper.TABLE_SAKE_LIST,
+                // IDは自動で振ってもらう
+                SakeDBOpenHelper.COL_NAME to sakeList.name,
+                SakeDBOpenHelper.COL_GRADE to sakeList.grade,
+                SakeDBOpenHelper.COL_TYPE to sakeList.type,
+                SakeDBOpenHelper.COL_IMAGE to sakeList.image,
+                SakeDBOpenHelper.COL_MAKER to sakeList.maker,
+                SakeDBOpenHelper.COL_PREF to sakeList.prefecture,
+                SakeDBOpenHelper.COL_SAKE_DEG to sakeList.sake_deg,
+                SakeDBOpenHelper.COL_POL_RATE to sakeList.pol_rate,
+                SakeDBOpenHelper.COL_ALCOHOL to sakeList.alcohol,
+                SakeDBOpenHelper.COL_RICE to sakeList.rice,
+                SakeDBOpenHelper.COL_YEAST to sakeList.yeast
+            )
+        }
+    }
+
+    fun insertSakeListFromListWithId(sakeList: SakeList) {
+        sakeListDb.use {
+            insert(
+                SakeDBOpenHelper.TABLE_SAKE_LIST,
+                SakeDBOpenHelper.COL_ID to sakeList.id,
+                SakeDBOpenHelper.COL_NAME to sakeList.name,
+                SakeDBOpenHelper.COL_GRADE to sakeList.grade,
+                SakeDBOpenHelper.COL_TYPE to sakeList.type,
+                SakeDBOpenHelper.COL_IMAGE to sakeList.image,
+                SakeDBOpenHelper.COL_MAKER to sakeList.maker,
+                SakeDBOpenHelper.COL_PREF to sakeList.prefecture,
+                SakeDBOpenHelper.COL_SAKE_DEG to sakeList.sake_deg,
+                SakeDBOpenHelper.COL_POL_RATE to sakeList.pol_rate,
+                SakeDBOpenHelper.COL_ALCOHOL to sakeList.alcohol,
+                SakeDBOpenHelper.COL_RICE to sakeList.rice,
+                SakeDBOpenHelper.COL_YEAST to sakeList.yeast
+            )
+        }
+    }
+
+    fun isExistSakeList(id: Int): Boolean {
+        var dbId: Int = -99
+        // 引数のIDの要素を要求してみて，存在するかを判断する
+        sakeListDb.use {
+            dbId = select(SakeDBOpenHelper.TABLE_SAKE_LIST, "id")
+                .whereArgs("id = {id}", "id" to id).parseSingle(IntParser)
+        }
+        return dbId == id
+
+    }
+
+    fun replaceSakeListFromList(sakeList: SakeList) {
+        // あるIDのリストをリプレイスしてアップデートする
+        deleteSakeList(sakeList.id)
+        insertSakeListFromListWithId(sakeList)
+    }
+
+    fun updateSakeListFromList(sakeList: SakeList) {
         sakeListDb.use {
             insert(
                 SakeDBOpenHelper.TABLE_SAKE_LIST,
