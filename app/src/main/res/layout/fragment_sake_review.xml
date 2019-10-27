@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".SakeInformationFragment"
+        android:orientation="vertical">
+
+    <ScrollView
+            android:id="@+id/sake_review_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <!-- 基本情報 -->
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_large"
+                    android:text="@string/label_basic_information" />
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date"
+                        android:textSize="@dimen/text_normal" />
+                <EditText
+                        android:id="@+id/sake_review_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bar"
+                        android:textSize="@dimen/text_normal" />
+                <EditText
+                        android:id="@+id/sake_review_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/price"
+                        android:textSize="@dimen/text_normal" />
+                <EditText
+                        android:id="@+id/sake_review_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal" />
+                <TextView
+                        android:id="@+id/sake_review_price_per"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/temperature"
+                        android:textSize="@dimen/text_normal" />
+                <TextView
+                        android:id="@+id/sake_review_temperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
+
+            <!-- 見た目 -->
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_large"
+                    android:text="@string/label_looking" />
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/color"
+                        android:textSize="@dimen/text_normal" />
+                <TextView
+                        android:id="@+id/sake_review_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/viscosity"
+                        android:textSize="@dimen/text_normal" />
+                <RatingBar
+                        android:id="@+id/sake_review_viscosity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:max="3"
+                        android:stepSize="1"
+                        android:min="1" />
+            </LinearLayout>
+
+            <!-- 香り -->
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_large"
+                    android:text="@string/label_scent" />
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_scent_top"
+                        android:textSize="@dimen/text_normal"/>
+                <TextView
+                        android:id="@+id/sake_review_scent_top"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_scent_mouth"
+                        android:textSize="@dimen/text_normal"/>
+                <TextView
+                        android:id="@+id/sake_review_scent_mouth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal" />
+
+                <!-- 味 -->
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_large"
+                        android:text="@string/label_taste" />
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_sweet_spicy"
+                            android:textSize="@dimen/text_normal" />
+                    <RatingBar
+                            android:id="@+id/sake_review_sweet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:stepSize="1"
+                            android:max="5" />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_sour"
+                            android:textSize="@dimen/text_normal" />
+                    <RatingBar
+                            android:id="@+id/sake_review_sour"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:stepSize="1"
+                            android:max="5"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_bitter"
+                            android:textSize="@dimen/text_normal" />
+                    <RatingBar
+                            android:id="@+id/sake_review_bitter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:stepSize="1"
+                            android:max="5" />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_umami"
+                            android:textSize="@dimen/text_normal" />
+                    <RatingBar
+                            android:id="@+id/sake_review_umami"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:stepSize="1"
+                            android:max="5" />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_sharp"
+                            android:textSize="@dimen/text_normal" />
+                    <RatingBar
+                            android:id="@+id/sake_review_sharp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:stepSize="1"
+                            android:max="5" />
+                </LinearLayout>
+
+                <!-- その他 -->
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_large"
+                        android:text="@string/label_other" />
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_scene"
+                            android:textSize="@dimen/text_normal" />
+                    <EditText
+                            android:id="@+id/sake_review_scene"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_normal" />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_dish"
+                            android:textSize="@dimen/text_normal" />
+                    <EditText
+                            android:id="@+id/sake_review_dish"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_normal"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_comment"
+                            android:textSize="@dimen/text_normal" />
+                    <EditText
+                            android:id="@+id/sake_review_comment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_normal"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_review"
+                            android:textSize="@dimen/text_normal" />
+                    <RatingBar
+                            android:id="@+id/sake_review_review"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:stepSize="1"
+                            android:max="5" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- sakeList.id を格納するダミーTextView -->
+    <TextView
+            android:id="@+id/sake_review_hidden_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-1"
+            android:visibility="gone" />
+
+
+</LinearLayout>

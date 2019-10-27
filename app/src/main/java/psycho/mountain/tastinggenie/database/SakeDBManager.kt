@@ -125,7 +125,7 @@ class SakeDBManager (context: Context){
     }
 
     fun insertSakeReview(id: Int, date: String, temp: String, color: String,
-                         scent1: String, scent2: String, scent3: String,
+                         scent_top: String, scent_mouth: String,
                          sweet: String, sour: String, bitter: String, umami: String,
                          viscosity: String, scene: String, dish: String, comment: String,
                          review: Float) {
@@ -137,9 +137,8 @@ class SakeDBManager (context: Context){
                 SakeDBOpenHelper.COL_DATE to date,
                 SakeDBOpenHelper.COL_TEMP to temp,
                 SakeDBOpenHelper.COL_COLOR to color,
-                SakeDBOpenHelper.COL_SCENT1 to scent1,
-                SakeDBOpenHelper.COL_SCENT2 to scent2,
-                SakeDBOpenHelper.COL_SCENT3 to scent3,
+                SakeDBOpenHelper.COL_SCENT_TOP to scent_top,
+                SakeDBOpenHelper.COL_SCENT_MOUTH to scent_mouth,
                 SakeDBOpenHelper.COL_SWEET to sweet,
                 SakeDBOpenHelper.COL_SOUR to sour,
                 SakeDBOpenHelper.COL_BITTER to bitter,

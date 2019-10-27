@@ -20,6 +20,7 @@ class SakeDetailedFragment: Fragment() {
 
     interface SakeDetailedFragmentListener {
         fun onClickEditInformation(sake: SakeList)
+        fun onFabReviewButtonClick()
     }
 
     companion object {
@@ -56,10 +57,19 @@ class SakeDetailedFragment: Fragment() {
 
         sakeList?.let {
             setupView(it)
+        }
 
-            button_edit_sake_information.setOnClickListener {
-                listener?.onClickEditInformation(sakeList!!)
+        context?.let {
+            sakeList?.let {
+                button_edit_sake_information.setOnClickListener {
+                    listener?.onClickEditInformation(sakeList!!)
+                }
             }
+
+            button_sake_review_add.setOnClickListener {
+                listener?.onFabReviewButtonClick()
+            }
+
         }
     }
 

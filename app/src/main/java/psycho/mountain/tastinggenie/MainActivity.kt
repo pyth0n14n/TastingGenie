@@ -153,6 +153,7 @@ class MainActivity : AppCompatActivity(),
         fragmentTransaction.commit()
     }
 
+    // ============== Sake Detailed Fragment =================
     override fun onClickEditInformation(sake: SakeList) {
         val bundle: Bundle = Bundle()
         bundle.putParcelable("sake", sake)
@@ -165,6 +166,17 @@ class MainActivity : AppCompatActivity(),
         val fragment = SakeInformationFragment.newInstance()
         fragment.arguments = bundle
         fragmentTransaction.replace(R.id.container, fragment)
+        fragmentTransaction.commit()
+    }
+
+    override fun onFabReviewButtonClick() {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        fragmentTransaction.addToBackStack(null)
+
+        // TODO: sake_list.id を渡す必要がある(ここでやる必要はないかも)
+        fragmentTransaction.replace(R.id.container, SakeReviewFragment.newInstance())
         fragmentTransaction.commit()
     }
 

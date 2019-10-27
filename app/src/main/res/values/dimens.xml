@@ -4,5 +4,6 @@
     <dimen name="layout_margin">4dp</dimen>
     <dimen name="layout_margin2">8dp</dimen>
     <dimen name="text_normal">18sp</dimen>
+    <dimen name="text_large">22sp</dimen>
 
 </resources>

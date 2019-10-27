@@ -33,14 +33,14 @@ class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
         const val COL_PRICE = "price"
         const val COL_TEMP = "temperature"
         const val COL_COLOR = "color"
-        const val COL_SCENT1 = "scent1"
-        const val COL_SCENT2 = "scent2"
-        const val COL_SCENT3 = "scent3"
+        const val COL_VISCOSITY = "viscosity"
+        const val COL_SCENT_TOP = "scent_top"
+        const val COL_SCENT_MOUTH = "scent_mouth"
         const val COL_SWEET = "sweet"
         const val COL_SOUR = "sour"
         const val COL_BITTER = "bitter"
         const val COL_UMAMI = "umami"
-        const val COL_VISCOSITY = "viscosity"
+        const val COL_SHARP = "sharp"
         const val COL_SCENE = "scene"
         const val COL_DISH = "dish"
         const val COL_COMMENT = "comment"
@@ -83,18 +83,18 @@ class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
                     COL_PRICE to TEXT,
                     COL_TEMP to TEXT,
                     COL_COLOR to TEXT,
-                    COL_SCENT1 to TEXT,
-                    COL_SCENT2 to TEXT,
-                    COL_SCENT3 to TEXT,
-                    COL_SWEET to TEXT,
-                    COL_SOUR to TEXT,
-                    COL_BITTER to TEXT,
-                    COL_UMAMI to TEXT,
-                    COL_VISCOSITY to TEXT,
+                    COL_VISCOSITY to INTEGER,
+                    COL_SCENT_TOP to TEXT,
+                    COL_SCENT_MOUTH to TEXT,
+                    COL_SWEET to INTEGER,
+                    COL_SOUR to INTEGER,
+                    COL_BITTER to INTEGER,
+                    COL_UMAMI to INTEGER,
+                    COL_SHARP to INTEGER,
                     COL_SCENE to TEXT,
                     COL_DISH to TEXT,
                     COL_COMMENT to TEXT,
-                    COL_REVIEW to REAL
+                    COL_REVIEW to INTEGER
                 )
             )
         }

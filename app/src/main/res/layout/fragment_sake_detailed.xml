@@ -6,6 +6,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".SakeInformationFragment"
         android:orientation="vertical">
 
@@ -185,9 +186,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_normal" />
-
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+            android:id="@+id/button_sake_review_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/layout_margin"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:srcCompat="@android:drawable/ic_input_add" />
 
 </LinearLayout>
