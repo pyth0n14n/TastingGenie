@@ -7,27 +7,21 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.content.ContentValues
-import android.content.Context
 import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.Environment
 import android.util.Log
 import android.widget.ImageView
-import android.widget.Toast
 import org.jetbrains.anko.imageURI
 import psycho.mountain.tastinggenie.database.SakeDBManager
 import psycho.mountain.tastinggenie.database.SakeList
 import java.io.*
-import android.support.v4.app.SupportActivity
-import android.support.v4.app.SupportActivity.ExtraData
-import android.support.v4.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import psycho.mountain.tastinggenie.Utility.copyImageFromBitmap
+import psycho.mountain.tastinggenie.utility.copyImageFromBitmap
 
 
 class MainActivity : AppCompatActivity(),
     SakeListFragment.SakeListListener,
-    SakeInformationFragment.SakeInformationFragmentListener {
+    SakeInformationFragment.SakeInformationFragmentListener,
+    SakeDetailedFragment.SakeDetailedFragmentListener{
 
     lateinit var sakeDBManager: SakeDBManager
     val REQUEST_GET_IMAGE = 100
@@ -89,28 +83,37 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onClickAddButton(sakeList: SakeList) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+
         // DBへの追加かDBの更新かを判断
         if (sakeList.id == -1) {
             // DBへの追加
             Log.d("MainActivity", "DB Add")
             sakeDBManager.insertSakeListFromList(sakeList)
         } else {
+            // DBの更新
             Log.d("MainActivity", "DB renew")
             if (sakeDBManager.isExistSakeList(sakeList.id)) {
                 Log.d("MainActivity", "DB renew exec")
                 sakeDBManager.replaceSakeListFromList(sakeList)
             }
+            fragmentManager.popBackStack() // 前回のDetailedFragmentへの遷移を消しておく
         }
 
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
 
         // 一つPopしておく
         fragmentManager.popBackStack()
         // さらにPushすると，一つ前の値をPushしたことになる
         fragmentTransaction.addToBackStack(null)
 
-        fragmentTransaction.replace(R.id.container, SakeDetailedFragment.newInstance())
+        val bundle: Bundle = Bundle()
+        bundle.putParcelable("sake", sakeList)
+
+        val fragment = SakeDetailedFragment.newInstance()
+        fragment.arguments = bundle
+        fragmentTransaction.replace(R.id.container, fragment)
         fragmentTransaction.commit()
     }
 
@@ -124,11 +127,12 @@ class MainActivity : AppCompatActivity(),
 
         fragmentTransaction.addToBackStack(null)
 
-        val fragment = SakeInformationFragment.newInstance()
+        val fragment = SakeDetailedFragment.newInstance()
         fragment.arguments = bundle
         fragmentTransaction.replace(R.id.container, fragment)
         fragmentTransaction.commit()
     }
+
 
     override fun onItemLongClick(sake: SakeList) {
         // 消すかどうかの確認はすでにとってある
@@ -151,6 +155,21 @@ class MainActivity : AppCompatActivity(),
         fragmentTransaction.addToBackStack(null)
 
         fragmentTransaction.replace(R.id.container, SakeInformationFragment.newInstance())
+        fragmentTransaction.commit()
+    }
+
+    override fun onClickEditInformation(sake: SakeList) {
+        val bundle: Bundle = Bundle()
+        bundle.putParcelable("sake", sake)
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        fragmentTransaction.addToBackStack(null)
+
+        val fragment = SakeInformationFragment.newInstance()
+        fragment.arguments = bundle
+        fragmentTransaction.replace(R.id.container, fragment)
         fragmentTransaction.commit()
     }
 

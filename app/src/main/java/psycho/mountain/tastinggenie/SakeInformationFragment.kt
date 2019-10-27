@@ -1,7 +1,6 @@
 package psycho.mountain.tastinggenie
 
 import android.app.AlertDialog
-import android.app.ProgressDialog.show
 import android.content.Context
 import android.content.DialogInterface
 import android.net.Uri
@@ -16,12 +15,10 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_sake_information.*
-import org.jetbrains.anko.imageBitmap
-import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.sdk27.coroutines.onFocusChange
-import psycho.mountain.tastinggenie.Utility.deleteFileByUri
-import psycho.mountain.tastinggenie.Utility.fileFromUri
+import psycho.mountain.tastinggenie.utility.deleteFileByUri
 import psycho.mountain.tastinggenie.database.SakeList
+import psycho.mountain.tastinggenie.utility.degToSweetLevel
 import java.lang.NullPointerException
 import java.lang.NumberFormatException
 
@@ -86,7 +83,7 @@ class SakeInformationFragment : Fragment() {
             sake_information_sake_deg.onFocusChange { _, _ ->
                 try {
                     val deg = sake_information_sake_deg.text.toString().toFloat()
-                    sake_information_sake_deg_level.text = degToSweetLevel(deg)
+                    sake_information_sake_deg_level.text = degToSweetLevel(deg, it)
                 }
                 catch(e: Exception){
                     when(e) {
@@ -144,7 +141,7 @@ class SakeInformationFragment : Fragment() {
         if (sake.prefecture != "") {sake_information_prefecture.text = sake.prefecture}
         if (sake.sake_deg >= 0.0F) {
             sake_information_sake_deg.setText(sake.sake_deg.toString())
-            sake_information_sake_deg_level.text = degToSweetLevel(sake.sake_deg)
+            sake_information_sake_deg_level.text = degToSweetLevel(sake.sake_deg, context!!)
         }
         if (sake.pol_rate >= 0) {sake_information_pol_rate.setText(sake.pol_rate.toString())}
         if (sake.alcohol >= 0) {sake_information_alcohol.setText(sake.alcohol.toString())}
@@ -175,6 +172,9 @@ class SakeInformationFragment : Fragment() {
         lateinit var data: String
         try {
             data = textView.text.toString()
+            if (data == getString(R.string.need_selecting)) {
+                data = ""
+            }
         } catch(e: NullPointerException) {
             data = ""
         }
@@ -203,38 +203,6 @@ class SakeInformationFragment : Fragment() {
             data = -2
         }
         return data
-    }
-
-    private fun degToSweetLevel(deg: Float): String {
-        lateinit var taste: String
-        when  {
-            deg >= 6.0 -> {
-                taste = getString(R.string.taste_strongly_spicy)
-            }
-            deg >= 3.5 -> {
-                taste = getString(R.string.taste_spicy)
-            }
-            deg >= 1.5 -> {
-                taste = getString(R.string.taste_softly_spicy)
-            }
-            deg >= -1.4 -> {
-                taste = getString(R.string.taste_normal)
-            }
-            deg >= -3.4 -> {
-                taste = getString(R.string.taste_softly_sweet)
-            }
-            deg >= -5.9 -> {
-                taste = getString(R.string.taste_sweet)
-            }
-            deg <= -6.0 -> {
-                taste = getString(R.string.taste_strongly_sweet)
-            }
-            else -> {
-                taste = "不正値"
-            }
-        }
-
-        return taste
     }
 
     private fun validateSakeList() : Boolean{

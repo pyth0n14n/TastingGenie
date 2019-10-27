@@ -87,7 +87,7 @@
             android:layout_height="180dp"
             android:layout_gravity="center"
             android:layout_margin="@dimen/layout_margin"
-            android:contentDescription="お酒の画像"
+            android:contentDescription=""
             android:src="@drawable/empty_image" />
 
     <ScrollView

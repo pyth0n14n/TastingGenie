@@ -1,4 +1,4 @@
-package psycho.mountain.tastinggenie.Utility
+package psycho.mountain.tastinggenie.utility
 
 import android.content.Context
 import android.graphics.Bitmap
