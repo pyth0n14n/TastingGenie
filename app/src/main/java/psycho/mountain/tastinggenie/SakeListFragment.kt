@@ -27,7 +27,7 @@ class SakeListFragment: Fragment() {
         fun onItemClick(sake: SakeList)
         fun onItemLongClick(sake: SakeList)
         fun onFabButtonClick()
-        fun onListViewCreated(size: Int): MutableList<SakeList>?
+        fun onListViewCreated(): MutableList<SakeList>?
     }
 
     companion object {
@@ -42,10 +42,6 @@ class SakeListFragment: Fragment() {
             Log.d("SakeListFragment", "onCreate with Argument")
             sakeList = it.getParcelableArrayList<SakeList>("sake_list") as MutableList<SakeList>
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     override fun onCreateView(
@@ -73,9 +69,7 @@ class SakeListFragment: Fragment() {
 
         context?.let {
             // TODO: わざわざBundleでやるようにしたのに，この実装は本当は良くないのでは？
-            listener?.onListViewCreated(sakeList.size)?.let {
-                sakeList = it
-            }
+            sakeList = listener?.onListViewCreated()!!
 
             val adapter = RecyclerAdapter(sakeList, object : RecyclerViewHolder.ItemClickListener {
                 override fun onItemClick(position: Int) {

@@ -139,13 +139,8 @@ class MainActivity : AppCompatActivity(),
         sakeDBManager.deleteSakeList(sake.id)
     }
 
-    override fun onListViewCreated(size: Int): MutableList<SakeList>? {
-        val sakeList = sakeDBManager.getSakeList() as MutableList<SakeList>
-        if (sakeList.size != size) {
-            return sakeList
-        } else {
-            return null
-        }
+    override fun onListViewCreated(): MutableList<SakeList>? {
+        return sakeDBManager.getSakeList() as MutableList<SakeList>
     }
 
     override fun onFabButtonClick() {
