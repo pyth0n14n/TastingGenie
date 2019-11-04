@@ -34,7 +34,7 @@
                         android:textSize="@dimen/text_normal" />
                 <EditText
                         android:id="@+id/sake_review_date"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_normal" />
             </LinearLayout>
@@ -51,7 +51,7 @@
                         android:textSize="@dimen/text_normal" />
                 <EditText
                         android:id="@+id/sake_review_bar"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_normal" />
             </LinearLayout>
@@ -92,6 +92,7 @@
                         android:id="@+id/sake_review_temperature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/need_selecting"
                         android:textSize="@dimen/text_normal" />
             </LinearLayout>
 
@@ -100,6 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_large"
+                    android:layout_marginTop="@dimen/layout_margin"
                     android:text="@string/label_looking" />
 
             <LinearLayout
@@ -116,6 +118,7 @@
                         android:id="@+id/sake_review_color"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/need_selecting"
                         android:textSize="@dimen/text_normal" />
             </LinearLayout>
 
@@ -143,6 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_large"
+                    android:layout_marginTop="@dimen/layout_margin"
                     android:text="@string/label_scent" />
 
             <LinearLayout
@@ -158,6 +162,7 @@
                         android:id="@+id/sake_review_scent_top"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/need_selecting"
                         android:textSize="@dimen/text_normal" />
             </LinearLayout>
 
@@ -174,6 +179,7 @@
                         android:id="@+id/sake_review_scent_mouth"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/need_selecting"
                         android:textSize="@dimen/text_normal" />
 
                 <!-- 味 -->
@@ -181,6 +187,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_large"
+                        android:layout_marginTop="@dimen/layout_margin"
                         android:text="@string/label_taste" />
 
                 <LinearLayout
@@ -292,7 +299,7 @@
                             android:textSize="@dimen/text_normal" />
                     <EditText
                             android:id="@+id/sake_review_scene"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_normal" />
                 </LinearLayout>
@@ -309,7 +316,7 @@
                             android:textSize="@dimen/text_normal" />
                     <EditText
                             android:id="@+id/sake_review_dish"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_normal"/>
                 </LinearLayout>
@@ -320,13 +327,13 @@
                         android:orientation="vertical">
 
                     <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/label_comment"
                             android:textSize="@dimen/text_normal" />
                     <EditText
                             android:id="@+id/sake_review_comment"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_normal"/>
                 </LinearLayout>
@@ -350,6 +357,15 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/button_add" />
+
+
         </LinearLayout>
     </ScrollView>
 
