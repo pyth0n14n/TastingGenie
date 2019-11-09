@@ -1,78 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-    <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="125dp"
-            tools:layout_editor_absoluteY="13dp"
-            tools:srcCompat="@tools:sample/avatars" />
-
-    <EditText
-            android:id="@+id/sake_information_name2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="16dp"
-            android:inputType="text"
-            android:text="お名前は？"
-            android:textSize="@dimen/text_normal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/sake_information_name" />
-
-    <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/sake_name"
-            android:textSize="@dimen/text_normal"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="220dp" />
-
-    <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/sake_name"
-            android:textSize="@dimen/text_normal"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="164dp" />
-
-    <EditText
-            android:id="@+id/sake_information_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:inputType="text"
-            android:text="お名前は？"
-            android:textSize="@dimen/text_normal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView3"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <android.support.constraint.Barrier
-            android:id="@+id/barrier3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="right"
-            app:constraint_referenced_ids="textView3,textView4"
-            tools:layout_editor_absoluteX="52dp" />
-
-</android.support.constraint.ConstraintLayout>
--->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -203,6 +129,28 @@
                         android:text="@string/need_selecting" />
             </LinearLayout>
 
+            <!-- 上でその他を選んだら -->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_type_other" />
+
+                <EditText
+                        android:id="@+id/sake_information_type_other"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
+
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -271,7 +219,83 @@
                         android:layout_height="wrap_content"
                         android:text=""
                         android:textSize="@dimen/text_normal" />
+            </LinearLayout>
 
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_acidity" />
+
+                <EditText
+                        android:id="@+id/sake_information_acidity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberSigned|number|numberDecimal"
+                        android:text=""
+                        android:layout_weight="1"
+                        android:textSize="@dimen/text_normal" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_amino" />
+
+                <EditText
+                        android:id="@+id/sake_information_amino"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberSigned|number|numberDecimal"
+                        android:text=""
+                        android:layout_weight="1"
+                        android:textSize="@dimen/text_normal" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_koji_mai" />
+
+                <EditText
+                        android:id="@+id/sake_information_koji_mai"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:text=""
+                        android:textSize="@dimen/text_normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -287,7 +311,57 @@
                         android:text="@string/sake_polishing_rate" />
 
                 <EditText
-                        android:id="@+id/sake_information_pol_rate"
+                        android:id="@+id/sake_information_koji_pol"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:text=""
+                        android:layout_weight="1"
+                        android:textSize="@dimen/text_normal" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="%" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_kake_mai" />
+
+                <EditText
+                        android:id="@+id/sake_information_kake_mai"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:text=""
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_polishing_rate" />
+
+                <EditText
+                        android:id="@+id/sake_information_kake_pol"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
@@ -342,14 +416,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/text_margin"
                         android:textSize="@dimen/text_normal"
-                        android:text="@string/sake_rice" />
+                        android:text="@string/sake_yeast" />
 
                 <EditText
-                        android:id="@+id/sake_information_rice"
+                        android:id="@+id/sake_information_yeast"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_normal"
-                        android:text=""/>
+                        android:text="" />
             </LinearLayout>
 
             <LinearLayout
@@ -362,10 +436,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/text_margin"
                         android:textSize="@dimen/text_normal"
-                        android:text="@string/sake_yeast" />
+                        android:text="@string/sake_water" />
 
                 <EditText
-                        android:id="@+id/sake_information_yeast"
+                        android:id="@+id/sake_information_water"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_normal"
@@ -373,20 +447,20 @@
 
             </LinearLayout>
 
-            <!-- sakeList.id を格納するダミーTextView -->
-            <TextView
-                    android:id="@+id/sake_information_hidden_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-1"
-                    android:visibility="gone" />
+        <!-- sakeList.id を格納するダミーTextView -->
+        <TextView
+                android:id="@+id/sake_information_hidden_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-1"
+                android:visibility="gone" />
 
-            <Button
-                    android:id="@+id/button_add_sake_list"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_add" />
+        <Button
+                android:id="@+id/button_add_sake_list"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_add" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -18,6 +18,7 @@ class SakeDBManager (context: Context){
         return sakeList
     }
 
+    /*
     fun insertSakeList(name: String, grade: String, type: String, image: String, maker: String,
                        pref: String, sake_deg: Float, pol_rate: Int, alcohol: Int, rice: String,
                        yeast: String) {
@@ -38,6 +39,7 @@ class SakeDBManager (context: Context){
                 )
         }
     }
+    */
 
     fun insertSakeListFromList(sakeList: SakeList) {
         sakeListDb.use {
@@ -47,14 +49,20 @@ class SakeDBManager (context: Context){
                 SakeDBOpenHelper.COL_NAME to sakeList.name,
                 SakeDBOpenHelper.COL_GRADE to sakeList.grade,
                 SakeDBOpenHelper.COL_TYPE to sakeList.type,
+                SakeDBOpenHelper.COL_TYPE_OTHER to sakeList.type_other,
                 SakeDBOpenHelper.COL_IMAGE to sakeList.image,
                 SakeDBOpenHelper.COL_MAKER to sakeList.maker,
                 SakeDBOpenHelper.COL_PREF to sakeList.prefecture,
-                SakeDBOpenHelper.COL_SAKE_DEG to sakeList.sake_deg,
-                SakeDBOpenHelper.COL_POL_RATE to sakeList.pol_rate,
                 SakeDBOpenHelper.COL_ALCOHOL to sakeList.alcohol,
-                SakeDBOpenHelper.COL_RICE to sakeList.rice,
-                SakeDBOpenHelper.COL_YEAST to sakeList.yeast
+                SakeDBOpenHelper.COL_YEAST to sakeList.yeast,
+                SakeDBOpenHelper.COL_WATER to sakeList.water,
+                SakeDBOpenHelper.COL_SAKE_DEG to sakeList.sake_deg,
+                SakeDBOpenHelper.COL_ACIDITY to sakeList.acidity,
+                SakeDBOpenHelper.COL_AMINO to sakeList.amino,
+                SakeDBOpenHelper.COL_KOJI_MAI to sakeList.koji_mai,
+                SakeDBOpenHelper.COL_KOJI_POL to sakeList.koji_pol,
+                SakeDBOpenHelper.COL_KAKE_MAI to sakeList.kake_mai,
+                SakeDBOpenHelper.COL_KAKE_POL to sakeList.kake_pol
             )
         }
     }
@@ -67,14 +75,18 @@ class SakeDBManager (context: Context){
                 SakeDBOpenHelper.COL_NAME to sakeList.name,
                 SakeDBOpenHelper.COL_GRADE to sakeList.grade,
                 SakeDBOpenHelper.COL_TYPE to sakeList.type,
+                SakeDBOpenHelper.COL_TYPE_OTHER to sakeList.type_other,
                 SakeDBOpenHelper.COL_IMAGE to sakeList.image,
                 SakeDBOpenHelper.COL_MAKER to sakeList.maker,
                 SakeDBOpenHelper.COL_PREF to sakeList.prefecture,
+                SakeDBOpenHelper.COL_WATER to sakeList.water,
                 SakeDBOpenHelper.COL_SAKE_DEG to sakeList.sake_deg,
-                SakeDBOpenHelper.COL_POL_RATE to sakeList.pol_rate,
-                SakeDBOpenHelper.COL_ALCOHOL to sakeList.alcohol,
-                SakeDBOpenHelper.COL_RICE to sakeList.rice,
-                SakeDBOpenHelper.COL_YEAST to sakeList.yeast
+                SakeDBOpenHelper.COL_ACIDITY to sakeList.acidity,
+                SakeDBOpenHelper.COL_AMINO to sakeList.amino,
+                SakeDBOpenHelper.COL_KOJI_MAI to sakeList.koji_mai,
+                SakeDBOpenHelper.COL_KOJI_POL to sakeList.koji_pol,
+                SakeDBOpenHelper.COL_KAKE_MAI to sakeList.kake_mai,
+                SakeDBOpenHelper.COL_KAKE_POL to sakeList.kake_pol
             )
         }
     }
@@ -96,6 +108,7 @@ class SakeDBManager (context: Context){
         insertSakeListFromListWithId(sakeList)
     }
 
+    /*
     fun updateSakeListFromList(sakeList: SakeList) {
         sakeListDb.use {
             insert(
@@ -114,6 +127,7 @@ class SakeDBManager (context: Context){
             )
         }
     }
+     */
 
     fun deleteSakeList(id: Int) {
         sakeListDb.use {

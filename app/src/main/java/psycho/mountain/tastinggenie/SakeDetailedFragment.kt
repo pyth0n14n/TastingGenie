@@ -96,9 +96,9 @@ class SakeDetailedFragment: Fragment() {
         } else {
             sake_detailed_sake_deg_layout.visibility = LinearLayout.GONE
         }
-        setIntOrGone(sake.pol_rate, sake_detailed_pol_rate, sake_detailed_pol_rate_layout)
+        setStringOrGone(sake.koji_mai, sake_detailed_rice, sake_detailed_rice_layout)
+        setIntOrGone(sake.koji_pol, sake_detailed_pol_rate, sake_detailed_pol_rate_layout)
         setIntOrGone(sake.alcohol, sake_detailed_alcohol, sake_detailed_alcohol_layout)
-        setStringOrGone(sake.rice, sake_detailed_rice, sake_detailed_rice_layout)
         setStringOrGone(sake.yeast, sake_detailed_yeast, sake_detailed_yeast_layout)
     }
 

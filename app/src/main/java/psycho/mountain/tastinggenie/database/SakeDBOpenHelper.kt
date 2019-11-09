@@ -18,14 +18,20 @@ class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
         const val COL_NAME = "name"
         const val COL_GRADE = "grade"
         const val COL_TYPE = "type"
+        const val COL_TYPE_OTHER = "type_other"
         const val COL_IMAGE = "image"
         const val COL_MAKER = "maker"
         const val COL_PREF = "prefecture"
-        const val COL_SAKE_DEG = "sake_degree"
-        const val COL_POL_RATE = "polishing_rate"
         const val COL_ALCOHOL = "alcohol"
-        const val COL_RICE = "rice"
         const val COL_YEAST = "yeast"
+        const val COL_WATER = "water"
+        const val COL_SAKE_DEG = "sake_degree"
+        const val COL_ACIDITY = "acidity"
+        const val COL_AMINO = "amino"
+        const val COL_KOJI_MAI = "koji_mai"
+        const val COL_KOJI_POL = "koji_pol"
+        const val COL_KAKE_MAI = "kake_mai"
+        const val COL_KAKE_POL = "kake_pol"
 
         const val COL_REVIEW_ID = "review_id"
         const val COL_DATE = "date"
@@ -63,14 +69,20 @@ class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
                     COL_NAME to TEXT,
                     COL_GRADE to TEXT,
                     COL_TYPE to TEXT,
+                    COL_TYPE_OTHER to TEXT,
                     COL_IMAGE to TEXT,
                     COL_MAKER to TEXT,
                     COL_PREF to TEXT,
-                    COL_SAKE_DEG to REAL,
-                    COL_POL_RATE to INTEGER,
                     COL_ALCOHOL to INTEGER,
-                    COL_RICE to TEXT,
-                    COL_YEAST to TEXT
+                    COL_YEAST to TEXT,
+                    COL_WATER to TEXT,
+                    COL_SAKE_DEG to REAL,
+                    COL_ACIDITY to REAL,
+                    COL_AMINO to REAL,
+                    COL_KOJI_MAI to TEXT,
+                    COL_KOJI_POL to INTEGER,
+                    COL_KAKE_MAI to TEXT,
+                    COL_KAKE_POL to INTEGER
                 )
             )
             createTable(

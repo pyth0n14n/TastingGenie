@@ -59,5 +59,12 @@
     <string name="label_comment">感想</string>
     <string name="label_review">評価（好み）</string>
     <string name="label_basic_information">基本情報</string>
+    <string name="sake_water">水</string>
+    <string name="sake_kake_mai">掛米</string>
+    <string name="sake_koji_mai">麹米</string>
+    <string name="sake_type_other">分類（その他）</string>
+    <string name="sake_acidity">酸度</string>
+    <string name="amino">アミノ酸</string>
+    <string name="sake_amino">アミノ酸度</string>
 
 </resources>

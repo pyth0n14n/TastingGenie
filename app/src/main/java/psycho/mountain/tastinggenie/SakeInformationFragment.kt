@@ -137,16 +137,25 @@ class SakeInformationFragment : Fragment() {
         if (sake.name != "") {sake_information_name.setText(sake.name)}
         if (sake.grade != "") {sake_information_grade.text = sake.grade}
         if (sake.type != "") {sake_information_type.text = sake.type}
+        if (sake.type_other != "") {sake_information_type_other.setText(sake.type_other)}
         if (sake.maker != "") {sake_information_maker.setText((sake.maker))}
         if (sake.prefecture != "") {sake_information_prefecture.text = sake.prefecture}
+        if (sake.alcohol >= 0) {sake_information_alcohol.setText(sake.alcohol.toString())}
+        if (sake.koji_mai != "") {sake_information_kake_mai.setText(sake.koji_mai)}
+        if (sake.koji_pol >= 0) {sake_information_kake_pol.setText(sake.koji_pol)}
+        if (sake.kake_mai != "") {sake_information_kake_mai.setText(sake.kake_mai)}
+        if (sake.kake_pol >= 0) {sake_information_kake_pol.setText(sake.kake_pol)}
+
         if (sake.sake_deg >= 0.0F) {
             sake_information_sake_deg.setText(sake.sake_deg.toString())
             sake_information_sake_deg_level.text = degToSweetLevel(sake.sake_deg, context!!)
         }
-        if (sake.pol_rate >= 0) {sake_information_pol_rate.setText(sake.pol_rate.toString())}
-        if (sake.alcohol >= 0) {sake_information_alcohol.setText(sake.alcohol.toString())}
-        if (sake.rice != "") {sake_information_rice.setText(sake.rice)}
+        if (sake.acidity >= 0) {sake_information_acidity.setText(sake.acidity.toString())}
+        if (sake.amino >= 0) {sake_information_amino.setText(sake.amino.toString())}
+
         if (sake.yeast != "") {sake_information_yeast.setText(sake.yeast)}
+        if (sake.water != "") {sake_information_water.setText(sake.water)}
+
         if (sake.id != -1) {sake_information_hidden_id.text = sake.id.toString()}
         button_add_sake_list.text = "更新"
     }
@@ -156,15 +165,21 @@ class SakeInformationFragment : Fragment() {
             viewToString(sake_information_name),
             viewToString(sake_information_grade),
             viewToString(sake_information_type),
+            viewToString(sake_information_type_other),
             if (sake_information_image.contentDescription == null) ""
             else sake_information_image.contentDescription.toString(),
             viewToString(sake_information_maker),
             viewToString(sake_information_prefecture),
-            viewToFloat(sake_information_sake_deg),
-            viewToInt(sake_information_pol_rate),
             viewToInt(sake_information_alcohol),
-            viewToString(sake_information_rice),
-            viewToString(sake_information_yeast)
+            viewToString(sake_information_yeast),
+            viewToString(sake_information_water),
+            viewToFloat(sake_information_sake_deg),
+            viewToFloat(sake_information_acidity),
+            viewToFloat(sake_information_amino),
+            viewToString(sake_information_koji_mai),
+            viewToInt(sake_information_koji_pol),
+            viewToString(sake_information_kake_mai),
+            viewToInt(sake_information_kake_pol)
         )
     }
 
