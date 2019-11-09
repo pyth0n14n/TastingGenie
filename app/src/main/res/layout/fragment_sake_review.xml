@@ -66,16 +66,37 @@
                         android:layout_height="wrap_content"
                         android:text="@string/price"
                         android:textSize="@dimen/text_normal" />
-                <EditText
-                        android:id="@+id/sake_review_price"
-                        android:layout_width="wrap_content"
+
+                <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_normal" />
-                <TextView
-                        android:id="@+id/sake_review_price_per"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_normal" />
+                        android:orientation="horizontal">
+
+                    <EditText
+                            android:id="@+id/sake_review_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/text_normal" />
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/yen"
+                            android:textSize="@dimen/text_normal"
+                            android:layout_marginEnd="@dimen/layout_margin"/>
+
+                    <EditText
+                            android:id="@+id/sake_review_volume"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/text_normal" />
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ml"
+                            android:textSize="@dimen/text_normal" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -92,7 +113,7 @@
                         android:id="@+id/sake_review_temperature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/need_selecting"
+                        android:hint="@string/need_selecting"
                         android:textSize="@dimen/text_normal" />
             </LinearLayout>
 
@@ -101,7 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_large"
-                    android:layout_marginTop="@dimen/layout_margin"
+                    android:layout_marginTop="@dimen/layout_margin2"
                     android:text="@string/label_looking" />
 
             <LinearLayout
@@ -118,7 +139,8 @@
                         android:id="@+id/sake_review_color"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/need_selecting"
+                        android:hint="@string/need_selecting"
+                        android:textColor="@color/colorBlack"
                         android:textSize="@dimen/text_normal" />
             </LinearLayout>
 
@@ -132,13 +154,13 @@
                         android:layout_height="wrap_content"
                         android:text="@string/viscosity"
                         android:textSize="@dimen/text_normal" />
-                <RatingBar
+                <TextView
                         android:id="@+id/sake_review_viscosity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:max="3"
-                        android:stepSize="1"
-                        android:min="1" />
+                        android:hint="@string/need_selecting"
+                        android:textSize="@dimen/text_normal"
+                        />
             </LinearLayout>
 
             <!-- 香り -->
@@ -146,8 +168,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_large"
-                    android:layout_marginTop="@dimen/layout_margin"
+                    android:layout_marginTop="@dimen/layout_margin2"
                     android:text="@string/label_scent" />
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_scent_intensity"
+                        android:textSize="@dimen/text_normal"/>
+                <TextView
+                        android:id="@+id/sake_review_scent_intensity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/need_selecting"
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -162,7 +201,7 @@
                         android:id="@+id/sake_review_scent_top"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/need_selecting"
+                        android:hint="@string/need_selecting"
                         android:textSize="@dimen/text_normal" />
             </LinearLayout>
 
@@ -179,7 +218,24 @@
                         android:id="@+id/sake_review_scent_mouth"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/need_selecting"
+                        android:hint="@string/need_selecting"
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_scent_nose"
+                        android:textSize="@dimen/text_normal"/>
+                <TextView
+                        android:id="@+id/sake_review_scent_nose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/need_selecting"
                         android:textSize="@dimen/text_normal" />
 
                 <!-- 味 -->
@@ -187,7 +243,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_large"
-                        android:layout_marginTop="@dimen/layout_margin"
+                        android:layout_marginTop="@dimen/layout_margin2"
                         android:text="@string/label_taste" />
 
                 <LinearLayout
@@ -200,12 +256,12 @@
                             android:layout_height="wrap_content"
                             android:text="@string/label_sweet_spicy"
                             android:textSize="@dimen/text_normal" />
-                    <RatingBar
+                    <TextView
                             android:id="@+id/sake_review_sweet"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:stepSize="1"
-                            android:max="5" />
+                            android:hint="@string/need_selecting"
+                            android:textSize="@dimen/text_normal" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -218,12 +274,12 @@
                             android:layout_height="wrap_content"
                             android:text="@string/label_sour"
                             android:textSize="@dimen/text_normal" />
-                    <RatingBar
+                    <TextView
                             android:id="@+id/sake_review_sour"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:stepSize="1"
-                            android:max="5"/>
+                            android:hint="@string/need_selecting"
+                            android:textSize="@dimen/text_normal" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -236,12 +292,12 @@
                             android:layout_height="wrap_content"
                             android:text="@string/label_bitter"
                             android:textSize="@dimen/text_normal" />
-                    <RatingBar
+                    <TextView
                             android:id="@+id/sake_review_bitter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:stepSize="1"
-                            android:max="5" />
+                            android:hint="@string/need_selecting"
+                            android:textSize="@dimen/text_normal" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -254,12 +310,12 @@
                             android:layout_height="wrap_content"
                             android:text="@string/label_umami"
                             android:textSize="@dimen/text_normal" />
-                    <RatingBar
+                    <TextView
                             android:id="@+id/sake_review_umami"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:stepSize="1"
-                            android:max="5" />
+                            android:hint="@string/need_selecting"
+                            android:textSize="@dimen/text_normal" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -272,12 +328,12 @@
                             android:layout_height="wrap_content"
                             android:text="@string/label_sharp"
                             android:textSize="@dimen/text_normal" />
-                    <RatingBar
+                    <TextView
                             android:id="@+id/sake_review_sharp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:stepSize="1"
-                            android:max="5" />
+                            android:hint="@string/need_selecting"
+                            android:textSize="@dimen/text_normal" />
                 </LinearLayout>
 
                 <!-- その他 -->
@@ -285,6 +341,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_large"
+                        android:layout_marginTop="@dimen/layout_margin2"
                         android:text="@string/label_other" />
 
                 <LinearLayout
@@ -348,19 +405,19 @@
                             android:layout_height="wrap_content"
                             android:text="@string/label_review"
                             android:textSize="@dimen/text_normal" />
-                    <RatingBar
+                    <TextView
                             android:id="@+id/sake_review_review"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:stepSize="1"
-                            android:max="5" />
+                            android:hint="@string/need_selecting"
+                            android:textSize="@dimen/text_normal" />
                 </LinearLayout>
 
             </LinearLayout>
 
 
             <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
                     android:text="@string/button_add" />

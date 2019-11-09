@@ -43,9 +43,9 @@
     <string name="viscosity">粘性</string>
     <string name="rating_three">3</string>
     <string name="label_scent">香り</string>
-    <string name="label_scent1">上立香</string>
     <string name="label_scent_top">上立ち香</string>
-    <string name="label_scent_mouth">口中香</string>
+    <string name="label_scent_mouth">基調香</string>
+    <string name="label_scent_nose">引込香</string>
     <string name="label_taste">味</string>
     <string name="sweet_spicy">甘辛</string>
     <string name="label_sweet_spicy">甘辛</string>
@@ -66,5 +66,9 @@
     <string name="sake_acidity">酸度</string>
     <string name="amino">アミノ酸</string>
     <string name="sake_amino">アミノ酸度</string>
+    <string name="yen">円</string>
+    <string name="ml">ml</string>
+    <string name="label_scent_intensity">強さ</string>
+
 
 </resources>

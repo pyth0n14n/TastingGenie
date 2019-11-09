@@ -12,8 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_sake_review.*
+import java.lang.Math.round
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.round
 
 class SakeReviewFragment: Fragment() {
 
@@ -77,12 +79,44 @@ class SakeReviewFragment: Fragment() {
             }
 
             // 香り
+            sake_review_scent_intensity.setOnClickListener {
+                dialogSakeScentIntensity(context!!)
+            }
             sake_review_scent_top.setOnClickListener {
                 dialogSakeScent(context!!, sake_review_scent_top)
             }
             sake_review_scent_mouth.setOnClickListener {
                 dialogSakeScent(context!!, sake_review_scent_mouth)
             }
+            sake_review_scent_nose.setOnClickListener {
+                dialogSakeScent(context!!, sake_review_scent_nose)
+            }
+
+            // 味
+            sake_review_viscosity.setOnClickListener {
+                dialogSakeViscosity(context!!)
+            }
+            sake_review_sweet.setOnClickListener {
+                dialogSakeSweetSpicy(context!!)
+            }
+            sake_review_sour.setOnClickListener {
+                dialogSakeSour(context!!)
+            }
+            sake_review_bitter.setOnClickListener {
+                dialogSakeBitter(context!!)
+            }
+            sake_review_umami.setOnClickListener {
+                dialogSakeUmami(context!!)
+            }
+            sake_review_sharp.setOnClickListener {
+                dialogSakeSharp(context!!)
+            }
+
+            // 評価
+            sake_review_review.setOnClickListener {
+                dialogSakeReview(context!!)
+            }
+
         }
     }
 
@@ -120,7 +154,8 @@ class SakeReviewFragment: Fragment() {
     }
 
     private fun dialogSakeColor(context: Context) {
-        val colorList = arrayOf("青冴え", "透明", "山吹色", "琥珀色", "番茶色", "橙色", "白色", "白濁", "緑色")
+        val colorList = arrayOf("青冴え", "透明", "ほぼ透明", "やや黄色",
+            "山吹色", "琥珀色", "番茶色", "橙色", "白色", "白濁", "緑色")
 
         var color = colorList.indexOf(sake_review_color.text)
         if (color < 0) {color = 0}
@@ -156,17 +191,96 @@ class SakeReviewFragment: Fragment() {
 
         val scentList = scentFloralList + scentFleshList + scentGentleList + scentPlumpList
 
-        var scent = scentList.indexOf(textview.text)
-        if (scent < 0) {scent = 0}
+        var checked : BooleanArray = BooleanArray(scentList.size) { false }
+        // 選択されていた値を取り出し
+        for (scent in textview.text.split(",")) {
+            var idx = scentList.indexOf(scent)
+            if (idx > 0) {
+                checked[idx] = true
+            }
+        }
 
+        var scent: String = ""
         val dialog = AlertDialog.Builder(context)
             .setTitle(R.string.label_scent)
-            .setSingleChoiceItems(scentList, scent) { _, which ->
-                scent = which
+            .setMultiChoiceItems(scentList, checked) { _, which, isChecked ->
+                checked[which] = isChecked
             }
             .setPositiveButton("OK") { _, _ ->
-                textview.text = scentList[scent]
+                for (i in 0 until scentList.size) {
+                    if (checked[i]) {
+                        scent += scentList[i] + ","
+                    }
+                }
+                textview.text = scent
             }
             .show()
     }
+
+    private fun dialogSakeSelect(context: Context, list: Array<String>, textView: TextView, title: Int) {
+        var idx = list.indexOf(textView.text)
+        if (idx < 0) {idx = list.size/2}
+
+        var dialog = AlertDialog.Builder(context)
+            .apply{
+                setTitle(title)
+                setSingleChoiceItems(list, idx) { _, which ->
+                    idx = which
+                }
+                setPositiveButton("OK") { _, _ ->
+                    textView.text = list[idx]
+                }
+                show()
+            }
+    }
+
+    private fun dialogSakeViscosity(context: Context) {
+        val viscosityList = arrayOf("弱い", "中程度", "強い")
+        dialogSakeSelect(context, viscosityList, sake_review_viscosity, R.string.viscosity)
+    }
+
+    private fun dialogSakeScentIntensity(context: Context) {
+        dialogSakeSelect(context,
+            arrayOf("弱い", "やや弱い", "普通", "やや強い", "強い")
+            , sake_review_scent_intensity, R.string.label_scent_intensity)
+    }
+
+    private fun dialogSakeSweetSpicy(context: Context) {
+        dialogSakeSelect(context,
+            arrayOf("甘口", "やや甘口", "普通", "やや辛口", "辛口")
+            , sake_review_sweet, R.string.label_sweet_spicy)
+    }
+
+    private fun dialogSakeSour(context: Context) {
+        dialogSakeSelect(context,
+            arrayOf("弱い", "やや弱い", "普通", "やや強い", "強い")
+            , sake_review_sour, R.string.label_sour)
+    }
+
+    private fun dialogSakeBitter(context: Context) {
+        dialogSakeSelect(context,
+            arrayOf("弱い", "やや弱い", "普通", "やや強い", "強い")
+            , sake_review_bitter, R.string.label_bitter)
+    }
+
+    private fun dialogSakeUmami(context: Context) {
+        dialogSakeSelect(context,
+            arrayOf("淡麗", "やや淡麗", "普通", "やや濃醇", "濃醇")
+            , sake_review_umami, R.string.label_umami)
+    }
+
+    private fun dialogSakeSharp(context: Context) {
+        dialogSakeSelect(context,
+            arrayOf("短い", "やや短い", "普通", "やや長い", "長い")
+            , sake_review_sharp, R.string.label_sharp)
+    }
+
+    private fun dialogSakeReview(context: Context) {
+        dialogSakeSelect(context,
+            arrayOf("嫌い", "やや嫌い", "あまり好きでない",
+                "普通", "やや好き", "好き", "大好き")
+            , sake_review_review, R.string.label_review)
+    }
+
+
 }

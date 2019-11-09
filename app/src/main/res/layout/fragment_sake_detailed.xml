@@ -312,18 +312,19 @@
                         android:textSize="@dimen/text_normal" />
             </LinearLayout>
 
+            <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/button_sake_review_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="@dimen/layout_margin"
+                    app:backgroundTint="@color/colorPrimaryDark"
+                    app:srcCompat="@android:drawable/ic_input_add" />
+
+
         </LinearLayout>
     </ScrollView>
-
-    <android.support.design.widget.FloatingActionButton
-            android:id="@+id/button_sake_review_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="@dimen/layout_margin"
-            app:backgroundTint="@color/colorPrimaryDark"
-            app:srcCompat="@android:drawable/ic_input_add" />
 
 </LinearLayout>

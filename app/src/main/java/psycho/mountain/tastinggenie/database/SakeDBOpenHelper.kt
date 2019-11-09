@@ -37,11 +37,14 @@ class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
         const val COL_DATE = "date"
         const val COL_BAR = "bar"
         const val COL_PRICE = "price"
+        const val COL_VOLUME = "volume"
         const val COL_TEMP = "temperature"
         const val COL_COLOR = "color"
         const val COL_VISCOSITY = "viscosity"
+        const val COL_SCENT_INTENSITY = "scent_intensity"
         const val COL_SCENT_TOP = "scent_top"
         const val COL_SCENT_MOUTH = "scent_mouth"
+        const val COL_SCENT_NOSE = "scent_nose"
         const val COL_SWEET = "sweet"
         const val COL_SOUR = "sour"
         const val COL_BITTER = "bitter"
@@ -92,21 +95,24 @@ class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
                     COL_ID to INTEGER,
                     COL_DATE to TEXT,
                     COL_BAR to TEXT,
-                    COL_PRICE to TEXT,
+                    COL_PRICE to INTEGER,
+                    COL_VOLUME to INTEGER,
                     COL_TEMP to TEXT,
                     COL_COLOR to TEXT,
-                    COL_VISCOSITY to INTEGER,
+                    COL_VISCOSITY to TEXT,
+                    COL_SCENT_INTENSITY to TEXT,
                     COL_SCENT_TOP to TEXT,
                     COL_SCENT_MOUTH to TEXT,
-                    COL_SWEET to INTEGER,
-                    COL_SOUR to INTEGER,
-                    COL_BITTER to INTEGER,
-                    COL_UMAMI to INTEGER,
-                    COL_SHARP to INTEGER,
+                    COL_SCENT_NOSE to TEXT,
+                    COL_SWEET to TEXT,
+                    COL_SOUR to TEXT,
+                    COL_BITTER to TEXT,
+                    COL_UMAMI to TEXT,
+                    COL_SHARP to TEXT,
                     COL_SCENE to TEXT,
                     COL_DISH to TEXT,
                     COL_COMMENT to TEXT,
-                    COL_REVIEW to INTEGER
+                    COL_REVIEW to TEXT
                 )
             )
         }
