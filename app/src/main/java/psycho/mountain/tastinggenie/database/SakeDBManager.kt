@@ -79,6 +79,8 @@ class SakeDBManager (context: Context){
                 SakeDBOpenHelper.COL_IMAGE to sakeList.image,
                 SakeDBOpenHelper.COL_MAKER to sakeList.maker,
                 SakeDBOpenHelper.COL_PREF to sakeList.prefecture,
+                SakeDBOpenHelper.COL_ALCOHOL to sakeList.alcohol,
+                SakeDBOpenHelper.COL_YEAST to sakeList.yeast,
                 SakeDBOpenHelper.COL_WATER to sakeList.water,
                 SakeDBOpenHelper.COL_SAKE_DEG to sakeList.sake_deg,
                 SakeDBOpenHelper.COL_ACIDITY to sakeList.acidity,

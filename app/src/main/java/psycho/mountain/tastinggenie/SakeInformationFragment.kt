@@ -128,6 +128,7 @@ class SakeInformationFragment : Fragment() {
 
     private fun setupView(sake: SakeList) {
         if (sake.image != "") {
+            Log.d("sake.image", sake.image)
             sake_information_image.setImageURI(Uri.parse(sake.image))
             sake_information_image.contentDescription = sake.image
         }
@@ -146,10 +147,10 @@ class SakeInformationFragment : Fragment() {
         if (sake.maker != "") {sake_information_maker.setText((sake.maker))}
         if (sake.prefecture != "") {sake_information_prefecture.text = sake.prefecture}
         if (sake.alcohol >= 0) {sake_information_alcohol.setText(sake.alcohol.toString())}
-        if (sake.koji_mai != "") {sake_information_kake_mai.setText(sake.koji_mai)}
-        if (sake.koji_pol >= 0) {sake_information_kake_pol.setText(sake.koji_pol)}
+        if (sake.koji_mai != "") {sake_information_koji_mai.setText(sake.koji_mai)}
+        if (sake.koji_pol >= 0) {sake_information_koji_pol.setText(sake.koji_pol.toString())}
         if (sake.kake_mai != "") {sake_information_kake_mai.setText(sake.kake_mai)}
-        if (sake.kake_pol >= 0) {sake_information_kake_pol.setText(sake.kake_pol)}
+        if (sake.kake_pol >= 0) {sake_information_kake_pol.setText(sake.kake_pol.toString())}
 
         if (sake.sake_deg >= 0.0F) {
             sake_information_sake_deg.setText(sake.sake_deg.toString())
@@ -192,12 +193,10 @@ class SakeInformationFragment : Fragment() {
         lateinit var data: String
         try {
             data = textView.text.toString()
-            if (data == getString(R.string.need_selecting)) {
-                data = ""
-            }
         } catch(e: NullPointerException) {
             data = ""
         }
+        Log.d("viewToString", data)
         return data
     }
 
@@ -228,11 +227,8 @@ class SakeInformationFragment : Fragment() {
     private fun validateSakeList() : Boolean{
         var msg: String = ""
 
-        val initText = resources.getString(R.string.sake_information_name_init)
-        val needSelect = resources.getString(R.string.need_selecting)
-
         // 必須項目: 酒名
-        if (sake_information_name.text.toString() == initText) {
+        if (sake_information_name.text.toString() == "") {
             sake_information_must1.visibility = View.VISIBLE
             msg += "酒名 "
         }
@@ -241,7 +237,7 @@ class SakeInformationFragment : Fragment() {
         }
 
         // 必須項目: 酒類
-        if (sake_information_grade.text.toString() == needSelect) {
+        if (sake_information_grade.text.toString() == "") {
             sake_information_must2.visibility = View.VISIBLE
             msg += "酒類 "
         }
@@ -250,7 +246,7 @@ class SakeInformationFragment : Fragment() {
         }
 
         // 必須項目: 分類
-        if (sake_information_type.text.toString() == needSelect) {
+        if (sake_information_type.text.toString() == "") {
             sake_information_must3.visibility = View.VISIBLE
             msg += "分類 "
         }

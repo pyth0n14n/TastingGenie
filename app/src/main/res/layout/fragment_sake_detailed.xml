@@ -76,6 +76,112 @@
             </LinearLayout>
 
             <LinearLayout
+                    android:id="@+id/sake_detailed_koji_mai_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_koji_mai" />
+
+                <TextView
+                        android:id="@+id/sake_detailed_koji_mai"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal"
+                        android:text=""/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/sake_detailed_koji_pol_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_polishing_rate" />
+
+                <TextView
+                        android:id="@+id/sake_detailed_koji_pol"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal"
+                        android:text=""/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/sake_detailed_kake_mai_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_kake_mai" />
+
+                <TextView
+                        android:id="@+id/sake_detailed_kake_mai"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal"
+                        android:text=""/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/sake_detailed_kake_pol_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_polishing_rate" />
+
+                <TextView
+                        android:id="@+id/sake_detailed_kake_pol"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal"
+                        android:text=""/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/sake_detailed_alcohol_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_alcohol" />
+
+                <TextView
+                        android:id="@+id/sake_detailed_alcohol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
+
+            <LinearLayout
                     android:id="@+id/sake_detailed_sake_deg_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -105,28 +211,38 @@
             </LinearLayout>
 
             <LinearLayout
-                    android:id="@+id/sake_detailed_pol_rate_layout"
+                    android:id="@+id/sake_detailed_acidity_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/layout_margin"
                     android:orientation="horizontal">
+
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/text_margin"
                         android:textSize="@dimen/text_normal"
-                        android:text="@string/sake_polishing_rate" />
+                        android:text="@string/sake_acidity" />
 
                 <TextView
-                        android:id="@+id/sake_detailed_pol_rate"
+                        android:id="@+id/sake_detailed_acidity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/text_margin"
+                        android:layout_weight="1"
                         android:textSize="@dimen/text_normal" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:text="%"
+                        android:textSize="@dimen/text_normal" />
+
             </LinearLayout>
 
             <LinearLayout
-                    android:id="@+id/sake_detailed_alcohol_layout"
+                    android:id="@+id/sake_detailed_amino_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/layout_margin"
@@ -137,35 +253,23 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/text_margin"
                         android:textSize="@dimen/text_normal"
-                        android:text="@string/sake_alcohol" />
+                        android:text="@string/sake_amino" />
 
                 <TextView
-                        android:id="@+id/sake_detailed_alcohol"
+                        android:id="@+id/sake_detailed_amino"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/text_margin"
+                        android:layout_weight="1"
                         android:textSize="@dimen/text_normal" />
-            </LinearLayout>
 
-            <LinearLayout
-                    android:id="@+id/sake_detailed_rice_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/layout_margin"
-                    android:orientation="horizontal">
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/text_margin"
-                        android:textSize="@dimen/text_normal"
-                        android:text="@string/sake_rice" />
+                        android:text="%"
+                        android:textSize="@dimen/text_normal" />
 
-                <TextView
-                        android:id="@+id/sake_detailed_rice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_normal"
-                        android:text=""/>
             </LinearLayout>
 
             <LinearLayout
@@ -187,6 +291,27 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_normal" />
             </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/sake_detailed_water_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_water" />
+
+                <TextView
+                        android:id="@+id/sake_detailed_water"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal" />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

@@ -83,7 +83,7 @@ class SakeDetailedFragment: Fragment() {
 
         if (sake.type != "") {
             sake_detailed_type.visibility = TextView.VISIBLE
-
+            // その他はまとめてtypeに表示する
             val regex = Regex("その他")
             if (regex.containsMatchIn(sake.type)) {
                 val saketype = sake.type.replace("その他", sake.type_other)
@@ -99,7 +99,11 @@ class SakeDetailedFragment: Fragment() {
 
         if (sake.prefecture != "") {
             sake_detailed_type.visibility= TextView.VISIBLE
-            sake_detailed_prefecture.setText("(${sake.prefecture})")
+            if (sake.maker == "") {
+                sake_detailed_prefecture.setText("${sake.prefecture}")
+            }else {
+                sake_detailed_prefecture.setText("(${sake.prefecture})")
+            }
         } else {
             sake_detailed_prefecture.visibility = TextView.GONE
         }
@@ -110,10 +114,17 @@ class SakeDetailedFragment: Fragment() {
         } else {
             sake_detailed_sake_deg_layout.visibility = LinearLayout.GONE
         }
-        setStringOrGone(sake.koji_mai, sake_detailed_rice, sake_detailed_rice_layout)
-        setIntOrGone(sake.koji_pol, sake_detailed_pol_rate, sake_detailed_pol_rate_layout)
+        setFloatOrGone(sake.acidity, sake_detailed_acidity, sake_detailed_acidity_layout)
+        setFloatOrGone(sake.amino, sake_detailed_amino, sake_detailed_amino_layout)
+
+        setStringOrGone(sake.koji_mai, sake_detailed_koji_mai, sake_detailed_koji_mai_layout)
+        setIntOrGone(sake.koji_pol, sake_detailed_koji_pol, sake_detailed_koji_pol_layout)
+        setStringOrGone(sake.kake_mai, sake_detailed_kake_mai, sake_detailed_kake_mai_layout)
+        setIntOrGone(sake.kake_pol, sake_detailed_kake_pol, sake_detailed_kake_pol_layout)
+
         setIntOrGone(sake.alcohol, sake_detailed_alcohol, sake_detailed_alcohol_layout)
         setStringOrGone(sake.yeast, sake_detailed_yeast, sake_detailed_yeast_layout)
+        setStringOrGone(sake.water, sake_detailed_water, sake_detailed_water_layout)
     }
 
     private fun setStringOrGone(data: String, view: TextView, layout: LinearLayout?) {
@@ -134,6 +145,15 @@ class SakeDetailedFragment: Fragment() {
     }
 
     private fun setIntOrGone(data: Int, view: TextView, layout: LinearLayout) {
+        if (data >= 0) {
+            view.text = data.toString()
+            layout.visibility = LinearLayout.VISIBLE
+        } else {
+            layout.visibility = LinearLayout.GONE
+        }
+    }
+
+    private fun setFloatOrGone(data: Float, view: TextView, layout: LinearLayout) {
         if (data >= 0) {
             view.text = data.toString()
             layout.visibility = LinearLayout.VISIBLE

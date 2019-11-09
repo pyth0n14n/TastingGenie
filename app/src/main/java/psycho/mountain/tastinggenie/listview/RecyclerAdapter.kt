@@ -32,7 +32,11 @@ class RecyclerAdapter(
 
         val sake: SakeList = itemList[position]
 
-        holder.sakeImageView.imageURI = Uri.parse(sake.image)
+        if (sake.image == "") {
+            holder.sakeImageView.setImageResource(R.drawable.empty_image)
+        } else {
+            holder.sakeImageView.imageURI = Uri.parse(sake.image)
+        }
         holder.nameTextView.text = sake.name
         holder.gradeTextView.text = sake.grade
         holder.typeTextView.text = sake.type.replace(",", " ")

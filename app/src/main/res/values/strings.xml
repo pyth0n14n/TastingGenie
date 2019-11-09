@@ -26,7 +26,7 @@
     <string name="moto">酛</string>
     <string name="sake_degree">日本酒度</string>
     <string name="sake_alcohol">アルコール度数</string>
-    <string name="sake_information_name_init"><![CDATA[<酒名>]]></string>
+    <string name="sake_information_name_init">例）八海山</string>
     <string name="taste_strongly_spicy">大辛口</string>
     <string name="taste_spicy">辛口</string>
     <string name="taste_softly_spicy">やや辛口</string>
