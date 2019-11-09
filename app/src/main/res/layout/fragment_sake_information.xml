@@ -131,6 +131,7 @@
 
             <!-- 上でその他を選んだら -->
             <LinearLayout
+                    android:id="@+id/sake_information_type_other_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/layout_margin"
@@ -293,7 +294,6 @@
                         android:id="@+id/sake_information_koji_mai"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
                         android:text=""
                         android:textSize="@dimen/text_normal" />
             </LinearLayout>
@@ -343,7 +343,6 @@
                         android:id="@+id/sake_information_kake_mai"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
                         android:text=""
                         android:textSize="@dimen/text_normal" />
             </LinearLayout>

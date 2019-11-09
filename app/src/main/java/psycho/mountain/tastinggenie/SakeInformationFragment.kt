@@ -10,10 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ScrollView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import kotlinx.android.synthetic.main.fragment_sake_information.*
 import org.jetbrains.anko.sdk27.coroutines.onFocusChange
 import psycho.mountain.tastinggenie.utility.deleteFileByUri
@@ -136,8 +133,16 @@ class SakeInformationFragment : Fragment() {
         }
         if (sake.name != "") {sake_information_name.setText(sake.name)}
         if (sake.grade != "") {sake_information_grade.text = sake.grade}
-        if (sake.type != "") {sake_information_type.text = sake.type}
-        if (sake.type_other != "") {sake_information_type_other.setText(sake.type_other)}
+        if (sake.type != "") {
+            sake_information_type.text = sake.type
+
+            val regex = Regex("その他")
+            if (regex.containsMatchIn(sake.type)) {
+                sake_information_type_other_layout.visibility = EditText.VISIBLE
+                if (sake.type_other != "") {sake_information_type_other.setText(sake.type_other)}
+            }
+        }
+
         if (sake.maker != "") {sake_information_maker.setText((sake.maker))}
         if (sake.prefecture != "") {sake_information_prefecture.text = sake.prefecture}
         if (sake.alcohol >= 0) {sake_information_alcohol.setText(sake.alcohol.toString())}
@@ -295,7 +300,8 @@ class SakeInformationFragment : Fragment() {
             "にごり酒", "おり酒",  // 濾し
             "荒走り", "中汲み", "責め", "雫酒", // 絞り
             "凍結酒", "発泡酒", // 口当たり
-            "生一本", "貴醸酒" // 製造
+            "生一本", "貴醸酒", // 製造
+            "その他" // 後で指定
         )
         var checked : BooleanArray = BooleanArray(typeList.size) { false }
 
@@ -315,13 +321,21 @@ class SakeInformationFragment : Fragment() {
                 checked[which] = isChecked
             }
             .setPositiveButton("OK") { _, _ ->
-                for (i in 0 until typeList.size-1) {
+                for (i in 0 until typeList.size) {
                     if (checked[i]) {
                         Log.d("checked", typeList[i])
                         types += typeList[i] + ","
                     }
                 }
                 sake_information_type.text = types
+                val regex = Regex("その他")
+                if (regex.containsMatchIn(types)) {
+                    sake_information_type_other_layout.visibility = EditText.VISIBLE
+                }
+                else {
+                    sake_information_type_other_layout.visibility = EditText.GONE
+                }
+
             }
             .show()
     }

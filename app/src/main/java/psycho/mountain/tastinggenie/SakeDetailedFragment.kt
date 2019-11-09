@@ -80,7 +80,21 @@ class SakeDetailedFragment: Fragment() {
         }
         setStringOrGone(sake.name, sake_detailed_name, null)
         setStringOrGone(sake.grade, sake_detailed_grade, null)
-        setStringOrGone(sake.type, sake_detailed_type, null)
+
+        if (sake.type != "") {
+            sake_detailed_type.visibility = TextView.VISIBLE
+
+            val regex = Regex("その他")
+            if (regex.containsMatchIn(sake.type)) {
+                val saketype = sake.type.replace("その他", sake.type_other)
+                sake_detailed_type.text = saketype
+            } else {
+                sake_detailed_type.text = sake.type
+            }
+        } else {
+            sake_detailed_type.visibility = TextView.GONE
+        }
+
         setStringOrGone(sake.maker, sake_detailed_maker, null)
 
         if (sake.prefecture != "") {
