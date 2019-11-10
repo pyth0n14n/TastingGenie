@@ -8,7 +8,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.sake_list_item.*  // TODO: extensionが効かない
 import psycho.mountain.tastinggenie.R
 
-class RecyclerViewHolder (view: View) : RecyclerView.ViewHolder(view) {
+class SakeListViewHolder (view: View) : RecyclerView.ViewHolder(view) {
 
     interface ItemClickListener {
         fun onItemClick(position: Int)

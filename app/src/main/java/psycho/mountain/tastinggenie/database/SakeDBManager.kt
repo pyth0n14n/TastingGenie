@@ -110,6 +110,15 @@ class SakeDBManager (context: Context){
         insertSakeListFromListWithId(sakeList)
     }
 
+
+    fun getSakeListById(id: Int): SakeList {
+        lateinit var sakeList: SakeList
+        sakeListDb.use {
+            sakeList = select(SakeDBOpenHelper.TABLE_SAKE_LIST)
+                .whereArgs("id = {id}", "id" to id).parseList(SakeListParser())[0]
+        }
+        return sakeList
+    }
     /*
     fun updateSakeListFromList(sakeList: SakeList) {
         sakeListDb.use {
@@ -140,32 +149,79 @@ class SakeDBManager (context: Context){
         }
     }
 
-    fun insertSakeReview(id: Int, date: String, temp: String, color: String,
-                         scent_top: String, scent_mouth: String,
-                         sweet: String, sour: String, bitter: String, umami: String,
-                         viscosity: String, scene: String, dish: String, comment: String,
-                         review: Float) {
-
+    fun insertSakeReviewFromList(review: SakeReview) {
         sakeListDb.use {
             insert(
                 SakeDBOpenHelper.TABLE_SAKE_REVIEW,
-                SakeDBOpenHelper.COL_ID to id,
-                SakeDBOpenHelper.COL_DATE to date,
-                SakeDBOpenHelper.COL_TEMP to temp,
-                SakeDBOpenHelper.COL_COLOR to color,
-                SakeDBOpenHelper.COL_SCENT_TOP to scent_top,
-                SakeDBOpenHelper.COL_SCENT_MOUTH to scent_mouth,
-                SakeDBOpenHelper.COL_SWEET to sweet,
-                SakeDBOpenHelper.COL_SOUR to sour,
-                SakeDBOpenHelper.COL_BITTER to bitter,
-                SakeDBOpenHelper.COL_UMAMI to umami,
-                SakeDBOpenHelper.COL_VISCOSITY to viscosity,
-                SakeDBOpenHelper.COL_SCENE to scene,
-                SakeDBOpenHelper.COL_DISH to dish,
-                SakeDBOpenHelper.COL_COMMENT to comment,
-                SakeDBOpenHelper.COL_REVIEW to review
+                SakeDBOpenHelper.COL_ID to review.id,
+                SakeDBOpenHelper.COL_DATE to review.date,
+                SakeDBOpenHelper.COL_BAR to review.bar,
+                SakeDBOpenHelper.COL_PRICE to review.price,
+                SakeDBOpenHelper.COL_VOLUME to review.volume,
+                SakeDBOpenHelper.COL_TEMP to review.temp,
+                SakeDBOpenHelper.COL_COLOR to review.color,
+                SakeDBOpenHelper.COL_VISCOSITY to review.viscosity,
+                SakeDBOpenHelper.COL_SCENT_INTENSITY to review.intensity,
+                SakeDBOpenHelper.COL_SCENT_TOP to review.scent_top,
+                SakeDBOpenHelper.COL_SCENT_MOUTH to review.scent_mouth,
+                SakeDBOpenHelper.COL_SCENT_NOSE to review.scent_nose,
+                SakeDBOpenHelper.COL_SWEET to review.sweet,
+                SakeDBOpenHelper.COL_SOUR to review.sour,
+                SakeDBOpenHelper.COL_BITTER to review.bitter,
+                SakeDBOpenHelper.COL_UMAMI to review.umami,
+                SakeDBOpenHelper.COL_SHARP to review.sharp,
+                SakeDBOpenHelper.COL_SCENE to review.scene,
+                SakeDBOpenHelper.COL_DISH to review.dish,
+                SakeDBOpenHelper.COL_COMMENT to review.comment,
+                SakeDBOpenHelper.COL_REVIEW to review.review
             )
         }
+    }
+
+    fun insertSakeReviewFromListWithId(review: SakeReview) {
+        sakeListDb.use {
+            insert(
+                SakeDBOpenHelper.TABLE_SAKE_REVIEW,
+                SakeDBOpenHelper.COL_REVIEW_ID to review.review_id,
+                SakeDBOpenHelper.COL_ID to review.id,
+                SakeDBOpenHelper.COL_DATE to review.date,
+                SakeDBOpenHelper.COL_BAR to review.bar,
+                SakeDBOpenHelper.COL_PRICE to review.price,
+                SakeDBOpenHelper.COL_VOLUME to review.volume,
+                SakeDBOpenHelper.COL_TEMP to review.temp,
+                SakeDBOpenHelper.COL_COLOR to review.color,
+                SakeDBOpenHelper.COL_VISCOSITY to review.viscosity,
+                SakeDBOpenHelper.COL_SCENT_INTENSITY to review.intensity,
+                SakeDBOpenHelper.COL_SCENT_TOP to review.scent_top,
+                SakeDBOpenHelper.COL_SCENT_MOUTH to review.scent_mouth,
+                SakeDBOpenHelper.COL_SCENT_NOSE to review.scent_nose,
+                SakeDBOpenHelper.COL_SWEET to review.sweet,
+                SakeDBOpenHelper.COL_SOUR to review.sour,
+                SakeDBOpenHelper.COL_BITTER to review.bitter,
+                SakeDBOpenHelper.COL_UMAMI to review.umami,
+                SakeDBOpenHelper.COL_SHARP to review.sharp,
+                SakeDBOpenHelper.COL_SCENE to review.scene,
+                SakeDBOpenHelper.COL_DISH to review.dish,
+                SakeDBOpenHelper.COL_COMMENT to review.comment,
+                SakeDBOpenHelper.COL_REVIEW to review.review
+            )
+        }
+    }
+
+
+    fun getSakeReviewBySakeListId(sake_list_id: Int): List<SakeReview> {
+        lateinit var sakeReview: List<SakeReview>
+        sakeListDb.use {
+            sakeReview = select(SakeDBOpenHelper.TABLE_SAKE_REVIEW)
+                .whereArgs("id = {id}", "id" to sake_list_id).parseList(SakeReviewParser())
+        }
+        return sakeReview
+    }
+
+    fun replaceSakeReviewFromList(review: SakeReview) {
+        // あるIDのリストをリプレイスしてアップデートする
+        deleteSakeReview(review.review_id)
+        insertSakeReviewFromListWithId(review)
     }
 
     fun deleteSakeReview(review_id: Int) {

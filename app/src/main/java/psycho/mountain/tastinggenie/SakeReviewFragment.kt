@@ -11,7 +11,11 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import kotlinx.android.synthetic.main.fragment_sake_detailed.*
 import kotlinx.android.synthetic.main.fragment_sake_review.*
+import psycho.mountain.tastinggenie.database.SakeReview
+import psycho.mountain.tastinggenie.utility.viewToInt
+import psycho.mountain.tastinggenie.utility.viewToString
 import java.lang.Math.round
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,9 +23,40 @@ import kotlin.math.round
 
 class SakeReviewFragment: Fragment() {
 
+    private var listener: SakeReviewFragmentListener? = null
+    private var sakeReview: SakeReview? = null  // データ更新時は既存の値をBundleで渡される
+    private var sakeListId: Int? = null         // データ初回設定時は既存の値をBundleで渡される
+
+    interface SakeReviewFragmentListener {
+        fun onClickReviewAddButton(sakeReview: SakeReview)
+    }
+
     companion object {
         fun newInstance(): SakeReviewFragment {
             return SakeReviewFragment()
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let{
+            // sakeReviewは更新時のみ渡され，それ以外では空っぽなので例外処理で対処する
+            try {
+                sakeReview = it.getParcelable("sakeReview") as SakeReview
+            }
+            catch (e: TypeCastException) {
+                Log.d("SakeReviewFragment", "new review")
+                sakeReview = null
+            }
+            sakeListId = it.getInt("sake_list_id")
+        }
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        if (context is SakeReviewFragmentListener) {
+            listener = context
         }
     }
 
@@ -37,8 +72,15 @@ class SakeReviewFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         context?.let{
-            // 日付の自動セット
-            initDate()
+            if (sakeReview != null) {
+                setupView(sakeReview!!)
+            }
+            else {
+                // 日付の自動セット
+                initDate()
+                // sake_list_idの設定 (MEMO: これはsakeReviewの更新だろうがそうでなかろうが，常にやらないとダメな奴だった)
+                sake_review_hidden_id.text = sakeListId.toString()
+            }
 
             // 日付のセット
             sake_review_date.setOnTouchListener { v, event ->
@@ -117,7 +159,66 @@ class SakeReviewFragment: Fragment() {
                 dialogSakeReview(context!!)
             }
 
+            // DBに追加する処理
+            button_sake_review_make.setOnClickListener {
+                val sakeReview = makeSakeReview()
+                listener?.onClickReviewAddButton(sakeReview)
+            }
         }
+    }
+
+    private fun setupView(review: SakeReview) {
+        sake_review_hidden_review_id.text = review.review_id.toString()
+        sake_review_hidden_id.text = review.id.toString()
+        sake_review_date.setText(review.date)
+        sake_review_bar.setText(review.bar)
+        if (review.price >= 0) {sake_review_price.setText(review.price.toString())}
+        if (review.volume >= 0) {sake_review_volume.setText(review.volume.toString())}
+        sake_review_temperature.text = review.temp
+        sake_review_color.text = review.color
+        sake_review_viscosity.text = review.viscosity
+        sake_review_scent_intensity.text = review.intensity
+        sake_review_scent_top.text = review.scent_top
+        sake_review_scent_mouth.text = review.scent_mouth
+        sake_review_scent_nose.text = review.scent_nose
+        sake_review_sweet.text = review.sweet
+        sake_review_sour.text = review.sour
+        sake_review_bitter.text = review.bitter
+        sake_review_umami.text = review.umami
+        sake_review_sharp.text = review.sharp
+        sake_review_scene.setText(review.scene)
+        sake_review_dish.setText(review.dish)
+        sake_review_comment.setText(review.comment)
+        sake_review_review.text = review.review
+
+        button_sake_review_make.text = "更新"
+    }
+
+    private fun makeSakeReview(): SakeReview {
+        return SakeReview(
+            viewToInt(sake_review_hidden_review_id),
+            viewToInt(sake_review_hidden_id),
+            viewToString(sake_review_date),
+            viewToString(sake_review_bar),
+            viewToInt(sake_review_price),
+            viewToInt(sake_review_volume),
+            viewToString(sake_review_temperature),
+            viewToString(sake_review_color),
+            viewToString(sake_review_viscosity),
+            viewToString(sake_review_scent_intensity),
+            viewToString(sake_review_scent_top),
+            viewToString(sake_review_scent_mouth),
+            viewToString(sake_review_scent_nose),
+            viewToString(sake_review_sweet),
+            viewToString(sake_review_sour),
+            viewToString(sake_review_bitter),
+            viewToString(sake_review_umami),
+            viewToString(sake_review_sharp),
+            viewToString(sake_review_scene),
+            viewToString(sake_review_dish),
+            viewToString(sake_review_comment),
+            viewToString(sake_review_review)
+        )
     }
 
     private fun initDate() {

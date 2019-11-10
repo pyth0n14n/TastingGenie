@@ -14,6 +14,7 @@ import android.widget.ImageView
 import org.jetbrains.anko.imageURI
 import psycho.mountain.tastinggenie.database.SakeDBManager
 import psycho.mountain.tastinggenie.database.SakeList
+import psycho.mountain.tastinggenie.database.SakeReview
 import java.io.*
 import psycho.mountain.tastinggenie.utility.copyImageFromBitmap
 
@@ -21,7 +22,8 @@ import psycho.mountain.tastinggenie.utility.copyImageFromBitmap
 class MainActivity : AppCompatActivity(),
     SakeListFragment.SakeListListener,
     SakeInformationFragment.SakeInformationFragmentListener,
-    SakeDetailedFragment.SakeDetailedFragmentListener{
+    SakeDetailedFragment.SakeDetailedFragmentListener,
+    SakeReviewFragment.SakeReviewFragmentListener{
 
     lateinit var sakeDBManager: SakeDBManager
     val REQUEST_GET_IMAGE = 100
@@ -95,6 +97,7 @@ class MainActivity : AppCompatActivity(),
         } else {
             // DBの更新
             Log.d("MainActivity", "DB renew")
+            // TODO: これってバグでIDを渡し損ねない限り，存在しないはずがないと思うのだけど．．？
             if (sakeDBManager.isExistSakeList(sakeList.id)) {
                 Log.d("MainActivity", "DB renew exec")
                 sakeDBManager.replaceSakeListFromList(sakeList)
@@ -169,14 +172,72 @@ class MainActivity : AppCompatActivity(),
         fragmentTransaction.commit()
     }
 
-    override fun onFabReviewButtonClick() {
+    override fun onFabReviewButtonClick(id: Int) {
+        val bundle = Bundle()
+        bundle.putInt("sake_list_id", id)
+
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
 
         fragmentTransaction.addToBackStack(null)
 
-        // TODO: sake_list.id を渡す必要がある(ここでやる必要はないかも)
-        fragmentTransaction.replace(R.id.container, SakeReviewFragment.newInstance())
+        val fragment = SakeReviewFragment.newInstance()
+        fragment.arguments = bundle
+        fragmentTransaction.replace(R.id.container, fragment)
+        fragmentTransaction.commit()
+    }
+
+    override fun onReviewItemClick(sakeReview: SakeReview) {
+        val bundle: Bundle = Bundle()
+        bundle.putParcelable("sakeReview", sakeReview)
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        fragmentTransaction.addToBackStack(null)
+
+        val fragment = SakeReviewFragment.newInstance()
+        fragment.arguments = bundle
+        fragmentTransaction.replace(R.id.container, fragment)
+        fragmentTransaction.commit()
+    }
+
+    override fun onReviewItemLongClick(sakeReview: SakeReview) {
+        sakeDBManager.deleteSakeReview(sakeReview.review_id)
+    }
+
+    override fun onSakeReviewListCreated(sake_list_id: Int): MutableList<SakeReview>? {
+        return sakeDBManager.getSakeReviewBySakeListId(sake_list_id) as MutableList<SakeReview>
+    }
+
+    override fun onClickReviewAddButton(sakeReview: SakeReview) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        // DBへの追加かDBの更新かを判断
+        if (sakeReview.review_id == -1) {
+            // DBへの追加
+            Log.d("MainActivity", "DB Review Add")
+            sakeDBManager.insertSakeReviewFromList(sakeReview)
+        } else {
+            // DBの更新
+            Log.d("MainActivity", "DB Review Renew")
+            sakeDBManager.replaceSakeReviewFromList(sakeReview)
+        }
+
+        // 二つPopしておく
+        fragmentManager.popBackStack()  // review fragment
+        fragmentManager.popBackStack()  // detailed fragment
+        // さらにPushすると，一つ前の値をPushしたことになる
+        fragmentTransaction.addToBackStack(null)  // detailed fragment
+
+        val bundle: Bundle = Bundle()
+        val sakeList = sakeDBManager.getSakeListById(sakeReview.id)
+        bundle.putParcelable("sake", sakeList)
+
+        val fragment = SakeDetailedFragment.newInstance()
+        fragment.arguments = bundle
+        fragmentTransaction.replace(R.id.container, fragment)
         fragmentTransaction.commit()
     }
 

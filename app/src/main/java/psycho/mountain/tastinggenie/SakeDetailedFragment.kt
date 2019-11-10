@@ -1,9 +1,12 @@
 package psycho.mountain.tastinggenie
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +14,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_sake_detailed.*
 import psycho.mountain.tastinggenie.database.SakeList
+import psycho.mountain.tastinggenie.database.SakeReview
+import psycho.mountain.tastinggenie.listview.SakeReviewAdapter
+import psycho.mountain.tastinggenie.listview.SakeReviewViewHolder
 import psycho.mountain.tastinggenie.utility.degToSweetLevel
 
 class SakeDetailedFragment: Fragment() {
@@ -20,7 +26,11 @@ class SakeDetailedFragment: Fragment() {
 
     interface SakeDetailedFragmentListener {
         fun onClickEditInformation(sake: SakeList)
-        fun onFabReviewButtonClick()
+        fun onFabReviewButtonClick(id: Int)
+
+        fun onSakeReviewListCreated(sake_list_id: Int): MutableList<SakeReview>?
+        fun onReviewItemClick(sakeReview: SakeReview)
+        fun onReviewItemLongClick(sakeReview: SakeReview)
     }
 
     companion object {
@@ -55,20 +65,53 @@ class SakeDetailedFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sakeList?.let {
-            setupView(it)
-        }
+        val recyclerView = sake_review_list
 
         context?.let {
+            // TODO: sakeListがnullであることはあり得ないが，ちゃんと例外処理をしたほうがよさそう
             sakeList?.let {
+                setupView(it)
                 button_edit_sake_information.setOnClickListener {
                     listener?.onClickEditInformation(sakeList!!)
                 }
+
+                button_sake_review_add.setOnClickListener {
+                    listener?.onFabReviewButtonClick(sakeList!!.id)
+                }
             }
 
-            button_sake_review_add.setOnClickListener {
-                listener?.onFabReviewButtonClick()
-            }
+
+            // TODO: viewを作るたびにsakeReviewをDBから取ってくる処理は重い．後で改良する
+            // TODO: sakeListがnullだった時の処理を記述する
+            var sakeReview = listener?.onSakeReviewListCreated(sakeList!!.id)!!
+
+            val adapter = SakeReviewAdapter(sakeReview, object: SakeReviewViewHolder.ItemClickListener {
+                override fun onItemClick(position: Int) {
+                    listener?.onReviewItemClick(sakeReview[position])
+                }
+
+                override fun onItemLongClick(position: Int) {
+                    AlertDialog.Builder(it).apply {
+                        setTitle("データベースの削除")
+                        setMessage("本当に消しますか？")
+                        setPositiveButton("はい", DialogInterface.OnClickListener { _, _ ->
+                            // DBから削除
+                            listener?.onReviewItemLongClick(sakeReview[position])
+
+                            // 表示上の変更
+                            sakeReview.removeAt(position)
+                            recyclerView.removeViewAt(position)
+                            recyclerView.adapter?.notifyItemRemoved(position)
+                            recyclerView.adapter?.notifyItemRangeChanged(position, sakeReview.size)
+                            recyclerView.adapter?.notifyDataSetChanged()
+                        })
+                    }.show()
+                }
+            })
+
+            recyclerView.setHasFixedSize(true)
+            recyclerView.layoutManager = LinearLayoutManager(this.activity)
+            recyclerView.adapter = adapter
 
         }
     }

@@ -323,6 +323,10 @@
                     app:backgroundTint="@color/colorPrimaryDark"
                     app:srcCompat="@android:drawable/ic_input_add" />
 
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/sake_review_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
         </LinearLayout>
     </ScrollView>

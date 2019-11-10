@@ -13,9 +13,8 @@ import android.view.ViewGroup
 import android.widget.*
 import kotlinx.android.synthetic.main.fragment_sake_information.*
 import org.jetbrains.anko.sdk27.coroutines.onFocusChange
-import psycho.mountain.tastinggenie.utility.deleteFileByUri
 import psycho.mountain.tastinggenie.database.SakeList
-import psycho.mountain.tastinggenie.utility.degToSweetLevel
+import psycho.mountain.tastinggenie.utility.*
 import java.lang.NullPointerException
 import java.lang.NumberFormatException
 
@@ -187,41 +186,6 @@ class SakeInformationFragment : Fragment() {
             viewToString(sake_information_kake_mai),
             viewToInt(sake_information_kake_pol)
         )
-    }
-
-    private fun viewToString(textView: TextView): String{
-        lateinit var data: String
-        try {
-            data = textView.text.toString()
-        } catch(e: NullPointerException) {
-            data = ""
-        }
-        Log.d("viewToString", data)
-        return data
-    }
-
-    private fun viewToFloat(textView: TextView): Float{
-        var data: Float = 0.0F
-        try {
-            data = textView.text.toString().toFloat()
-        } catch(e: NullPointerException) {
-            data = -1.0F
-        } catch(e: NumberFormatException) {
-            data = -2.0F
-        }
-        return data
-    }
-
-    private fun viewToInt(textView: TextView): Int{
-        var data: Int = 0
-        try {
-            data = textView.text.toString().toInt()
-        } catch(e: NullPointerException) {
-            data = -1
-        } catch(e: NumberFormatException) {
-            data = -2
-        }
-        return data
     }
 
     private fun validateSakeList() : Boolean{

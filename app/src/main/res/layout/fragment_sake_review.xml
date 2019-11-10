@@ -416,7 +416,9 @@
             </LinearLayout>
 
 
+            <!-- TODO: IDの名前がひどい -->
             <Button
+                    android:id="@+id/button_sake_review_make"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
@@ -427,6 +429,13 @@
     </ScrollView>
 
     <!-- sakeList.id を格納するダミーTextView -->
+    <TextView
+            android:id="@+id/sake_review_hidden_review_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-1"
+            android:visibility="gone" />
+
     <TextView
             android:id="@+id/sake_review_hidden_id"
             android:layout_width="wrap_content"
