@@ -93,7 +93,9 @@ class MainActivity : AppCompatActivity(),
         if (sakeList.id == -1) {
             // DBへの追加
             Log.d("MainActivity", "DB Add")
-            sakeDBManager.insertSakeListFromList(sakeList)
+            val id = sakeDBManager.insertSakeListFromList(sakeList)
+            // 新規登録して自動で割り振られたIDに振り変える
+            sakeList.id = id
         } else {
             // DBの更新
             Log.d("MainActivity", "DB renew")
@@ -104,7 +106,6 @@ class MainActivity : AppCompatActivity(),
             }
             fragmentManager.popBackStack() // 前回のDetailedFragmentへの遷移を消しておく
         }
-
 
         // 一つPopしておく
         fragmentManager.popBackStack()
@@ -232,6 +233,7 @@ class MainActivity : AppCompatActivity(),
         fragmentTransaction.addToBackStack(null)  // detailed fragment
 
         val bundle: Bundle = Bundle()
+        Log.d("return to Detailed", "sakeListId: " + sakeReview.id.toString())
         val sakeList = sakeDBManager.getSakeListById(sakeReview.id)
         bundle.putParcelable("sake", sakeList)
 

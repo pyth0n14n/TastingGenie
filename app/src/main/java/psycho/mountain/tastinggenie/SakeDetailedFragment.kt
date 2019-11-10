@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,6 +69,7 @@ class SakeDetailedFragment: Fragment() {
         val recyclerView = sake_review_list
 
         context?.let {
+            Log.d("SakeDetailed", "sakeList.id: " + sakeList!!.id.toString())
             // TODO: sakeListがnullであることはあり得ないが，ちゃんと例外処理をしたほうがよさそう
             sakeList?.let {
                 setupView(it)
@@ -78,41 +80,38 @@ class SakeDetailedFragment: Fragment() {
                 button_sake_review_add.setOnClickListener {
                     listener?.onFabReviewButtonClick(sakeList!!.id)
                 }
+
+                // TODO: viewを作るたびにsakeReviewをDBから取ってくる処理は重い．後で改良する
+                var sakeReview = listener?.onSakeReviewListCreated(sakeList!!.id)!!
+
+                val adapter = SakeReviewAdapter(sakeReview, object: SakeReviewViewHolder.ItemClickListener {
+                    override fun onItemClick(position: Int) {
+                        listener?.onReviewItemClick(sakeReview[position])
+                    }
+
+                    override fun onItemLongClick(position: Int) {
+                        AlertDialog.Builder(context!!).apply {
+                            setTitle("データベースの削除")
+                            setMessage("本当に消しますか？")
+                            setPositiveButton("はい", DialogInterface.OnClickListener { _, _ ->
+                                // DBから削除
+                                listener?.onReviewItemLongClick(sakeReview[position])
+
+                                // 表示上の変更
+                                sakeReview.removeAt(position)
+                                recyclerView.removeViewAt(position)
+                                recyclerView.adapter?.notifyItemRemoved(position)
+                                recyclerView.adapter?.notifyItemRangeChanged(position, sakeReview.size)
+                                recyclerView.adapter?.notifyDataSetChanged()
+                            })
+                        }.show()
+                    }
+                })
+
+                recyclerView.setHasFixedSize(true)
+                recyclerView.layoutManager = LinearLayoutManager(this.activity)
+                recyclerView.adapter = adapter
             }
-
-
-            // TODO: viewを作るたびにsakeReviewをDBから取ってくる処理は重い．後で改良する
-            // TODO: sakeListがnullだった時の処理を記述する
-            var sakeReview = listener?.onSakeReviewListCreated(sakeList!!.id)!!
-
-            val adapter = SakeReviewAdapter(sakeReview, object: SakeReviewViewHolder.ItemClickListener {
-                override fun onItemClick(position: Int) {
-                    listener?.onReviewItemClick(sakeReview[position])
-                }
-
-                override fun onItemLongClick(position: Int) {
-                    AlertDialog.Builder(it).apply {
-                        setTitle("データベースの削除")
-                        setMessage("本当に消しますか？")
-                        setPositiveButton("はい", DialogInterface.OnClickListener { _, _ ->
-                            // DBから削除
-                            listener?.onReviewItemLongClick(sakeReview[position])
-
-                            // 表示上の変更
-                            sakeReview.removeAt(position)
-                            recyclerView.removeViewAt(position)
-                            recyclerView.adapter?.notifyItemRemoved(position)
-                            recyclerView.adapter?.notifyItemRangeChanged(position, sakeReview.size)
-                            recyclerView.adapter?.notifyDataSetChanged()
-                        })
-                    }.show()
-                }
-            })
-
-            recyclerView.setHasFixedSize(true)
-            recyclerView.layoutManager = LinearLayoutManager(this.activity)
-            recyclerView.adapter = adapter
-
         }
     }
 

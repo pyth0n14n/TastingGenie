@@ -41,8 +41,10 @@ class SakeDBManager (context: Context){
     }
     */
 
-    fun insertSakeListFromList(sakeList: SakeList) {
-        sakeListDb.use {
+    fun insertSakeListFromList(sakeList: SakeList) : Int{
+        // MEMO: 初回追加時，IDを取得しないとDetailedに-1が渡って，
+        //       そのままReviewを登録すると，おかしな値をDBに登録することになる
+        val id = sakeListDb.use {
             insert(
                 SakeDBOpenHelper.TABLE_SAKE_LIST,
                 // IDは自動で振ってもらう
@@ -65,6 +67,7 @@ class SakeDBManager (context: Context){
                 SakeDBOpenHelper.COL_KAKE_POL to sakeList.kake_pol
             )
         }
+        return id.toInt()
     }
 
     fun insertSakeListFromListWithId(sakeList: SakeList) {
