@@ -2,7 +2,6 @@ package psycho.mountain.tastinggenie.database
 
 import android.content.Context
 import org.jetbrains.anko.db.IntParser
-import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.db.insert
 
@@ -227,13 +226,21 @@ class SakeDBManager (context: Context){
         insertSakeReviewFromListWithId(review)
     }
 
-    fun deleteSakeReview(review_id: Int) {
+    fun deleteSakeReview(reviewId: Int) {
         sakeListDb.use {
             delete(
                 SakeDBOpenHelper.TABLE_SAKE_REVIEW,
-                SakeDBOpenHelper.COL_REVIEW_ID + " = ?", arrayOf(review_id.toString())
+                SakeDBOpenHelper.COL_REVIEW_ID + " = ?", arrayOf(reviewId.toString())
             )
         }
     }
 
+    fun deleteSakeReviewBySakeListId(sakeListId: Int) {
+        sakeListDb.use {
+            delete(
+                SakeDBOpenHelper.TABLE_SAKE_REVIEW,
+                SakeDBOpenHelper.COL_ID + " = ?", arrayOf(sakeListId.toString())
+            )
+        }
+    }
 }

@@ -141,6 +141,7 @@ class MainActivity : AppCompatActivity(),
     override fun onItemLongClick(sake: SakeList) {
         // 消すかどうかの確認はすでにとってある
         sakeDBManager.deleteSakeList(sake.id)
+        sakeDBManager.deleteSakeReviewBySakeListId(sake.id)
     }
 
     override fun onListViewCreated(): MutableList<SakeList>? {
