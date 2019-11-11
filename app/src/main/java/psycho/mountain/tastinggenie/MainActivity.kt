@@ -30,20 +30,24 @@ class MainActivity : AppCompatActivity(),
     private var imageUri: Uri? = null
     private var imageView: ImageView? = null
 
+    // DBアクセスの回数を減らすために，initで取得し，更新時情報だけを反映する．
+    // 変更可能なListであるMutableListとして保持する
+    private var sakeLists: MutableList<SakeList>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         sakeDBManager = SakeDBManager(applicationContext)
+        sakeLists = sakeDBManager.getSakeList() as MutableList<SakeList>
 
         if (savedInstanceState == null){
             val bundle: Bundle = Bundle()
-            bundle.putParcelableArrayList("sake_list", sakeDBManager.getSakeList() as ArrayList<SakeList>)
+            // Listは参照渡しされる．Fragmentで変更するとActivity側も変わるので注意．
+            bundle.putParcelableArrayList("sake_list", sakeLists as ArrayList<SakeList>)
 
             val fragmentManager = supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
-
-            //fragmentTransaction.addToBackStack(null)
 
             val fragment = SakeListFragment.newInstance()
             fragment.arguments = bundle
@@ -88,7 +92,6 @@ class MainActivity : AppCompatActivity(),
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
 
-
         // DBへの追加かDBの更新かを判断
         if (sakeList.id == -1) {
             // DBへの追加
@@ -96,6 +99,11 @@ class MainActivity : AppCompatActivity(),
             val id = sakeDBManager.insertSakeListFromList(sakeList)
             // 新規登録して自動で割り振られたIDに振り変える
             sakeList.id = id
+
+            // MainActivityのメンバ変数の更新
+            sakeLists?.let{
+                it.add(sakeList)
+            }
         } else {
             // DBの更新
             Log.d("MainActivity", "DB renew")
@@ -105,6 +113,14 @@ class MainActivity : AppCompatActivity(),
                 sakeDBManager.replaceSakeListFromList(sakeList)
             }
             fragmentManager.popBackStack() // 前回のDetailedFragmentへの遷移を消しておく
+
+            // MainActivityのメンバ変数の更新
+            sakeLists?.let {
+                // 二つ以上はあり得ないことになっている; TODO: 一応，例外処理を
+                val oldSake = it.filter{ it.id == sakeList.id }[0]
+                it.remove(oldSake)
+                it.add(sakeList)
+            }
         }
 
         // 一つPopしておく
@@ -139,13 +155,25 @@ class MainActivity : AppCompatActivity(),
 
 
     override fun onItemLongClick(sake: SakeList) {
+        Log.d("MainActivity", sake.id.toString() + ": " + sake.name + " is removed")
         // 消すかどうかの確認はすでにとってある
         sakeDBManager.deleteSakeList(sake.id)
         sakeDBManager.deleteSakeReviewBySakeListId(sake.id)
-    }
 
-    override fun onListViewCreated(): MutableList<SakeList>? {
-        return sakeDBManager.getSakeList() as MutableList<SakeList>
+        // こいつの削除は，fragmentに任せる
+//        sakeLists?.let{
+//            Log.d("MainActivity", "Before Remove")
+//            for (i in 0 until it.size) {
+//                Log.d("MainActivity", it[i].id.toString() + ": " + it[i].name)
+//            }
+//
+//            val success = it.remove(sake)
+//            Log.d("MainActivity", "sakeList variable remove succeeded? {$success}")
+//            Log.d("MainActivity", "After Remove")
+//            for (i in 0 until it.size) {
+//                Log.d("MainActivity", it[i].id.toString() + ": " + it[i].name)
+//            }
+//        }
     }
 
     override fun onFabButtonClick() {

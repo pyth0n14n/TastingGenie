@@ -25,7 +25,6 @@ class SakeListFragment: Fragment() {
         fun onItemClick(sake: SakeList)
         fun onItemLongClick(sake: SakeList)
         fun onFabButtonClick()
-        fun onListViewCreated(): MutableList<SakeList>?
     }
 
     companion object {
@@ -66,9 +65,6 @@ class SakeListFragment: Fragment() {
         Log.d("SakeListFragment", "sake.size = " + sakeList.size.toString())
 
         context?.let {
-            // TODO: わざわざBundleでやるようにしたのに，この実装は本当は良くないのでは？
-            sakeList = listener?.onListViewCreated()!!
-
             val adapter = SakeListAdapter(sakeList, object : SakeListViewHolder.ItemClickListener {
                 override fun onItemClick(position: Int) {
                     listener?.onItemClick(sakeList[position])
@@ -79,8 +75,18 @@ class SakeListFragment: Fragment() {
                         setTitle("データベースの削除")
                         setMessage("本当に消しますか？")
                         setPositiveButton("はい", DialogInterface.OnClickListener { _, _ ->
+
+                            Log.d("SakeListFragment", "Before Remove")
+                            for (i in 0 until sakeList.size) {
+                                Log.d("SakeListFragment", sakeList[i].id.toString() + ": " + sakeList[i].name)
+                            }
+
                             // DBから削除
                             listener?.onItemLongClick(sakeList[position])
+                            Log.d("SakeListFragment", "After DB Remove")
+                            for (i in 0 until sakeList.size) {
+                                Log.d("SakeListFragment", sakeList[i].id.toString() + ": " + sakeList[i].name)
+                            }
 
                             // 表示上の変更
                             sakeList.removeAt(position)
@@ -88,6 +94,11 @@ class SakeListFragment: Fragment() {
                             recyclerView.adapter?.notifyItemRemoved(position)
                             recyclerView.adapter?.notifyItemRangeChanged(position, sakeList.size)
                             recyclerView.adapter?.notifyDataSetChanged()
+
+                            Log.d("SakeListFragment", "After recyclerView Remove")
+                            for (i in 0 until sakeList.size) {
+                                Log.d("SakeListFragment", sakeList[i].id.toString() + ": " + sakeList[i].name)
+                            }
                         })
                     }.show()
                 }
