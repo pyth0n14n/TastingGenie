@@ -1,22 +1,27 @@
 package psycho.mountain.tastinggenie
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.content.ContentValues
+import android.content.DialogInterface
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
+import kotlinx.android.synthetic.main.dialog_dont_show_me.*
+import kotlinx.android.synthetic.main.dialog_dont_show_me.view.*
 import org.jetbrains.anko.imageURI
 import psycho.mountain.tastinggenie.database.SakeDBManager
 import psycho.mountain.tastinggenie.database.SakeList
 import psycho.mountain.tastinggenie.database.SakeReview
+import psycho.mountain.tastinggenie.utility.*
 import java.io.*
-import psycho.mountain.tastinggenie.utility.copyImageFromBitmap
 
 
 class MainActivity : AppCompatActivity(),
@@ -68,7 +73,7 @@ class MainActivity : AppCompatActivity(),
         val contentValues = ContentValues().apply {
             put(MediaStore.Images.Media.TITLE, photoName)
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-            // TODO: フォルダ名を任意にしたい
+            // TODO: これは生のPicturesディレクトリ．パスを追加してあげれば何とかなりそう．
             // val path = Environment.DIRECTORY_PICTURES + File.pathSeparator + "利酒魔人"
         }
         imageUri = contentResolver
@@ -299,21 +304,54 @@ class MainActivity : AppCompatActivity(),
             resultUri?.let{
                 MediaScannerConnection.scanFile(this, arrayOf(it.path) as Array<String>, arrayOf("image/jpg"), null)
                 try {
-                    val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, it)
-                    // ドキュメントの場合，アプリのストレージにコピーを作成
+                    val storeUncompressed: Boolean = needStoreUncompressed()
+
                     if (isFromDocument) {
-                        copyImageFromBitmap(bitmap, imageUri!!, baseContext)
+                        copyImageFromUri(it, imageUri!!, storeUncompressed, baseContext) // TODO: applicationContextとの違いは？
                     }
+                    else {
+                        copyImageFromUri(it, it, storeUncompressed, baseContext)
+                    }
+
                     // 画像の貼り付けとURIの保持
                     imageView?.apply {
-                        imageURI = resultUri// imageBitmap = compressBitmap(it) // TODO
-                        contentDescription = resultUri.toString()  // DBにはStringとして保存する
+                        imageURI = imageUri
+                        contentDescription = imageUri.toString()  // DBにはStringとして保存する
                     }
                 } catch (e : IOException){
                     e.printStackTrace()
                 }
             }
         }
+    }
+
+    // 無圧縮画像を保存するかの確認
+    private fun needStoreUncompressed(): Boolean {
+        var storeUncompressed: Boolean = true
+        if (isStoreUncompressedConfirmed(this)) {
+            val doNotShowMeView = View.inflate(this, R.layout.dialog_dont_show_me, null)
+            AlertDialog.Builder(this).apply {
+                setView(doNotShowMeView)
+                setTitle("無圧縮画像を保存しますか？")
+                setMessage("メモリあふれ防止のために，画像は圧縮した状態で保存されます．")
+                setNegativeButton("いいえ", DialogInterface.OnClickListener { _, _ ->
+                    storeUncompressed = false
+                })
+                setPositiveButton("はい", DialogInterface.OnClickListener {_, _ ->
+                    storeUncompressed = true
+                })
+                show()
+            }
+            // 二度と表示しない処理
+            if (doNotShowMeView.dont_show_me_checkbox.isChecked) {
+                setStoreUncompressedConfirmed(this, false)
+                setStoreUncompressed(this, storeUncompressed)
+            }
+        }
+        else {
+            storeUncompressed = isStoreUncompressed(this)
+        }
+        return storeUncompressed
     }
 
 

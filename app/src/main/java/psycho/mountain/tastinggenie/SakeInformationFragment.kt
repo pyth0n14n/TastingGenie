@@ -106,9 +106,8 @@ class SakeInformationFragment : Fragment() {
             }
 
             // 長押しで写真削除
-            val dialog = AlertDialog.Builder(it)
             sake_information_image.setOnLongClickListener {
-                dialog.apply {
+                AlertDialog.Builder(context!!).apply {
                     setTitle("画像の削除")
                     setMessage("本当に消しますか？")
                     setPositiveButton("はい", DialogInterface.OnClickListener { _, _ ->
