@@ -1,19 +1,18 @@
 package psycho.mountain.tastinggenie.utility
 
-import android.app.AlertDialog
+
 import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
-import android.view.View
-import kotlinx.android.synthetic.main.dialog_dont_show_me.view.*
 import java.io.*
 import android.util.DisplayMetrics
-import android.app.Activity
 import android.graphics.Matrix
 import org.jetbrains.anko.windowManager
+import android.content.ContentValues
+
+
 
 
 fun fileFromUri(uri: Uri, context: Context) : File? {
@@ -86,26 +85,41 @@ fun copyImageFromUri(srcUri: Uri, dstUri: Uri, needOriginal: Boolean ,context: C
         fileFromUncompressedUri(dstUri, context)?.let {
             if (srcFile != null) {
                 srcFile.copyTo(it, true)
+                registerContentProvider(it, context)
             }
         }
     }
 
-    val bos = FileOutputStream(dstFile)
+    var bos : FileOutputStream? = null
     try {
         val baos = ByteArrayOutputStream()
 
         val originalBitmap: Bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver, srcUri)
         val bmp = resizeBitmapToDisplaySize(originalBitmap, context)
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+
+        bos = FileOutputStream(dstFile)
         bos.write(baos.toByteArray())
         bos.close()
     } catch (e: IOException) {
         e.printStackTrace()
     } finally {
-        bos.close()
+        bos?.let{
+            bos.close()
+        }
     }
 }
 
+fun registerContentProvider(file: File, context: Context) {
+    val contentValues = ContentValues()
+    val contentResolver = context.contentResolver
+    contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+    contentValues.put("_data", file.absolutePath)
+    contentResolver.insert(
+        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+        contentValues
+    )
+}
 
 fun resizeBitmapToDisplaySize(src: Bitmap, context: Context): Bitmap {
     val TAG = "resizeBitmap"
