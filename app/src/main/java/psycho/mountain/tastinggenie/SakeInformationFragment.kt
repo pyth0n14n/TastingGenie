@@ -211,15 +211,6 @@ class SakeInformationFragment : Fragment() {
             sake_information_must2.visibility = View.GONE
         }
 
-        // 必須項目: 分類
-        if (sake_information_type.text.toString() == "") {
-            sake_information_must3.visibility = View.VISIBLE
-            msg += "分類 "
-        }
-        else {
-            sake_information_must3.visibility = View.GONE
-        }
-
         if (msg != "") {
             msg += "は必須項目です"
             sake_information_scroll.fullScroll(ScrollView.FOCUS_UP)

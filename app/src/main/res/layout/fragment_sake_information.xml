@@ -104,16 +104,6 @@
                     android:layout_margin="@dimen/layout_margin"
                     android:orientation="horizontal">
 
-                <!-- 入力必須項目 -->
-                <TextView
-                        android:id="@+id/sake_information_must3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_normal"
-                        android:text="*"
-                        android:textColor="@color/colorRed"
-                        android:visibility="gone"/>
-
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
