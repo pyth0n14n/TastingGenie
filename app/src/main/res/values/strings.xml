@@ -70,6 +70,8 @@
     <string name="ml">ml</string>
     <string name="label_scent_intensity">強さ</string>
     <string name="OK">OK</string>
+    <string name="same_rice">米をまとめる</string>
+    <string name="sake_kome">酒米</string>
 
 
 </resources>

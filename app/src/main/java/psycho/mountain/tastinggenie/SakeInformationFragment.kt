@@ -78,6 +78,28 @@ class SakeInformationFragment : Fragment() {
                 dialogSakePrefecture(context!!)
             }
 
+            checkbox_same_rice.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
+                    layout_kake_mai.visibility = TextView.GONE
+                    layout_kake_pol.visibility = TextView.GONE
+                    text_koji_mai.text = getString(R.string.sake_kome)
+                } else {
+                    layout_kake_mai.visibility = TextView.VISIBLE
+                    layout_kake_pol.visibility = TextView.VISIBLE
+                    sake_information_kake_mai.text = sake_information_koji_mai.text
+                    sake_information_kake_pol.text = sake_information_koji_pol.text
+                    text_koji_mai.text = getString(R.string.sake_koji_mai)
+                }
+            }
+
+            if (sake_information_kake_mai.text.toString() != "") {
+                if ((sake_information_koji_mai.text.toString() == sake_information_koji_mai.text.toString())
+                    && (sake_information_koji_pol.text.toString() == sake_information_koji_pol.text.toString())
+                ) {
+                        checkbox_same_rice.isChecked = true
+                }
+            }
+
             // 甘辛を自動で入力
             sake_information_sake_deg.onFocusChange { _, _ ->
                 try {
@@ -168,6 +190,10 @@ class SakeInformationFragment : Fragment() {
     }
 
     private fun makeSakeList(): SakeList {
+        if (checkbox_same_rice.isChecked) {
+            sake_information_kake_mai.text = sake_information_koji_mai.text
+            sake_information_kake_pol.text = sake_information_koji_pol.text
+        }
         return SakeList(viewToInt(sake_information_hidden_id),// IDはダミー．DBに自動入力して貰う
             viewToString(sake_information_name),
             viewToString(sake_information_grade),

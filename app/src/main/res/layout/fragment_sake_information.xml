@@ -271,6 +271,23 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                >
+                <CheckBox
+                        android:id="@+id/checkbox_same_rice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:layout_margin="@dimen/layout_margin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/same_rice" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/layout_margin"
                     android:orientation="horizontal">
                 <TextView
@@ -278,7 +295,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/text_margin"
                         android:textSize="@dimen/text_normal"
-                        android:text="@string/sake_koji_mai" />
+                        android:text="@string/sake_koji_mai"
+                        android:id="@+id/text_koji_mai" />
 
                 <EditText
                         android:id="@+id/sake_information_koji_mai"
@@ -321,7 +339,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/layout_margin"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:id="@+id/layout_kake_mai">
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -341,7 +360,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/layout_margin"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:id="@+id/layout_kake_pol">
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
