@@ -69,6 +69,7 @@
     <string name="yen">円</string>
     <string name="ml">ml</string>
     <string name="label_scent_intensity">強さ</string>
+    <string name="OK">OK</string>
 
 
 </resources>

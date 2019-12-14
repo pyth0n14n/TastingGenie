@@ -14,9 +14,12 @@ import android.widget.*
 import kotlinx.android.synthetic.main.fragment_sake_information.*
 import org.jetbrains.anko.sdk27.coroutines.onFocusChange
 import psycho.mountain.tastinggenie.database.SakeList
+import psycho.mountain.tastinggenie.listview.CustomExpandableListAdapter
 import psycho.mountain.tastinggenie.utility.*
 import java.lang.NullPointerException
 import java.lang.NumberFormatException
+import java.util.ArrayList
+import java.util.HashMap
 
 class SakeInformationFragment : Fragment() {
 
@@ -300,31 +303,34 @@ class SakeInformationFragment : Fragment() {
     }
 
     private fun dialogSakePrefecture(context : Context) {
-        val prefectureList : Array<String> = arrayOf(
-            "北海道", // 北海道
-            "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県", // 東北
-            "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県", // 関東
-            "新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", // 中部
-            "三重県", "滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県", // 近畿
-            "鳥取県", "島根県", "岡山県", "広島県", "山口県", // 中国
-            "徳島県", "香川県", "愛媛県", "高知県", // 四国
-            "福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県" // 九州・沖縄
-        )
+        val listData = LinkedHashMap<String, List<String>>()
 
-        // 選択されていた値を取り出し
-        var pref : Int = prefectureList.indexOf(sake_information_prefecture.text)
-        if (pref < 0) { pref = 0}
+        listData["北海道"] = arrayListOf("北海道")
+        listData["東北"] = arrayListOf("青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県")
+        listData["関東"] = arrayListOf("茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県")
+        listData["中部"] = arrayListOf("新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県")
+        listData["近畿"] = arrayListOf("三重県", "滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県")
+        listData["中国"] = arrayListOf("鳥取県", "島根県", "岡山県", "広島県", "山口県")
+        listData["四国"] = arrayListOf("徳島県", "香川県", "愛媛県", "高知県")
+        listData["九州・沖縄"] = arrayListOf("福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県")
+
+
+        val view = ExpandableListView(context)
+        val titleList: ArrayList<String> = ArrayList(listData.keys)
+        val adapter = CustomExpandableListAdapter(context, titleList, listData)
 
         val dialog = AlertDialog.Builder(context)
             .setTitle(R.string.sake_prefecture)
-            .setSingleChoiceItems(prefectureList, pref) { _, which ->
-                pref = which
-            }
-            .setPositiveButton("OK") { _, _ ->
-                sake_information_prefecture.text = prefectureList[pref]
-            }
-            .show()
-    }
+            .setView(view)
+            .create()
 
+        view.setAdapter(adapter)
+        view.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
+            sake_information_prefecture.text = listData[titleList[groupPosition]]!!.get(childPosition)
+            dialog.dismiss()
+            true
+        }
+        dialog.show()
+    }
 
 }
