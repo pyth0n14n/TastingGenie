@@ -2,6 +2,7 @@ package psycho.mountain.tastinggenie.database
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import android.util.Log
 import org.jetbrains.anko.db.*
 
 class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
@@ -9,7 +10,7 @@ class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
 
     companion object {
         const val DB_SAKE = "sake.db"
-        const val DB_VERSION = 1
+        const val DB_VERSION = 2
 
         const val TABLE_SAKE_LIST = "sake_list"
         const val TABLE_SAKE_REVIEW = "sake_review"
@@ -22,6 +23,7 @@ class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
         const val COL_IMAGE = "image"
         const val COL_MAKER = "maker"
         const val COL_PREF = "prefecture"
+        const val COL_CITY = "city"
         const val COL_ALCOHOL = "alcohol"
         const val COL_YEAST = "yeast"
         const val COL_WATER = "water"
@@ -59,11 +61,13 @@ class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
 
         fun newInstance(context: Context): SakeDBOpenHelper {
             return instance
-                ?: SakeDBOpenHelper(context.applicationContext)!!
+                ?: SakeDBOpenHelper(context.applicationContext)
         }
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
+        Log.d("sql", db?.path.toString())
+        Log.d("sql", "onCreate")
         db?.run {
             createTable(
                 TABLE_SAKE_LIST, ifNotExists = true,
@@ -76,6 +80,7 @@ class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
                     COL_IMAGE to TEXT,
                     COL_MAKER to TEXT,
                     COL_PREF to TEXT,
+                    COL_CITY to TEXT,
                     COL_ALCOHOL to INTEGER,
                     COL_YEAST to TEXT,
                     COL_WATER to TEXT,
@@ -119,7 +124,13 @@ class SakeDBOpenHelper (context: Context): ManagedSQLiteOpenHelper(context,
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        // 今は特にすることなし
+        if (oldVersion == 1 && newVersion == 2) {
+            Log.d("sql", "upgrade")
+            db?.run {
+                execSQL("alter table $TABLE_SAKE_LIST add column city TEXT;")
+                execSQL("update $TABLE_SAKE_LIST set city = '';")
+//                update(TABLE_SAKE_LIST, COL_CITY to "", where)
+            }
+        }
     }
-
 }

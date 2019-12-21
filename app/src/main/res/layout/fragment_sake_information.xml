@@ -193,6 +193,26 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/text_margin"
                         android:textSize="@dimen/text_normal"
+                        android:text="@string/sake_city" />
+
+                <EditText
+                        android:id="@+id/sake_information_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_normal"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:textSize="@dimen/text_normal"
                         android:text="@string/sake_degree" />
 
                 <EditText

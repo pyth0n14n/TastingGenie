@@ -13,6 +13,7 @@ class SakeListParser: MapRowParser<SakeList> {
             columns[SakeDBOpenHelper.COL_IMAGE] as String,
             columns[SakeDBOpenHelper.COL_MAKER] as String,
             columns[SakeDBOpenHelper.COL_PREF] as String,
+            columns[SakeDBOpenHelper.COL_CITY] as String,
             (columns[SakeDBOpenHelper.COL_ALCOHOL] as Long).toInt(),
             columns[SakeDBOpenHelper.COL_YEAST] as String,
             columns[SakeDBOpenHelper.COL_WATER] as String,

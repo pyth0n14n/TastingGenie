@@ -172,6 +172,7 @@ class SakeInformationFragment : Fragment() {
 
         if (sake.maker != "") {sake_information_maker.setText((sake.maker))}
         if (sake.prefecture != "") {sake_information_prefecture.text = sake.prefecture}
+        if (sake.city != "") {sake_information_city.setText(sake.city)}
         if (sake.alcohol >= 0) {sake_information_alcohol.setText(sake.alcohol.toString())}
         if (sake.koji_mai != "") {sake_information_koji_mai.setText(sake.koji_mai)}
         if (sake.koji_pol >= 0) {sake_information_koji_pol.setText(sake.koji_pol.toString())}
@@ -206,6 +207,7 @@ class SakeInformationFragment : Fragment() {
             else sake_information_image.contentDescription.toString(),
             viewToString(sake_information_maker),
             viewToString(sake_information_prefecture),
+            viewToString(sake_information_city),
             viewToInt(sake_information_alcohol),
             viewToString(sake_information_yeast),
             viewToString(sake_information_water),

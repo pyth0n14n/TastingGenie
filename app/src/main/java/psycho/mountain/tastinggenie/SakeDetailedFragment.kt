@@ -141,10 +141,14 @@ class SakeDetailedFragment: Fragment() {
 
         if (sake.prefecture != "") {
             sake_detailed_type.visibility= TextView.VISIBLE
+            var pref = sake.prefecture.toString()
+            if (sake.city != "") {
+                pref += " ${sake.city}"
+            }
             if (sake.maker == "") {
-                sake_detailed_prefecture.setText("${sake.prefecture}")
+                sake_detailed_prefecture.text = pref
             }else {
-                sake_detailed_prefecture.setText("(${sake.prefecture})")
+                sake_detailed_prefecture.text = "(%s)".format(pref)
             }
         } else {
             sake_detailed_prefecture.visibility = TextView.GONE
