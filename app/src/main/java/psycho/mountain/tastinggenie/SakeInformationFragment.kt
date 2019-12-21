@@ -12,9 +12,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import kotlinx.android.synthetic.main.fragment_sake_information.*
+import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.sdk27.coroutines.onFocusChange
+import org.jetbrains.anko.sdk27.coroutines.onGroupClick
 import psycho.mountain.tastinggenie.database.SakeList
 import psycho.mountain.tastinggenie.listview.CustomExpandableListAdapter
+import psycho.mountain.tastinggenie.listview.ExpandableCheckListAdapter
 import psycho.mountain.tastinggenie.utility.*
 import java.lang.NullPointerException
 import java.lang.NumberFormatException
@@ -270,42 +273,27 @@ class SakeInformationFragment : Fragment() {
     }
 
     private fun dialogSakeType(context : Context) {
-        val typeList : Array<String> = arrayOf(
-            "生酛", "山廃酛", //　酛
-            "生詰め酒", "生貯蔵酒", "生酒", // 火入れ
-            "原酒",  // 加水
-            "冷やおろし", "雪室貯蔵", "樽酒", "長期熟成酒", // 貯蔵
-            "新酒", "古酒", // 新古
-            "にごり酒", "おり酒",  // 濾し
-            "荒走り", "中汲み", "責め", "雫酒", // 絞り
-            "凍結酒", "発泡酒", // 口当たり
-            "生一本", "貴醸酒", // 製造
-            "その他" // 後で指定
-        )
-        var checked : BooleanArray = BooleanArray(typeList.size) { false }
+        val listData = LinkedHashMap<String, List<String>>()
 
-        // 選択されていた値を取り出し
-        for (type in sake_information_type.text.split(",")) {
-            var idx = typeList.indexOf(type)
-            Log.d("asdf", idx.toString())
-            if (idx > 0) {
-                checked[idx] = true
-            }
-        }
+        listData["酛"] = arrayListOf("生酛", "山廃酛")
+        listData["火入れ"] = arrayListOf("生詰め酒", "生貯蔵酒", "生酒")
+        listData["加水"] = arrayListOf("原酒")
+        listData["貯蔵"] = arrayListOf("冷やおろし", "雪室貯蔵", "樽酒", "長期熟成酒")
+        listData["新旧"] = arrayListOf("新酒", "古酒")
+        listData["濾し"] = arrayListOf("にごり酒", "おり酒")
+        listData["絞り"] = arrayListOf("荒走り", "中汲み", "責め", "雫酒")
+        listData["食感"] = arrayListOf("凍結酒", "発泡酒")
+        listData["製造"] = arrayListOf("生一本", "貴醸酒")
+        listData["その他"] = arrayListOf("その他")
 
-        var types : String = ""
+        val view = ExpandableListView(context)
+        val titleList: ArrayList<String> = ArrayList(listData.keys)
+        val adapter = ExpandableCheckListAdapter(context, titleList, listData, sake_information_type.text.split(","))
         val dialog = AlertDialog.Builder(context)
-            .setTitle(R.string.sake_type)
-            .setMultiChoiceItems(typeList, checked) { _, which, isChecked ->
-                checked[which] = isChecked
-            }
-            .setPositiveButton("OK") { _, _ ->
-                for (i in 0 until typeList.size) {
-                    if (checked[i]) {
-                        Log.d("checked", typeList[i])
-                        types += typeList[i] + ","
-                    }
-                }
+            .setTitle(R.string.label_scent)
+            .setView(view)
+            .setPositiveButton("OK") { _,_ ->
+                val types = adapter.getCheckedItems().joinToString()
                 sake_information_type.text = types
                 val regex = Regex("その他")
                 if (regex.containsMatchIn(types)) {
@@ -314,9 +302,18 @@ class SakeInformationFragment : Fragment() {
                 else {
                     sake_information_type_other_layout.visibility = EditText.GONE
                 }
-
             }
-            .show()
+            .create()
+
+        view.setAdapter(adapter)
+        // グループを展開しておく (展開・圧縮させない)
+        for (i in 0 until adapter.groupCount-1) {
+            view.expandGroup(i)
+        }
+        view.setOnGroupClickListener { _, _, _, _ ->
+            true
+        }
+        dialog.show()
     }
 
     private fun dialogSakePrefecture(context : Context) {
@@ -325,8 +322,10 @@ class SakeInformationFragment : Fragment() {
         listData["北海道"] = arrayListOf("北海道")
         listData["東北"] = arrayListOf("青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県")
         listData["関東"] = arrayListOf("茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県")
-        listData["中部"] = arrayListOf("新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県")
-        listData["近畿"] = arrayListOf("三重県", "滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県")
+        listData["甲信越"] = arrayListOf("山梨県", "長野県", "新潟県")
+        listData["北陸"] = arrayListOf("富山県", "石川県", "福井県")
+        listData["東海"] = arrayListOf("岐阜県", "静岡県", "愛知県", "三重県")
+        listData["関西"] = arrayListOf("滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県")
         listData["中国"] = arrayListOf("鳥取県", "島根県", "岡山県", "広島県", "山口県")
         listData["四国"] = arrayListOf("徳島県", "香川県", "愛媛県", "高知県")
         listData["九州・沖縄"] = arrayListOf("福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県")

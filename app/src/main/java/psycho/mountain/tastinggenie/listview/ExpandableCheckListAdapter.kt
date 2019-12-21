@@ -21,7 +21,6 @@ class ExpandableCheckListAdapter internal constructor(private val context: Conte
     private val checkedItems :MutableSet<Pair<Long, Long>> = hashSetOf()
 
     init {
-        Log.d("setCheckedItems", chekedList.joinToString { "," })
         run loop@ {
             for (scent in chekedList){
                 val key =
@@ -29,13 +28,11 @@ class ExpandableCheckListAdapter internal constructor(private val context: Conte
                         val cid = list.indexOf(scent)
                         if (cid != -1) {
                             checkedItems.add(Pair(pid.toLong(), cid.toLong()))
-                            Log.d("asdf", "$pid, $cid")
                             return@loop
                         }
                     }
             }
         }
-        Log.d("setCheckedItems", checkedItems.toString())
     }
 
     fun getCheckedItems(): List<String> {
