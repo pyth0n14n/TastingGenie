@@ -28,6 +28,7 @@ class SakeDetailedFragment: Fragment() {
     interface SakeDetailedFragmentListener {
         fun onClickEditInformation(sake: SakeList)
         fun onFabReviewButtonClick(id: Int)
+        fun onImageClick(uri: Uri)
 
         fun onSakeReviewListCreated(sake_list_id: Int): MutableList<SakeReview>?
         fun onReviewItemClick(sakeReview: SakeReview)
@@ -119,6 +120,9 @@ class SakeDetailedFragment: Fragment() {
         if (sake.image != "") {
             sake_detailed_image.setImageURI(Uri.parse(sake.image))
             sake_detailed_image.contentDescription = sake.image
+            sake_detailed_image.setOnClickListener {
+                listener?.onImageClick(Uri.parse(sake.image))
+            }
         }
         setStringOrGone(sake.name, sake_detailed_name, null)
         setStringOrGone(sake.grade, sake_detailed_grade, null)

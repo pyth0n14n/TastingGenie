@@ -253,6 +253,27 @@ class MainActivity : AppCompatActivity(),
         fragmentTransaction.commit()
     }
 
+    override fun onImageClick(uri: Uri) {
+        val builder = Dialog(this)
+        builder.requestWindowFeature(FEATURE_NO_TITLE)
+        builder.window?.setBackgroundDrawable(
+            ColorDrawable(android.graphics.Color.TRANSPARENT)
+        )
+        builder.setOnDismissListener(DialogInterface.OnDismissListener {
+            //nothing;
+        })
+
+        val imageView = ImageView(this)
+        imageView.imageURI = uri
+        builder.addContentView(
+            imageView, RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        )
+        builder.show()
+    }
+
     override fun onReviewItemClick(sakeReview: SakeReview) {
         val bundle: Bundle = Bundle()
         bundle.putParcelable("sakeReview", sakeReview)
