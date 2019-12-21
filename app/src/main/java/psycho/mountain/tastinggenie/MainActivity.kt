@@ -2,6 +2,7 @@ package psycho.mountain.tastinggenie
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
@@ -22,6 +23,15 @@ import psycho.mountain.tastinggenie.database.SakeList
 import psycho.mountain.tastinggenie.database.SakeReview
 import psycho.mountain.tastinggenie.utility.*
 import java.io.*
+import android.view.ViewGroup
+import android.widget.RelativeLayout
+import android.graphics.drawable.ColorDrawable
+import android.view.Window.FEATURE_NO_TITLE
+import android.support.v4.app.SupportActivity
+import android.support.v4.app.SupportActivity.ExtraData
+import android.support.v4.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.view.Window
 
 
 class MainActivity : AppCompatActivity(),
@@ -189,6 +199,27 @@ class MainActivity : AppCompatActivity(),
 
         fragmentTransaction.replace(R.id.container, SakeInformationFragment.newInstance())
         fragmentTransaction.commit()
+    }
+
+    override fun onFabButtonLongClick() {
+        val builder = Dialog(this)
+        builder.requestWindowFeature(FEATURE_NO_TITLE)
+        builder.window?.setBackgroundDrawable(
+            ColorDrawable(android.graphics.Color.TRANSPARENT)
+        )
+        builder.setOnDismissListener(DialogInterface.OnDismissListener {
+            //nothing;
+        })
+
+        val imageView = ImageView(this)
+        imageView.setImageDrawable(getDrawable(R.drawable.tasting_genie_secret))
+        builder.addContentView(
+            imageView, RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        )
+        builder.show()
     }
 
     // ============== Sake Detailed Fragment =================

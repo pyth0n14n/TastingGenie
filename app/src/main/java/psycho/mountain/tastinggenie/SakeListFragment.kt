@@ -25,6 +25,7 @@ class SakeListFragment: Fragment() {
         fun onItemClick(sake: SakeList)
         fun onItemLongClick(sake: SakeList)
         fun onFabButtonClick()
+        fun onFabButtonLongClick()
     }
 
     companion object {
@@ -112,6 +113,12 @@ class SakeListFragment: Fragment() {
         view.button_sake_list_add.setOnClickListener {
             listener?.onFabButtonClick()
         }
+
+        view.button_sake_list_add.setOnLongClickListener {
+            listener?.onFabButtonLongClick()
+            true
+        }
+
     }
 
 
