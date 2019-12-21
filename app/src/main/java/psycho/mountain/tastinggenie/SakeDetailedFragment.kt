@@ -163,10 +163,19 @@ class SakeDetailedFragment: Fragment() {
         setFloatOrGone(sake.acidity, sake_detailed_acidity, sake_detailed_acidity_layout)
         setFloatOrGone(sake.amino, sake_detailed_amino, sake_detailed_amino_layout)
 
-        setStringOrGone(sake.koji_mai, sake_detailed_koji_mai, sake_detailed_koji_mai_layout)
-        setIntOrGone(sake.koji_pol, sake_detailed_koji_pol, sake_detailed_koji_pol_layout)
-        setStringOrGone(sake.kake_mai, sake_detailed_kake_mai, sake_detailed_kake_mai_layout)
-        setIntOrGone(sake.kake_pol, sake_detailed_kake_pol, sake_detailed_kake_pol_layout)
+        // 表記をまとめる
+        if (sake.koji_mai != "" && sake.koji_mai == sake.kake_mai && sake.koji_pol == sake.kake_pol) {
+            setStringOrGone(sake.koji_mai, sake_detailed_koji_mai, sake_detailed_koji_mai_layout)
+            sake_detailed_koji_mai_textview.text = getString(R.string.sake_kome)
+            setIntOrGone(sake.koji_pol, sake_detailed_koji_pol, sake_detailed_koji_pol_layout)
+            sake_detailed_kake_mai_layout.visibility = LinearLayout.GONE
+            sake_detailed_kake_pol_layout.visibility = LinearLayout.GONE
+        } else {
+            setStringOrGone(sake.koji_mai, sake_detailed_koji_mai, sake_detailed_koji_mai_layout)
+            setIntOrGone(sake.koji_pol, sake_detailed_koji_pol, sake_detailed_koji_pol_layout)
+            setStringOrGone(sake.kake_mai, sake_detailed_kake_mai, sake_detailed_kake_mai_layout)
+            setIntOrGone(sake.kake_pol, sake_detailed_kake_pol, sake_detailed_kake_pol_layout)
+        }
 
         setIntOrGone(sake.alcohol, sake_detailed_alcohol, sake_detailed_alcohol_layout)
         setStringOrGone(sake.yeast, sake_detailed_yeast, sake_detailed_yeast_layout)

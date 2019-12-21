@@ -309,7 +309,7 @@ class SakeInformationFragment : Fragment() {
 
         view.setAdapter(adapter)
         // グループを展開しておく (展開・圧縮させない)
-        for (i in 0 until adapter.groupCount-1) {
+        for (i in 0 until adapter.groupCount) {
             view.expandGroup(i)
         }
         view.setOnGroupClickListener { _, _, _, _ ->

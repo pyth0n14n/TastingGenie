@@ -82,6 +82,7 @@
                     android:layout_margin="@dimen/layout_margin"
                     android:orientation="horizontal">
                 <TextView
+                        android:id="@+id/sake_detailed_koji_mai_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/text_margin"
