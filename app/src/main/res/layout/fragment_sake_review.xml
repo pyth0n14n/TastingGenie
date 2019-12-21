@@ -4,7 +4,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".SakeInformationFragment"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark"
+        >
 
     <ScrollView
             android:id="@+id/sake_review_scroll"
@@ -16,237 +18,301 @@
                 android:orientation="vertical">
 
             <!-- 基本情報 -->
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_large"
-                    android:text="@string/label_basic_information" />
-
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/shape_rounded_corners_5dp"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:padding="@dimen/layout_margin2"
+                    android:paddingBottom="@dimen/layout_margin"
                     android:orientation="vertical">
 
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/date"
-                        android:textSize="@dimen/text_normal" />
-                <EditText
-                        android:id="@+id/sake_review_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_normal" />
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/bar"
-                        android:textSize="@dimen/text_normal" />
-                <EditText
-                        android:id="@+id/sake_review_bar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_normal" />
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/price"
-                        android:textSize="@dimen/text_normal" />
-
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                    <EditText
-                            android:id="@+id/sake_review_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:inputType="number"
-                            android:textSize="@dimen/text_normal" />
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/yen"
-                            android:textSize="@dimen/text_normal"
-                            android:layout_marginEnd="@dimen/layout_margin"/>
-
-                    <EditText
-                            android:id="@+id/sake_review_volume"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:inputType="number"
-                            android:textSize="@dimen/text_normal" />
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ml"
-                            android:textSize="@dimen/text_normal" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/temperature"
-                        android:textSize="@dimen/text_normal" />
-                <TextView
-                        android:id="@+id/sake_review_temperature"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/need_selecting"
-                        android:textSize="@dimen/text_normal" />
-            </LinearLayout>
-
-            <!-- 見た目 -->
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_large"
-                    android:layout_marginTop="@dimen/layout_margin2"
-                    android:text="@string/label_looking" />
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/color"
-                        android:textSize="@dimen/text_normal" />
-                <TextView
-                        android:id="@+id/sake_review_color"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/need_selecting"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/text_normal" />
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/viscosity"
-                        android:textSize="@dimen/text_normal" />
-                <TextView
-                        android:id="@+id/sake_review_viscosity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/need_selecting"
-                        android:textSize="@dimen/text_normal"
-                        />
-            </LinearLayout>
-
-            <!-- 香り -->
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_large"
-                    android:layout_marginTop="@dimen/layout_margin2"
-                    android:text="@string/label_scent" />
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_scent_intensity"
-                        android:textSize="@dimen/text_normal"/>
-                <TextView
-                        android:id="@+id/sake_review_scent_intensity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/need_selecting"
-                        android:textSize="@dimen/text_normal" />
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_scent_top"
-                        android:textSize="@dimen/text_normal"/>
-                <TextView
-                        android:id="@+id/sake_review_scent_top"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/need_selecting"
-                        android:textSize="@dimen/text_normal" />
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_scent_mouth"
-                        android:textSize="@dimen/text_normal"/>
-                <TextView
-                        android:id="@+id/sake_review_scent_mouth"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/need_selecting"
-                        android:textSize="@dimen/text_normal" />
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_scent_nose"
-                        android:textSize="@dimen/text_normal"/>
-                <TextView
-                        android:id="@+id/sake_review_scent_nose"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/need_selecting"
-                        android:textSize="@dimen/text_normal" />
-
-                <!-- 味 -->
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_large"
-                        android:layout_marginTop="@dimen/layout_margin2"
+                        android:text="@string/label_basic_information" />
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/date"
+                            android:textSize="@dimen/text_normal" />
+                    <EditText
+                            android:id="@+id/sake_review_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_normal" />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/bar"
+                            android:textSize="@dimen/text_normal" />
+                    <EditText
+                            android:id="@+id/sake_review_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_normal" />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/price"
+                            android:textSize="@dimen/text_normal" />
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                        <EditText
+                                android:id="@+id/sake_review_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:textSize="@dimen/text_normal" />
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/yen"
+                                android:textSize="@dimen/text_normal"
+                                android:layout_marginEnd="@dimen/layout_margin"/>
+
+                        <EditText
+                                android:id="@+id/sake_review_volume"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:textSize="@dimen/text_normal" />
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ml"
+                                android:textSize="@dimen/text_normal" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/temperature"
+                            android:textSize="@dimen/text_normal" />
+                    <TextView
+                            android:id="@+id/sake_review_temperature"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/need_selecting"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_normal" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- 見た目 -->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_rounded_corners_5dp"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:padding="@dimen/layout_margin2"
+                    android:paddingBottom="@dimen/layout_margin"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_large"
+                        android:text="@string/label_looking" />
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="?android:attr/listDivider" />
+
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/color"
+                            android:textSize="@dimen/text_normal" />
+                    <TextView
+                            android:id="@+id/sake_review_color"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/need_selecting"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_normal" />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/viscosity"
+                            android:textSize="@dimen/text_normal" />
+                    <TextView
+                            android:id="@+id/sake_review_viscosity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/need_selecting"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_normal"
+                            />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <!-- 香り -->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_rounded_corners_5dp"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:padding="@dimen/layout_margin2"
+                    android:paddingBottom="@dimen/layout_margin"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_large"
+                        android:text="@string/label_scent" />
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="?android:attr/listDivider" />
+
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_scent_intensity"
+                            android:textSize="@dimen/text_normal"/>
+                    <TextView
+                            android:id="@+id/sake_review_scent_intensity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/need_selecting"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_normal" />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_scent_top"
+                            android:textSize="@dimen/text_normal"/>
+                    <TextView
+                            android:id="@+id/sake_review_scent_top"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/need_selecting"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_normal" />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_scent_mouth"
+                            android:textSize="@dimen/text_normal"/>
+                    <TextView
+                            android:id="@+id/sake_review_scent_mouth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/need_selecting"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_normal" />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_scent_nose"
+                            android:textSize="@dimen/text_normal"/>
+                    <TextView
+                            android:id="@+id/sake_review_scent_nose"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/need_selecting"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_normal" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 味 -->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_rounded_corners_5dp"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:padding="@dimen/layout_margin2"
+                    android:paddingBottom="@dimen/layout_margin"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_large"
                         android:text="@string/label_taste" />
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="?android:attr/listDivider" />
 
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -263,6 +329,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="@string/need_selecting"
+                            android:textColor="@color/colorBlack"
                             android:textSize="@dimen/text_normal" />
                 </LinearLayout>
 
@@ -281,6 +348,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="@string/need_selecting"
+                            android:textColor="@color/colorBlack"
                             android:textSize="@dimen/text_normal" />
                 </LinearLayout>
 
@@ -299,6 +367,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="@string/need_selecting"
+                            android:textColor="@color/colorBlack"
                             android:textSize="@dimen/text_normal" />
                 </LinearLayout>
 
@@ -317,6 +386,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="@string/need_selecting"
+                            android:textColor="@color/colorBlack"
                             android:textSize="@dimen/text_normal" />
                 </LinearLayout>
 
@@ -335,16 +405,31 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="@string/need_selecting"
+                            android:textColor="@color/colorBlack"
                             android:textSize="@dimen/text_normal" />
                 </LinearLayout>
+            </LinearLayout>
 
-                <!-- その他 -->
+            <!-- その他 -->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_rounded_corners_5dp"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:padding="@dimen/layout_margin2"
+                    android:paddingBottom="@dimen/layout_margin"
+                    android:orientation="vertical">
+
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_large"
-                        android:layout_marginTop="@dimen/layout_margin2"
                         android:text="@string/label_other" />
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="?android:attr/listDivider" />
 
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -412,6 +497,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="@string/need_selecting"
+                            android:textColor="@color/colorBlack"
                             android:textSize="@dimen/text_normal" />
                 </LinearLayout>
 
@@ -423,10 +509,8 @@
                     android:id="@+id/button_sake_review_make"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:textSize="@dimen/text_large"
                     android:text="@string/button_add" />
-
-
         </LinearLayout>
     </ScrollView>
 
