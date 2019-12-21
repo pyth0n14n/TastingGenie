@@ -10,15 +10,19 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ExpandableListView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_sake_detailed.*
 import kotlinx.android.synthetic.main.fragment_sake_review.*
+import kotlinx.android.synthetic.main.list_checklist_item.*
 import psycho.mountain.tastinggenie.database.SakeReview
+import psycho.mountain.tastinggenie.listview.ExpandableCheckListAdapter
 import psycho.mountain.tastinggenie.utility.viewToInt
 import psycho.mountain.tastinggenie.utility.viewToString
 import java.lang.Math.round
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.LinkedHashMap
 import kotlin.math.round
 
 class SakeReviewFragment: Fragment() {
@@ -273,49 +277,39 @@ class SakeReviewFragment: Fragment() {
     }
 
     private fun dialogSakeScent(context: Context, textview: TextView) {
-        val scentFloralList = arrayOf("梅の花", "桜", "クチナシ", "チューリップ",
+        val listData = LinkedHashMap<String, List<String>>()
+
+        listData["フローラル"] = arrayListOf("梅の花", "桜", "クチナシ", "チューリップ",
             "ライチ", "メロン", "バナナ", "洋ナシ", "桃")
-        val scentFleshList = arrayOf("さざんか", "りんどう", "水仙", "藤",
+        listData["フレッシュ"] = arrayListOf("さざんか", "りんどう", "水仙", "藤",
             "レモンバーム", "タイム",
             "ラズベリー", "イチゴ", "レモン", "ライム", "オレンジ", "グレープフルーツ",
             "クレソン", "三つ葉", "バジル",
             "松の葉", "青竹", "新芽")
-        val scentGentleList = arrayOf("ミネラル", "石", "木炭", "オイル",
+        listData["穏やか"] = arrayListOf("ミネラル", "石", "木炭", "オイル",
             "白菜", "菜の花", "人参", "ごぼう", "大根", "春菊",
             "楓", "ヒノキ", "和紙",
             "くるみ", "銀杏", "胡麻",
             "ぶなしめじ", "エノキ", "まいたけ")
-        val scentPlumpList = arrayOf("稲穂", "つきたての餅", "白米", "豆腐", "蕎麦",
+        listData["ふくよか"] = arrayListOf("稲穂", "つきたての餅", "白米", "豆腐", "蕎麦",
             "栗", "カシューナッツ", "ピーナッツ",
             "バター", "カスタードクリーム", "ヨーグルト",
             "磯の香", "ミズゴケ", "青のり", "カステラ", "昆布", "はちみつ", "干し椎茸")
 
-        val scentList = scentFloralList + scentFleshList + scentGentleList + scentPlumpList
+        val view = ExpandableListView(context)
+        val titleList: ArrayList<String> = ArrayList(listData.keys)
+        val adapter = ExpandableCheckListAdapter(context, titleList, listData, textview.text.split(","))
 
-        var checked : BooleanArray = BooleanArray(scentList.size) { false }
-        // 選択されていた値を取り出し
-        for (scent in textview.text.split(",")) {
-            var idx = scentList.indexOf(scent)
-            if (idx > 0) {
-                checked[idx] = true
-            }
-        }
-
-        var scent: String = ""
         val dialog = AlertDialog.Builder(context)
             .setTitle(R.string.label_scent)
-            .setMultiChoiceItems(scentList, checked) { _, which, isChecked ->
-                checked[which] = isChecked
+            .setView(view)
+            .setPositiveButton("OK") { _,_ ->
+                textview.text = adapter.getCheckedItems().joinToString()
             }
-            .setPositiveButton("OK") { _, _ ->
-                for (i in 0 until scentList.size) {
-                    if (checked[i]) {
-                        scent += scentList[i] + ","
-                    }
-                }
-                textview.text = scent
-            }
-            .show()
+            .create()
+
+        view.setAdapter(adapter)
+        dialog.show()
     }
 
     private fun dialogSakeSelect(context: Context, list: Array<String>, textView: TextView, title: Int) {
