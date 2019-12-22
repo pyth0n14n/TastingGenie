@@ -3,6 +3,7 @@ package psycho.mountain.tastinggenie
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,10 +12,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import kotlinx.android.synthetic.main.dialog_hint.*
 import kotlinx.android.synthetic.main.fragment_sake_information.*
 import org.jetbrains.anko.backgroundColor
+import org.jetbrains.anko.padding
 import org.jetbrains.anko.sdk27.coroutines.onFocusChange
 import org.jetbrains.anko.sdk27.coroutines.onGroupClick
+import org.jetbrains.anko.textColor
 import psycho.mountain.tastinggenie.database.SakeList
 import psycho.mountain.tastinggenie.listview.CustomExpandableListAdapter
 import psycho.mountain.tastinggenie.listview.ExpandableCheckListAdapter
@@ -275,6 +279,42 @@ class SakeInformationFragment : Fragment() {
     }
 
     private fun dialogSakeType(context : Context) {
+        // ヒントの設定
+        val listDialogs: MutableList<AlertDialog> = arrayListOf()
+        listDialogs.add(dialogHintMsg(context, arrayListOf(
+            Pair("生酛", "酒母を手作業で作る製法．あらかじめ乳酸を加えずに，自然に生じる乳酸菌で酵母を殖やす"),
+            Pair("山廃酛", "生酛を製造する手順のうち，山卸（米をすり潰す作業）を廃したもの．"))))
+        listDialogs.add(dialogHintMsg(context, arrayListOf(
+            Pair("生詰め酒", "火入れして貯蔵し，火入れせずに瓶詰めするもの．"),
+            Pair("生貯蔵酒", "火入れせずに貯蔵し，火入れして瓶詰するもの．"),
+            Pair("生酒", "貯蔵時も瓶詰時も火入れしないもの"))))
+        listDialogs.add(dialogHintMsg(context, arrayListOf(
+            Pair("原酒", "加水せずに瓶詰した酒"))))
+        listDialogs.add(dialogHintMsg(context, arrayListOf(
+            Pair("冷やおろし", "火入れ後に，春・夏を蔵で貯蔵し，秋に火入れせずに瓶詰したもの"),
+            Pair("雪室貯蔵", "雪室で貯蔵したもの"),
+            Pair("樽酒", "樽で貯蔵したもの"),
+            Pair("長期熟成酒", "満3年以上蔵元で熟成させた、糖類添加酒を除く清酒"))))
+        listDialogs.add(dialogHintMsg(context, arrayListOf(
+            Pair("新酒", "酒造年度（7月～翌6月）内に出荷されたもの．冷やおろしは，秋口に出荷するため，新酒とはならない"),
+            Pair("古酒", "製造後1年以上経ったもの"))))
+        listDialogs.add(dialogHintMsg(context, arrayListOf(
+            Pair("にごり酒", "醪を目の粗い布で濾したもの"),
+            Pair("おり酒", "上槽後に，沈澱するのを待たずに澱と一緒に瓶詰したもの"))))
+        listDialogs.add(dialogHintMsg(context, arrayListOf(
+            Pair("荒走り", "絞り最初の部分を集めたもの"),
+            Pair("中汲み", "絞り途中の部分を集めたもの"),
+            Pair("責め", "絞りの最後の部分を集めたもの"),
+            Pair("雫酒", "醪の詰まった酒袋を吊るし，滴り落ちる雫だけを集めたもの"))))
+        listDialogs.add(dialogHintMsg(context, arrayListOf(
+            Pair("凍結酒", "シャーベット状に凍らせたもの"),
+            Pair("発砲酒", "炭酸ガスをふくむもの．スパークリング日本酒．発酵による方法や炭酸ガスを注入する方法がある．"))))
+        listDialogs.add(dialogHintMsg(context, arrayListOf(
+            Pair("生一本", "ひとつの製造場だけで醸造した純米酒．原義は，寒造りした酒を容器からそのまま瓶詰したもの．"),
+            Pair("貴醸酒", "仕込みの水の代わりに，日本酒を利用したもの"))))
+        listDialogs.add(dialogHintMsg(context, arrayListOf(
+            Pair("その他", "[内容を記載ください]"))))
+
         val listData = LinkedHashMap<String, List<String>>()
 
         listData["酛"] = arrayListOf("生酛", "山廃酛")
@@ -282,7 +322,7 @@ class SakeInformationFragment : Fragment() {
         listData["加水"] = arrayListOf("原酒")
         listData["貯蔵"] = arrayListOf("冷やおろし", "雪室貯蔵", "樽酒", "長期熟成酒")
         listData["新旧"] = arrayListOf("新酒", "古酒")
-        listData["濾し"] = arrayListOf("にごり酒", "おり酒")
+        listData["濾し"] = arrayListOf("にごり酒", "おり酒", "どぶろく")
         listData["絞り"] = arrayListOf("荒走り", "中汲み", "責め", "雫酒")
         listData["食感"] = arrayListOf("凍結酒", "発泡酒")
         listData["製造"] = arrayListOf("生一本", "貴醸酒")
@@ -290,7 +330,7 @@ class SakeInformationFragment : Fragment() {
 
         val view = ExpandableListView(context)
         val titleList: ArrayList<String> = ArrayList(listData.keys)
-        val adapter = ExpandableCheckListAdapter(context, titleList, listData, sake_information_type.text.split(","))
+        val adapter = ExpandableCheckListAdapter(context, titleList, listData, sake_information_type.text.split(","), listDialogs)
         val dialog = AlertDialog.Builder(context)
             .setTitle(R.string.label_scent)
             .setView(view)
@@ -332,7 +372,6 @@ class SakeInformationFragment : Fragment() {
         listData["四国"] = arrayListOf("徳島県", "香川県", "愛媛県", "高知県")
         listData["九州・沖縄"] = arrayListOf("福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県")
 
-
         val view = ExpandableListView(context)
         val titleList: ArrayList<String> = ArrayList(listData.keys)
         val adapter = CustomExpandableListAdapter(context, titleList, listData)
@@ -351,4 +390,30 @@ class SakeInformationFragment : Fragment() {
         dialog.show()
     }
 
+    private fun dialogHintMsg(context : Context, msg: List<Pair<String, String>>): AlertDialog {
+        val viewLinearLayout = LinearLayout(context)
+        viewLinearLayout.orientation = LinearLayout.VERTICAL
+        viewLinearLayout.setPadding(20, 10, 20, 10)
+
+        // TODO: サイズのハードコード
+        msg.forEach {
+            val (title, description) = it
+            val viewTitle = TextView(context)
+            viewTitle.text = title
+            viewTitle.textSize = 22f //resources.getDimension(R.dimen.text_large)
+            viewTitle.textColor = Color.rgb(0x00, 0x00, 0x00)
+            val viewDescription = TextView(context)
+            viewDescription.text = description
+            viewDescription.textSize = 16f //resources.getDimension(R.dimen.text_normal)
+            viewDescription.setPadding(0, 5, 0, 18)
+
+            viewLinearLayout.addView(viewTitle)
+            viewLinearLayout.addView(viewDescription)
+        }
+
+        val dialog = AlertDialog.Builder(context)
+            .setView(viewLinearLayout)
+            .create()
+        return dialog
+    }
 }

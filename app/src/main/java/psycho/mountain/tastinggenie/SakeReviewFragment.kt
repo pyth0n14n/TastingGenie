@@ -298,7 +298,7 @@ class SakeReviewFragment: Fragment() {
 
         val view = ExpandableListView(context)
         val titleList: ArrayList<String> = ArrayList(listData.keys)
-        val adapter = ExpandableCheckListAdapter(context, titleList, listData, textview.text.split(","))
+        val adapter = ExpandableCheckListAdapter(context, titleList, listData, textview.text.split(","), null)
 
         val dialog = AlertDialog.Builder(context)
             .setTitle(R.string.label_scent)

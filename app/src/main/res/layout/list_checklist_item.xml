@@ -25,8 +25,8 @@
             android:id="@+id/expandableCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_margin="@dimen/layout_margin"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/text_normal"
             />
     <!--android:focusable="false"
     android:focusableInTouchMode="false"-->

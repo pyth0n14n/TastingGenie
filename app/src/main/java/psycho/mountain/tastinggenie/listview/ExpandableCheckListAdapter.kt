@@ -1,5 +1,6 @@
 package psycho.mountain.tastinggenie.listview
 
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Typeface
 import android.util.Log
@@ -7,15 +8,12 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseExpandableListAdapter
-import android.widget.CheckBox
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import org.jetbrains.anko.sdk27.coroutines.onTouch
 import psycho.mountain.tastinggenie.R
 
 
-class ExpandableCheckListAdapter internal constructor(private val context: Context, private val titleList: List<String>, private val dataList: HashMap<String, List<String>>, private val chekedList: List<String>)  : BaseExpandableListAdapter() {
+class ExpandableCheckListAdapter internal constructor(private val context: Context, private val titleList: List<String>, private val dataList: HashMap<String, List<String>>, private val chekedList: List<String>, private val hintDialogs: List<AlertDialog>?)  : BaseExpandableListAdapter() {
 
     // <parentID, childID>
     private val checkedItems :MutableSet<Pair<Long, Long>> = hashSetOf()
@@ -107,11 +105,24 @@ class ExpandableCheckListAdapter internal constructor(private val context: Conte
         val listTitle = getGroup(groupPosition) as String
         if (convertView == null) {
             val layoutInflater = this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertView = layoutInflater.inflate(R.layout.list_group, null)
+            if (this.hintDialogs == null) {
+                convertView = layoutInflater.inflate(R.layout.list_group, null)
+            }
+            else {
+                convertView = layoutInflater.inflate(R.layout.list_group_with_hint, null)
+            }
         }
         val listTitleTextView = convertView!!.findViewById<TextView>(R.id.listTitle)
         listTitleTextView.setTypeface(null, Typeface.BOLD)
         listTitleTextView.text = listTitle
+
+        this.hintDialogs?.let{
+            val hintButton = convertView!!.findViewById<ImageView>(R.id.expandableListGroupHint)
+            hintButton.setOnClickListener {
+                this.hintDialogs[groupPosition].show()
+            }
+
+        }
         return convertView
     }
 
