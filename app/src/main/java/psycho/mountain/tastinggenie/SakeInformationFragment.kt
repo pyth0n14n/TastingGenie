@@ -332,7 +332,7 @@ class SakeInformationFragment : Fragment() {
         val titleList: ArrayList<String> = ArrayList(listData.keys)
         val adapter = ExpandableCheckListAdapter(context, titleList, listData, sake_information_type.text.split(","), listDialogs)
         val dialog = AlertDialog.Builder(context)
-            .setTitle(R.string.label_scent)
+            .setTitle(R.string.sake_type)
             .setView(view)
             .setPositiveButton("OK") { _,_ ->
                 val types = adapter.getCheckedItems().joinToString()
