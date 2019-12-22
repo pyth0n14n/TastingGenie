@@ -295,6 +295,8 @@ class SakeReviewFragment: Fragment() {
             "栗", "カシューナッツ", "ピーナッツ",
             "バター", "カスタードクリーム", "ヨーグルト",
             "磯の香", "ミズゴケ", "青のり", "カステラ", "昆布", "はちみつ", "干し椎茸")
+        listData["マイナス"] = arrayListOf("セメダイン", "カビ", "アルコール", "米酢", "ゴム",
+            "フィルタ紙", "炭")
 
         val view = ExpandableListView(context)
         val titleList: ArrayList<String> = ArrayList(listData.keys)
