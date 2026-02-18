@@ -14,7 +14,7 @@ fun isStoreUncompressed(context: Context): Boolean {
 }
 
 fun setStoreUncompressed(context: Context, bool: Boolean) {
-    context.defaultSharedPreferences.edit().putBoolean(storeUncompressed, bool)
+    context.defaultSharedPreferences.edit().putBoolean(storeUncompressed, bool).apply()
 }
 
 fun isStoreUncompressedConfirmed(context: Context): Boolean {
@@ -22,6 +22,5 @@ fun isStoreUncompressedConfirmed(context: Context): Boolean {
 }
 
 fun setStoreUncompressedConfirmed(context: Context, bool: Boolean) {
-    context.defaultSharedPreferences.edit().putBoolean(storeUncompressedConfirmed, bool)
+    context.defaultSharedPreferences.edit().putBoolean(storeUncompressedConfirmed, bool).apply()
 }
-
